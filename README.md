@@ -36,11 +36,10 @@
 
 From within the root directory:
 
-```sh
-sudo npm install -g bower
-npm install
-bower install
-```
+1. npm install
+2. npm run build
+3. (new tab) npm start
+
 
 ### Roadmap
 
