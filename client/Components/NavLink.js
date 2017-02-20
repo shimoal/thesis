@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import style from '../sass/NavLink.scss';
 
 export default React.createClass({
   render() {
