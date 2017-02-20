@@ -2,6 +2,6 @@ import React from 'react'
 
 export default React.createClass({
   render() {
-    return <div>About our App and Team</div>
+    return <div><h2>How it works</h2></div>
   }
 })

@@ -7,12 +7,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Thesis, yo!</h1>
-        <ul role="nav">
-          <li><NavLink to="/" onlyActiveOnIndex={true}>Home</NavLink></li>
-          <li><NavLink to="/about">About</NavLink></li>
-          <li><NavLink to="/repos">Repos</NavLink></li>
-        </ul>
+        <NavLink/>
 
         {this.props.children}
 
