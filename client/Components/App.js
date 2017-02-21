@@ -57,7 +57,19 @@ export default React.createClass({
     return (
       <div>
         <NavLink/>
-
+        <div className="jumbotron">
+          <div className="container">
+            <h1>Lend a Hacking Hand</h1>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+            <div className="input-group">
+              <input type="text" className="form-control" placeholder="Search for questions to answer..."/>
+              <span className="input-group-btn">
+                <button className="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        
         {this.props.children}
 
       </div>

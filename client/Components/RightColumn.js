@@ -4,13 +4,15 @@ export default React.createClass({
   render() {
     return (
         <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+          { /* UserProfile.js */}
           <div className="row">
             <div className="col-md-10">
               <h2>Ai Shi</h2>
               <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
             </div>
           </div>
-          
+
+          { /* Skills.js */}
           <div className="row">
             <div className="col-md-8">
               <table className="table">
@@ -28,13 +30,16 @@ export default React.createClass({
             </div>
           </div>
 
+          { /* PostQuestionButton.js */}
           <div>
             <p><a className="btn btn-primary" href="#" role="button">Post a question</a></p>
           </div>
           
+          { /* ClaimedQuestions.js */}
           <div className="table-responsive">
             <h3 className="sub-header">Claimed Questions</h3>
-            
+
+            { /* QuestionItem.js */}
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -46,6 +51,7 @@ export default React.createClass({
               </tbody>
             </table>
 
+            { /* Claim.js */}
             <table className="table">
               <tbody>
                 <tr>
@@ -57,8 +63,9 @@ export default React.createClass({
                   <td><a href="#">Claim</a></td>
                 </tr>
               </tbody>
-            </table>            
+            </table>
 
+            { /* QuestionItem.js */}
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -70,6 +77,7 @@ export default React.createClass({
               </tbody>
             </table>
 
+            { /* Claim.js */}
             <table className="table">
               <tbody>
                 <tr>
@@ -85,9 +93,11 @@ export default React.createClass({
 
           </div>
 
+          { /* OpenQuestions.js */}
           <div className="table-responsive">
             <h3 className="sub-header">Open Questions</h3>
             
+            { /* QuestionItem.js */}
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -102,6 +112,7 @@ export default React.createClass({
               </tbody>
             </table>
 
+            { /* QuestionItem.js */}
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -115,12 +126,13 @@ export default React.createClass({
                 </tr>
               </tbody>
             </table>
-            
+
           </div>
 
+          { /* ClosedQuestions.js */}
           <div className="table-responsive">
             <h3 className="sub-header">Closed Questions</h3>
-            
+            { /* QuestionItem.js */}
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -131,7 +143,7 @@ export default React.createClass({
                 </tr>
               </tbody>
             </table>
-
+            { /* QuestionItem.js */}
             <table className="table table-striped">
               <tbody>
                 <tr>
