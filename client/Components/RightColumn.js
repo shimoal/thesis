@@ -28,42 +28,121 @@ export default React.createClass({
             </div>
           </div>
 
-          
-          <div className="table-responsive">
-            <h3 className="sub-header">Open Questions</h3>
-            <table className="table table-striped">
-              <tbody>
-                <tr>
-                  <td>Question component 1</td>
-                </tr>
-                <tr>
-                  <td>Question component 2</td>
-                </tr>
-                <tr>
-                  <td>Question component 3</td>
-                </tr>
-              </tbody>
-            </table>
-            <p><a className="btn btn-default" href="#" role="button">More</a></p>
+          <div>
+            <p><a className="btn btn-primary" href="#" role="button">Post a question</a></p>
           </div>
           
-          
           <div className="table-responsive">
-            <h3 className="sub-header">Reviews</h3>
+            <h3 className="sub-header">Claimed Questions</h3>
+            
             <table className="table table-striped">
               <tbody>
                 <tr>
-                  <td>Review component 1</td>
+                  <td>Claimed Question component 1</td>
                 </tr>
                 <tr>
-                  <td>Review component 2</td>
-                </tr>
-                <tr>
-                  <td>Review component 3</td>
+                  <td><p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p></td>
                 </tr>
               </tbody>
             </table>
-            <p><a className="btn btn-default" href="#" role="button">More</a></p>
+
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td>Helper A</td>
+                  <td><a href="#">Claim</a></td>
+                </tr>
+                <tr>
+                  <td>Helper B</td>
+                  <td><a href="#">Claim</a></td>
+                </tr>
+              </tbody>
+            </table>            
+
+            <table className="table table-striped">
+              <tbody>
+                <tr>
+                  <td>Claimed Question component 2</td>
+                </tr>
+                <tr>
+                  <td><p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td>Helper A</td>
+                  <td><a href="#">Claim</a></td>
+                </tr>
+                <tr>
+                  <td>Helper B</td>
+                  <td><a href="#">Claim</a></td>
+                </tr>
+              </tbody>
+            </table> 
+
+          </div>
+
+          <div className="table-responsive">
+            <h3 className="sub-header">Open Questions</h3>
+            
+            <table className="table table-striped">
+              <tbody>
+                <tr>
+                  <td>Open Question component 1</td>
+                </tr>
+                <tr>
+                  <td><p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p></td>
+                </tr>
+                <tr>
+                  <td><a href="">Edit</a> | <a href="">Remove</a></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="table table-striped">
+              <tbody>
+                <tr>
+                  <td>Open Question component 2</td>
+                </tr>
+                <tr>
+                  <td><p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p></td>
+                </tr>
+                <tr>
+                  <td><a href="">Edit</a> | <a href="">Remove</a></td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+
+          <div className="table-responsive">
+            <h3 className="sub-header">Closed Questions</h3>
+            
+            <table className="table table-striped">
+              <tbody>
+                <tr>
+                  <td>Closed Question component 1</td>
+                </tr>
+                <tr>
+                  <td><p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table className="table table-striped">
+              <tbody>
+                <tr>
+                  <td>Closed Question component 2</td>
+                </tr>
+                <tr>
+                  <td><p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p></td>
+                </tr>
+              </tbody>
+            </table>
+            
           </div>
 
         </div>
