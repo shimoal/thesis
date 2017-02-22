@@ -28,11 +28,11 @@ export default React.createClass({
               <tbody>
                 <tr>
                   <td>Helper A</td>
-                  <td><a href="#">Claim</a></td>
+                  <td><a href="#">Accept</a></td>
                 </tr>
                 <tr>
                   <td>Helper B</td>
-                  <td><a href="#">Claim</a></td>
+                  <td><a href="#">Accept</a></td>
                 </tr>
               </tbody>
             </table>
@@ -57,11 +57,11 @@ export default React.createClass({
               <tbody>
                 <tr>
                   <td>Helper A</td>
-                  <td><a href="#">Claim</a></td>
+                  <td><a href="#">Accept</a></td>
                 </tr>
                 <tr>
                   <td>Helper B</td>
-                  <td><a href="#">Claim</a></td>
+                  <td><a href="#">Accept</a></td>
                 </tr>
               </tbody>
             </table>

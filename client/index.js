@@ -7,6 +7,11 @@ import Repos from './Components/Repos'
 import Repo from './Components/Repo'
 import Home from './Components/Home'
 import routes from './Components/routes'
+import { 
+  createStore, 
+  combineReducers, 
+  applyMiddleware, 
+  bindActionCreators } from 'redux';
 
 ReactDOM.render(
   <Router routes={routes} history={browserHistory}/>,
