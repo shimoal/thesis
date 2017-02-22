@@ -22,13 +22,17 @@ export default class RightColumn extends React.Component {
   render() {
 
     var showQuestionForm = function() {
-      console.log('button is clicked');
-      
       this.setState({
         showForm: true,
         showButton: false
       });
-      
+    }
+
+    var hideQuestionForm = function() {
+      this.setState({
+        showForm: false,
+        showButton: true
+      });
     }
 
     return (
@@ -36,7 +40,7 @@ export default class RightColumn extends React.Component {
         <UserProfile />
         <Skills />
         <PostQuestionButton showButton={this.state.showButton} showQuestionForm={showQuestionForm.bind(this)} />
-        <PostQuestion showForm={this.state.showForm} />
+        <PostQuestion showForm={this.state.showForm} hideQuestionForm={hideQuestionForm.bind(this)}/>
         <ClaimedQuestions />
         <OpenQuestions />
         <ClosedQuestions />

@@ -2,7 +2,8 @@ import React from 'react'
 
 export default class PostQuestion extends React.Component {
   render() {
-
+    // console.log('ShowForm is', this.props.showForm);
+    // console.log('hideQuestionForm', this.props.hideQuestionForm);
     if (this.props.showForm === true) {
       return (
         <div>
