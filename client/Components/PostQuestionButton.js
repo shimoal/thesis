@@ -8,6 +8,7 @@ export default class PostQuestionButton extends React.Component {
       return (
         <div>
           <p><a onClick={this.props.showQuestionForm} className="btn btn-primary" role="button">Post a question...</a></p>
+          <p>&nbsp;</p>
         </div>    
       )
     } else {
