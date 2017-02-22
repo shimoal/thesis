@@ -18,7 +18,6 @@ export default class RightColumn extends React.Component {
     }
   }
 
-
   render() {
 
     var showQuestionForm = function() {
