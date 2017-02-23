@@ -54,7 +54,7 @@ export default class App extends React.Component {
         id1487880252931: { 
           title: 'title for question 3',
           question: 'Question body for question 3'
-        }}
+        }} 
     }
   }
 

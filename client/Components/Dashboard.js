@@ -30,7 +30,7 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="row">
           <LeftColumn />
-          <RightColumn addQuestion={this.props.addQuestion} />
+          <RightColumn questions={this.props.userData.questions} addQuestion={this.props.addQuestion} />
         </div>
       </div>
     )

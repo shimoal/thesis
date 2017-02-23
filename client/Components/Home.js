@@ -2,6 +2,7 @@ import React from 'react'
 import OpenQuestions from './OpenQuestions'
 
 export default React.createClass({
+
   render() {
     return (
       <div className="row">
@@ -10,7 +11,7 @@ export default React.createClass({
         <div className="col-sm-10 col-md-10 main">
         
           { /* OpenQuestions.js */}
-          <OpenQuestions />
+          <OpenQuestions questions={this.props.userData.questions} />
 
           { /* FindHelpers Compoent */}
           <div>
