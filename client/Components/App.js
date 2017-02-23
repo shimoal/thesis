@@ -44,16 +44,8 @@ export default class App extends React.Component {
 
       questions: {
         id1487880252929: { 
-          title: 'title for question 1',
-          question: 'Question body for question 1'
-        },
-        id1487880252930: { 
-          title: 'title for question 2',
-          question: 'Question body for question 2'
-        },
-        id1487880252931: { 
-          title: 'title for question 3',
-          question: 'Question body for question 3'
+          title: 'Enable a button in Swift only if all text fields have been filled out',
+          question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...'
         }} 
     }
   }
