@@ -23,9 +23,11 @@ io.on('connection', function(socket) {
     // socket.username = username;
     // usernames[username] = username;
     userNum++;
-    // console.log('usernames: ', username);
+    console.log(username);
+
     console.log('counter: ', userNum);
   });
+
   /** when client emits 'addroom' **/
   socket.on('addroom', function(room_name) {
     if (rooms[room_name]) {
@@ -49,7 +51,6 @@ io.on('connection', function(socket) {
 
   socket.on('editor-content-changes', function(room_name, val) {
     // io.emit will send to all client, socket.broadcast.emit will NOT send to sender
-    // console.log('server socket on editor-content-changes: ', room_name, val);
     socket.broadcast.to(room_name).emit('editor-content-changes', val);
   });
 
@@ -57,20 +58,16 @@ io.on('connection', function(socket) {
     io.in(room_name).emit('submit-val', val);
   });
 
-  /** for the video chat - needs refactoring**/
-  socket.on('sendDescription', function(data) {
-    socket.broadcast.emit('description', data);
+  /** for the video chat **/
+  socket.on('sendDescription', function(room_name, data) {
+    socket.broadcast.to(room_name).emit('description', data);
   });
 
 
-  socket.on('sendCandidate', function(data){
-    socket.broadcast.emit('candidate', data);
+  socket.on('sendCandidate', function(room_name, data){
+    socket.broadcast.to(room_name).emit('candidate', data);
   });
 
-  socket.on('disconnect', function() {
-    userNum--;
-    console.log('A user disconnected');
-  });
 });
 
 http.listen(port, function() {
