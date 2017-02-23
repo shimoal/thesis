@@ -6,6 +6,7 @@ import Repos from './Repos'
 import Repo from './Repo'
 import Home from './Home'
 import Dashboard from './Dashboard'
+import Collaborate from './Collaborate'
 
 module.exports = (
   <Route path="/" component={App}>
@@ -17,5 +18,6 @@ module.exports = (
       <Route path="/repos/:userName/:repoName" component={Repo}/>
     </Route>
     <Route path="/about" component={About}/>
+    <Route path="/collaborate" component={Collaborate}/>
   </Route>
 )
