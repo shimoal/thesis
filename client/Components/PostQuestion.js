@@ -7,22 +7,21 @@ var PostQuestion = React.createClass({
      // event.preventDefault();
      console.log('form submit');
      // console.log(event);
-     console.log('inside processQuestion function',this.refs);
+     console.log('inside processQuestion function',this.refs.questionTitle.value);
      //1. take data from form
      var questionData = {
       questionTitle: this.refs.questionTitle.value,
       questionBody: this.refs.questionBody.value
      }
-     alert('questionData', questionData);
      //2. add question back to App
-     // this.props.addQuestion(questionData);
+     this.props.addQuestion(questionData);
 
-     // //3. reset the form
-     // this.refs.questionForm.reset();
+     //3. reset the form
+     this.refs.questionForm.reset();
   },
 
   // componentDidMount: function() {
-  //   console.log('inside DidMount', this.refs);
+  //   console.log('inside DidMount', this.props);
   // },
 
   render: function() {

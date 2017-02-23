@@ -11,6 +11,10 @@ export default React.createClass({
     router: React.PropTypes.object
   },
 
+  componentDidMount: function() {
+    console.log('inside Dashboard', this.props);
+  },
+
   handleSubmit(event) {
     event.preventDefault();
     const userName = event.target.elements[0].value;
@@ -26,7 +30,7 @@ export default React.createClass({
       <div className="container-fluid">
         <div className="row">
           <LeftColumn />
-          <RightColumn />
+          <RightColumn addQuestion={this.props.addQuestion} />
         </div>
       </div>
     )

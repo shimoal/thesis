@@ -56,18 +56,26 @@ export default class App extends React.Component {
     }
   }
 
-  
+
   addQuestion() {
-    
+    console.log('addQuestion function is called')
   }
 
 
   render() {
+
+    const childrenWithProps = React.Children.map(this.props.children,
+     (child) => React.cloneElement(child, {
+       addQuestion: this.addQuestion
+     })
+    );
+
     return (
       <div>
         <NavLink/>
     
-        {this.props.children}
+        {childrenWithProps}
+
         <div className="pre">
           <pre>
             {JSON.stringify(this.state, null, 2)}
