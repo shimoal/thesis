@@ -7,30 +7,30 @@ var PostQuestion = React.createClass({
      // event.preventDefault();
      console.log('form submit');
      // console.log(event);
-     console.log('inside processQuestion function',this.refs);
+     // console.log('inside processQuestion function',this.refs);
      //1. take data from form
-     var questionData = {
-      questionTitle: this.refs.questionTitle.value,
-      questionBody: this.refs.questionBody.value
-     }
-     alert('questionData', questionData);
-     //2. add question back to App
+     // var questionData = {
+     //  questionTitle: this.refs.questionTitle.value,
+     //  questionBody: this.refs.questionBody.value
+     // }
+     // //2. add question back to App
      // this.props.addQuestion(questionData);
 
      // //3. reset the form
-     // this.refs.questionForm.reset();
+     this.refs.questionForm.reset();
   },
 
-  // componentDidMount: function() {
-  //   console.log('inside DidMount', this.refs);
-  // },
+  componentDidMount: function() {
+    console.log('inside DidMount', this.refs);
+  },
 
   render: function() {
-    // console.log('ShowForm is', this.props.showForm);
-    // console.log('hideQuestionForm', this.props.hideQuestionForm);
-    if (this.props.showForm === true) {
-      return (
-        
+    return (
+      <div className="row">
+      <div className="col-sm-1 col-md-1"/>
+      
+      <div className="col-sm-10 col-md-10 main">
+
         <div className="panel panel-default">
           <div className="panel-body grey noPadding">
             
@@ -48,17 +48,16 @@ var PostQuestion = React.createClass({
               </div>
 
               <p><button className="btn btn-primary" type="submit" id="submit">Post</button> &nbsp;
-                 <a onClick={this.props.hideQuestionForm} className="btn btn-default" href="#" role="button">Cancel</a>
+                 <a className="btn btn-default" href="#" role="button">Cancel</a>
               </p>
 
             </form>
           </div>
 
         </div>
-      )
-    } else {
-      return (<div/>);
-    }
+      </div>
+    </div>
+    )
   }
 });
 
