@@ -47,10 +47,12 @@ export default class App extends React.Component {
           title: 'title for question 1',
           question: 'Question body for question 1'
         },
-        { title: 'title for question 2',
+        { 
+          title: 'title for question 2',
           question: 'Question body for question 2'
         },
-        { title: 'title for question 3',
+        { 
+          title: 'title for question 3',
           question: 'Question body for question 3'
         }]
     }

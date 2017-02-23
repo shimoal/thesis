@@ -4,7 +4,7 @@ import style from '../sass/PostQuestion.scss';
 var PostQuestion = React.createClass({
 
   processQuestion: function() {
-     // event.preventDefault();
+     event.preventDefault();
      console.log('form submit');
      // console.log(event);
      console.log('inside processQuestion function',this.refs.questionTitle.value);
