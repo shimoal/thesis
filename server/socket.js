@@ -57,7 +57,7 @@ io.on('connection', function(socket) {
     io.in(room_name).emit('submit-val', val);
   });
 
-  /** for the video chat **/
+  /** for the video chat - needs refactoring**/
   socket.on('sendDescription', function(data) {
     socket.broadcast.emit('description', data);
   });
@@ -70,7 +70,7 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     userNum--;
     console.log('A user disconnected');
-  })
+  });
 });
 
 http.listen(port, function() {
