@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "brace": "^0.10.0",
     "socket.io": "^1.7.3"
   }
 }
