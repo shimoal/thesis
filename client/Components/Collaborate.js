@@ -1,6 +1,8 @@
 import React from 'react'
 import ace from 'brace'
 import io from 'socket.io-client'
+import 'brace/mode/javascript'
+import 'brace/theme/github'
 
 let socket = io.connect();
 
@@ -19,19 +21,26 @@ export default class Collaborate extends React.Component {
 		this.updateEditorContent = this.updateEditorContent.bind(this);
 		this.handleRunCode = this.handleRunCode.bind(this);
 		this.updateResult = this.updateResult.bind(this);
+		this.handleReset = this.handleReset.bind(this);
+		this.ResetEditor = this.ResetEditor.bind(this);
 	}
 
 	componentDidMount() {		
 
 		/*********** live coding *********/
 		this.editor = ace.edit(this.refs.root);
-    // editor.getSession().setMode("ace/mode/javascript");
+    this.editor.getSession().setMode("ace/mode/javascript");
+    this.editor.setTheme("ace/theme/github");
     var username = prompt("what is your name?");
 
     socket.on('connect', function(){
     	console.log('connected');
+<<<<<<< HEAD
     	socket.emit('adduser', username);
 
+=======
+    	// socket.emit('adduser', username);
+>>>>>>> fully implemented live coding function.
       socket.on('welcome', function(msg) {
         $('#result').append($('<p>').text(msg));
       });
@@ -43,7 +52,8 @@ export default class Collaborate extends React.Component {
     // changes in editing board
     this.editor.on('change', this.handleEditorContentChange);
     socket.on('editor-content-changes', this.updateEditorContent);
-
+    // clear editor content
+    socket.on('clear-editor', this.ResetEditor);
     // 'run code'
 
     socket.on('submit-val', this.updateResult);
@@ -150,6 +160,12 @@ export default class Collaborate extends React.Component {
     this.editor.getSession().getDocument().applyDeltas([val]);
     this.setState({applyingChanges: false});
 	}
+	handleReset() {
+		socket.emit('clear-editor', this.state.room_name);
+	}
+	ResetEditor() {
+		this.editor.getSession().setValue("");
+	}
 	handleRunCode() {
     var val = this.editor.getValue();
     socket.emit('submit-val', this.state.room_name, val);
@@ -162,7 +178,7 @@ export default class Collaborate extends React.Component {
     this.setState({applyingChanges: false});
 	}
   render() {
-  	var style_A = {width: '640px', height: '440px'};
+  	var style_A = {width: '100%', minHeight: '400px', height: '100%'};
   	var style_B = {width: "200px", height: "200px", border: "#000 1px solid"};
     return (
     	<div className="row">
@@ -182,32 +198,40 @@ export default class Collaborate extends React.Component {
 
     		<div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
     			<h2>Collaborate</h2>
-    			<div>
-				    <h3>live coding panel</h3>
-					</div>
-					<div>
-						<div className="btn-group" role="group" aria-label="...">
-						  <button type="button" id="changeTheme" className="btn btn-default">Change theme</button>
-						  <button type="button" id="reset" className="btn btn-default">Clear</button>
-						  <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
-						</div>
-					</div>
-					<div>
-					  <div>
-				      <form id="roomForm" onSubmit={this.handleCreateRoom}>
-					      <input id="roomName" value={this.state.room_name} onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-					      <input type="submit" value="Submit" />
-					    </form>
+							  <div>
+						      <form id="roomForm" onSubmit={this.handleCreateRoom}>
+							      <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
+							      <input type="submit" value="Submit" />
+							    </form>
 
-					    <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
-					      <input id="roomName" value={this.state.room_name} onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-					      <input type="submit" value="Join" />
-					    </form>    
+							    <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+							      <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
+							      <input type="submit" value="Join" />
+							    </form>    
 
+							  </div>
+    			<div className="panel panel-default">
+					  <div className="panel-heading">
+					    <h3 className="panel-title">Live Coding</h3>
 					  </div>
-					  <div id="editor" ref="root" style={style_A} ></div>
-					  <div id="result" value={this.state.code}>this is result</div>
+					  <div className="panel-body">
+							
+							  <div className="btn-group" role="group" aria-label="...">
+								  <button type="button" id="changeTheme" className="btn btn-default">Change theme</button>
+								  <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
+								  <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+								</div>
+
+							  <div id="editor" ref="root" style={style_A} ></div>								
+					  </div>
 					</div>
+
+					<div className="panel panel-default">
+					  <div className="panel-body">
+					    <div id="result" value={this.state.code}>this is result</div>
+					  </div>
+					</div>
+					
     		</div>
     	</div>
     )

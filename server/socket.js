@@ -11,14 +11,20 @@ var rooms = {};
 
 io.on('connection', function(socket) {
   userNum++;
+<<<<<<< HEAD
 
   console.log('a user connected');
+=======
+  console.log('a user connected. counter: ', userNum);
+
+>>>>>>> fully implemented live coding function.
   socket.on('disconnect', function() {
     console.log('user disconnected');
     userNum--;
     console.log('counter: ', userNum);
     // delete usernames[username];
   });
+<<<<<<< HEAD
   // /** when the client emits 'adduser', this listens and executes **/
   socket.on('adduser', function(username){
     // store the username in the socket session for this client
@@ -29,6 +35,17 @@ io.on('connection', function(socket) {
     console.log('counter: ', userNum);
   });
 
+=======
+  /** when the client emits 'adduser', this listens and executes **/
+  // socket.on('adduser', function(username){
+    // store the username in the socket session for this client
+    // socket.username = username;
+    // usernames[username] = username;
+    // userNum++;
+    // console.log('usernames: ', username);
+    // console.log('counter: ', userNum);
+  // });
+>>>>>>> fully implemented live coding function.
   /** when client emits 'addroom' **/
   socket.on('addroom', function(room_name) {
     if (rooms[room_name]) {
@@ -38,8 +55,8 @@ io.on('connection', function(socket) {
       rooms[room_name] = 0;
       socket.join(room_name);
       io.in(room_name).emit('welcome', 'a new user has joined the room');// broadcast to everyone in the room
-        rooms[room_name]++;
-        console.log('counter: ', userNum, '. rooms', JSON.stringify(rooms));      
+      rooms[room_name]++;
+      console.log('counter: ', userNum, '. rooms', JSON.stringify(rooms));      
     }
   });
 
@@ -58,6 +75,10 @@ io.on('connection', function(socket) {
     socket.broadcast.to(room_name).emit('editor-content-changes', val);
   });
 
+  socket.on('clear-editor', function(room_name) {
+    io.in(room_name).emit('clear-editor');
+  });
+
   socket.on('submit-val', function(room_name, val) {
     io.in(room_name).emit('submit-val', val);
   });
@@ -67,9 +88,14 @@ io.on('connection', function(socket) {
     socket.broadcast.to(room_name).emit('description', data);
   });
 
+<<<<<<< HEAD
 
   socket.on('sendCandidate', function(room_name, data){
     socket.broadcast.to(room_name).emit('candidate', data);
+=======
+  socket.on('sendCandidate', function(data){
+    socket.broadcast.emit('candidate', data);
+>>>>>>> fully implemented live coding function.
   });
 
 });
