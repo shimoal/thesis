@@ -5,17 +5,20 @@ import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import { browserHistory } from 'react-router'
 
-export default React.createClass({
+export default class Collaborate extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  contextTypes: {
-    router: React.PropTypes.object
-  },
+  handler(){
+    console.log("testing123");
+  }
 
   render() {
     return (
       <div>
-        hello
+        <button type="button" onClick={this.handler}>Click Me!</button>
       </div>
     )
   }
-})
+}
