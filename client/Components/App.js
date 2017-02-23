@@ -42,27 +42,31 @@ export default class App extends React.Component {
           rating: 5 
         }],
 
-      questions: [
-        { 
+      questions: {
+        id1487880252929: { 
           title: 'title for question 1',
           question: 'Question body for question 1'
         },
-        { 
+        id1487880252930: { 
           title: 'title for question 2',
           question: 'Question body for question 2'
         },
-        { 
+        id1487880252931: { 
           title: 'title for question 3',
           question: 'Question body for question 3'
-        }]
+        }}
     }
   }
 
 
-  addQuestion(newQuestion) {
-    console.log('addQuestion function is called', newQuestion);
-
-    this.setState()
+  addQuestion(questionData) {
+    console.log('addQuestion function is called', questionData);
+    console.log(this.state);
+    var timeStamp = (new Date()).getTime();
+    this.state.questions['id' + timeStamp] = questionData;
+    this.setState({
+      questions: this.state.questions
+    })
   }
 
 
@@ -70,7 +74,7 @@ export default class App extends React.Component {
 
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
-       addQuestion: this.addQuestion,
+       addQuestion: this.addQuestion.bind(this),
        userData: this.state
      })
     );
