@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default React.createClass({
   render() {
@@ -28,11 +29,11 @@ export default React.createClass({
               <tbody>
                 <tr>
                   <td>Helper A</td>
-                  <td><a href="#">Accept</a></td>
+                  <td><Link to="/collaborate">Accept</Link></td>
                 </tr>
                 <tr>
                   <td>Helper B</td>
-                  <td><a href="#">Accept</a></td>
+                  <td><Link to="/collaborate">Accept</Link></td>
                 </tr>
               </tbody>
             </table>
@@ -57,11 +58,11 @@ export default React.createClass({
               <tbody>
                 <tr>
                   <td>Helper A</td>
-                  <td><a href="#">Accept</a></td>
+                  <td><Link to="/collaborate">Accept</Link></td>
                 </tr>
                 <tr>
                   <td>Helper B</td>
-                  <td><a href="#">Accept</a></td>
+                  <td><Link to="/collaborate">Accept</Link></td>
                 </tr>
               </tbody>
             </table>
