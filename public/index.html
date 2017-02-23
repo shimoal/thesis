@@ -28,6 +28,11 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- Include socket and webrtc for video chat -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://simplewebrtc.com/latest-v2.js"></script>
+
   </head>
 
   <body>
@@ -44,5 +49,12 @@
     <script src="holder.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="ie10-viewport-bug-workaround.js"></script>
+    <!-- Ace editor -->
+    <script src="//ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <!-- socket.io -->
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <!-- file to hold function for peerConnection -->
+    <script src="./peerConnection.js"></script>
+
   </body>
 </html>
