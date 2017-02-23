@@ -10,8 +10,8 @@ var PostQuestion = React.createClass({
      console.log('inside processQuestion function',this.refs.questionTitle.value);
      //1. take data from form
      var questionData = {
-      questionTitle: this.refs.questionTitle.value,
-      questionBody: this.refs.questionBody.value
+      title: this.refs.questionTitle.value,
+      question: this.refs.questionBody.value
      }
      //2. add question back to App
      this.props.addQuestion(questionData);

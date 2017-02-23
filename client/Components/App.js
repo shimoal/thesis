@@ -57,8 +57,10 @@ export default class App extends React.Component {
   }
 
 
-  addQuestion() {
-    console.log('addQuestion function is called')
+  addQuestion(newQuestion) {
+    console.log('addQuestion function is called', newQuestion);
+
+    this.setState()
   }
 
 
@@ -66,7 +68,8 @@ export default class App extends React.Component {
 
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
-       addQuestion: this.addQuestion
+       addQuestion: this.addQuestion,
+       userData: this.state
      })
     );
 
