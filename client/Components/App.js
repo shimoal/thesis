@@ -11,14 +11,14 @@ export default class App extends React.Component {
     super(props);
     this.state = {
 
-      user: {
+      user: { //check from user table
         id: 'id1487880252929',
         name: 'Ai Shi',
         profileImage: 'photo_aishi.jpg',
         description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
       },
 
-      user_skills: {
+      user_skills: { //check skills table and user_skills
         javaScript: 5,
         CSS: 4,
         React: 4,
@@ -26,32 +26,34 @@ export default class App extends React.Component {
         MySQL: 5
       },
 
-      ratings: {
+      ratings: { //check the review table
         Knowledge: 4,
         Helpfulness: 4,
         Experience: 5
       },
 
       questions: {
-        id1487880252929: {
+        id1487880252929: { //check the question
           title: 'Enable a button in Swift only if all text fields have been filled out',
-          question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...'
+          question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
+          status: 'open',
+          deadline: ''
         }
       },
 
-      claimedQuestions: {
+      questionsClaimed: { //check the question's status
         id1487880583646: {
           title: 'This is a claimed question #1',
           question: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh',
-          helpers: {
-            id1487880467435: 'Allison Reed',
-            id1487880908457: 'Max',
+          status: 'claimed',
+          deadline: '',
+          helpers: { //check from claims table
+            id1487880467435: 'Alison Reed',
+            id1487880908457: 'Max Quinn',
             id1487880443267: 'Hanyen'
-          } 
+          }
         }
       }
-
-
     }
   }
 

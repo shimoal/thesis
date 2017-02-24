@@ -7,6 +7,10 @@ import { browserHistory } from 'react-router'
 
 export default React.createClass({
 
+  componentDidMount() {
+    console.log('In Dashboard props',this.props);
+  },
+
   // contextTypes: {
   //   router: React.PropTypes.object
   // },
