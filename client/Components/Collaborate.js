@@ -11,6 +11,7 @@ let pc;
 		    'url': 'stun:stun.l.google.com:19302'
 		  }]
 		};
+
 export default class Collaborate extends React.Component {
 	constructor(props) {
 		super(props);
@@ -19,7 +20,8 @@ export default class Collaborate extends React.Component {
 			code: '',
 			info: '',
 			exit_room: '',
-			applyingChanges: false
+			applyingChanges: false,
+			username: ''
 		}
 		this.handleCreateRoom = this.handleCreateRoom.bind(this);
 		this.handleFormChange = this.handleFormChange.bind(this);
@@ -39,23 +41,24 @@ export default class Collaborate extends React.Component {
 		this.handleDescription = this.handleDescription.bind(this);
 		this.handleCandidate = this.handleCandidate.bind(this);
 	}
-
+	componentWillMount() {
+		var username = prompt("what is your name?");
+		this.setState({username: username});
+		console.log(username);
+	}
 	componentDidMount() {		
-
 		/*********** live coding *********/
 		this.editor = ace.edit(this.refs.root);
     this.editor.getSession().setMode("ace/mode/javascript");
     this.editor.setTheme("ace/theme/github");
-    var username = prompt("what is your name?");
+
     socket.on('connect', function(){
     	console.log('connected');
-    	// socket.emit('adduser', username);
-      socket.on('welcome', this.handleInfo);
-      socket.on('room-exists', function(msg) {
-        alert(msg);
-      })
     });
-
+    // socket.on('disconnect', this.exitRoom);
+    socket.on('room-exists', function(msg) {
+      alert(msg);
+    });
     // changes in editing board
     this.editor.on('change', this.handleEditorContentChange);
     socket.on('editor-content-changes', this.updateEditorContent);
@@ -70,55 +73,23 @@ export default class Collaborate extends React.Component {
 		/**************************************/
 
 		/*********** video conference *********/
-  //   socket.on('newUser', function(data) {
-		//   $('#numOfUsers').html(data);
-		// });
-
-		// var configuration = {
-		//   'iceServers': [{
-		//     'url': 'stun:stun.l.google.com:19302'
-		//   }]
-		// };
-
-		// run start(true) to initiate a call
-		// var signalingChannel = socket;
-		// var pc;
-
-		// signalingChannel.on('description', function (evt) {
-		// socket.on('description', function (evt) {
-		//   if (!pc) {
-		//     this.start(false);      
-	 //    }
-	 //    var description = (JSON.parse(evt)).sdp;
-		//   console.log('setting remote description');
-		//   pc.setRemoteDescription(new RTCSessionDescription(description));
-		// });
 		socket.on('description', this.handleDescription);
-		// signalingChannel.on('candidate', function (evt) {
-		// socket.on('candidate', function (evt) {
-		//   if (!pc) {
-		//     this.start(false);
-		//   }
-		//   var candidate = (JSON.parse(evt)).candidate;
-		//   pc.addIceCandidate(new RTCIceCandidate(candidate));
-		// });		
+	
 		socket.on('candidate', this.handleCandidate);
-
 	}
 
 	/************ live coding *************/
 	handleFormChange(e) {
-		console.log('handleFormChange: ', e.target.value);
 		this.setState({room_name: e.target.value});
 	}
 	handleCreateRoom(e) {
 		e.preventDefault();
-    socket.emit('addroom', this.state.room_name);
-    this.setState({info: 'You are in room '+ this.state.room_name});
+    socket.emit('addroom', this.state.username, this.state.room_name);
+    e.target.value = '';
 	}
 	handleJoinRoom(e) {
 		e.preventDefault();
-    socket.emit('join-room', this.state.room_name);
+    socket.emit('join-room', this.state.username, this.state.room_name);
 	}
 	handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
@@ -149,11 +120,11 @@ export default class Collaborate extends React.Component {
     this.setState({applyingChanges: false});
 	}
 	handleInfo(msg) {
-		console.log('handle info', msg);
+		// console.log('handle info', msg);
 		this.setState({info: msg});
 	}
 	exitRoom() {
-		socket.emit('exit_room', this.state.room_name);
+		socket.emit('exit_room', this.state.username, this.state.room_name);
 	}
 	handleExitRoom() {
 		this.setState({info: 'You left the room: '+this.state.room_name});
@@ -212,11 +183,15 @@ export default class Collaborate extends React.Component {
 		  this.start(false);      
 	  }
     var description = (JSON.parse(evt)).sdp;
-		console.log('setting remote description');
+		// console.log('setting remote description');
 	  pc.setRemoteDescription(new RTCSessionDescription(description));
 	}
 	handleCandidate(evt) {
-
+		if (!pc) {
+		  this.start(false);
+		}
+		var candidate = (JSON.parse(evt)).candidate;
+		pc.addIceCandidate(new RTCIceCandidate(candidate));
 	}
 	/************************************/	
   render() {
