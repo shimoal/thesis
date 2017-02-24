@@ -1,18 +1,30 @@
 import React from 'react'
-// import ace from 'brace'
+import ace from 'brace'
+import io from 'socket.io-client'
 
+let socket = io.connect();
 
 export default class Collaborate extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			room_name: '',
+			code: '',
+			applyingChanges: false
+		}
+		this.handleCreateRoom = this.handleCreateRoom.bind(this);
+		this.handleFormChange = this.handleFormChange.bind(this);
+		this.handleJoinRoom = this.handleJoinRoom.bind(this);
+		this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
+		this.updateEditorContent = this.updateEditorContent.bind(this);
+		this.handleRunCode = this.handleRunCode.bind(this);
+		this.updateResult = this.updateResult.bind(this);
 	}
 
 	componentDidMount() {		
-		var socket = io.connect();
 
 		/*********** live coding *********/
-		var editor = ace.edit(this.refs.root);
-		var applyingChanges = false;
+		this.editor = ace.edit(this.refs.root);
     // editor.getSession().setMode("ace/mode/javascript");
     var username = prompt("what is your name?");
 
@@ -27,50 +39,14 @@ export default class Collaborate extends React.Component {
         alert(msg);
       })
     });
-    // addroom
-    var room_name;
-    $('#roomForm').submit(function(e) {
-        e.preventDefault();
-        room_name = $(this).find('input:text').val();
-        // console.log('submit a new room_name: ', room_name);
-        socket.emit('addroom', room_name);
-    });
-    // join room
-    $('#joinRoomForm').submit(function(e) {
-        e.preventDefault();
-        room_name = $(this).find('input:text').val();
-        // console.log('join a room_name: ', room_name);
-        socket.emit('join-room', room_name);
-    });
-    // changes in editing board
-    editor.getSession().on('change', function(e) {
-        if (!applyingChanges) {
-            socket.emit('editor-content-changes', room_name, JSON.stringify(e));
-            // console.log('editor-content-changes: ', room_name, JSON.stringify(e));
-        }
-        return false;
-    });
-    socket.on('editor-content-changes', function(val) {
-        applyingChanges = true;
-        val = JSON.parse(val);
-        // console.log('socket on content changes, ', [val]);
-        editor.getSession().getDocument().applyDeltas([val]);
-        applyingChanges = false;
-    });
-    // 'run code'
-    $('#run').on('click', function() {
-        var val = editor.getValue();
-        socket.emit('submit-val', room_name, val);
-        // console.log('submit-val', room_name, val);
-        return false;
-    });
 
-    socket.on('submit-val', function(val) {
-    	applyingChanges = true;
-    	$('#result').append($('<p>').text(val));
-    	// console.log('socket on editor submit', val);
-    	applyingChanges = false;
-    });
+    // changes in editing board
+    this.editor.on('change', this.handleEditorContentChange);
+    socket.on('editor-content-changes', this.updateEditorContent);
+
+    // 'run code'
+
+    socket.on('submit-val', this.updateResult);
 		/**************************************/
 
 		// ********** video conference ********
@@ -101,41 +77,36 @@ export default class Collaborate extends React.Component {
 
 		    // once remote stream arrives, show it in the remote video element
 		    pc.onaddstream = function (evt) {
-		      console.log('adding remote stream');
-		      
+		      console.log('adding remote stream');		      
 		      $("#peer-camera video")[0].src = URL.createObjectURL(evt.stream);
 		    };
 
 		    // get the local stream, show it in the local video element and send it
 		    navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
 		      $("#my-camera video")[0].src = URL.createObjectURL(stream);
-
 		      pc.addStream(stream);
 
 		      if (isCaller){
-		          pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
+		        pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
 		      } else {
-		          pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
+		        pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
 		      }
 
-
 		      function gotDescription(desc) {
+
 		          pc.setLocalDescription(desc);
 
 		          signalingChannel.emit('sendDescription', room_name, JSON.stringify({ "sdp": desc }));
+
 		      }
 		    });
 		}
-
-
 
 		signalingChannel.on('description', function (evt) {
 		    if (!pc) {
 		      start(false);      
 		    }
-
 		    var description = (JSON.parse(evt)).sdp;
-
 		    console.log('setting remote description');
 		    pc.setRemoteDescription(new RTCSessionDescription(description));
 
@@ -145,12 +116,9 @@ export default class Collaborate extends React.Component {
 		  if (!pc) {
 		    start(false);
 		  }
-
 		  var candidate = (JSON.parse(evt)).candidate;
-
 		  pc.addIceCandidate(new RTCIceCandidate(candidate));
 		})
-
 
 		$("#start-call").click(function() {
 		    start(true);
@@ -158,11 +126,41 @@ export default class Collaborate extends React.Component {
 
 	}
 
-	createRoom() {
-
+	handleFormChange(e) {
+		console.log('handleFormChange: ', e.target.value);
+		this.setState({room_name: e.target.value});
 	}
-
-
+	handleCreateRoom(e) {
+		e.preventDefault();
+    socket.emit('addroom', this.state.room_name);
+	}
+	handleJoinRoom(e) {
+		e.preventDefault();
+    socket.emit('join-room', this.state.room_name);
+	}
+	handleEditorContentChange(e) {
+    if (!this.state.applyingChanges) {
+      socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
+    }
+    return false;
+	}
+	updateEditorContent(val) {
+		this.setState({applyingChanges: true});
+    val = JSON.parse(val);
+    this.editor.getSession().getDocument().applyDeltas([val]);
+    this.setState({applyingChanges: false});
+	}
+	handleRunCode() {
+    var val = this.editor.getValue();
+    socket.emit('submit-val', this.state.room_name, val);
+    return false;
+	}
+	updateResult(val) {
+    this.setState({applyingChanges: true});
+    this.setState({code: val});
+   	$('#result').append($('<p>').text(val));
+    this.setState({applyingChanges: false});
+	}
   render() {
   	var style_A = {width: '640px', height: '440px'};
   	var style_B = {width: "200px", height: "200px", border: "#000 1px solid"};
@@ -191,24 +189,24 @@ export default class Collaborate extends React.Component {
 						<div className="btn-group" role="group" aria-label="...">
 						  <button type="button" id="changeTheme" className="btn btn-default">Change theme</button>
 						  <button type="button" id="reset" className="btn btn-default">Clear</button>
-						  <button type="button" id="run" className="btn btn-default">Run</button>
+						  <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
 						</div>
 					</div>
 					<div>
 					  <div>
-				      <form id="roomForm">
-					      <input id="roomName" type="text" name="roomName" placeholder="room name" />
+				      <form id="roomForm" onSubmit={this.handleCreateRoom}>
+					      <input id="roomName" value={this.state.room_name} onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
 					      <input type="submit" value="Submit" />
 					    </form>
 
-					    <form id="joinRoomForm">
-					      <input id="roomName" type="text" name="roomName" placeholder="room name" />
+					    <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+					      <input id="roomName" value={this.state.room_name} onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
 					      <input type="submit" value="Join" />
 					    </form>    
 
 					  </div>
-					  <div id="editor" ref="root" style={style_A}></div>
-					  <div id="result">this is result</div>
+					  <div id="editor" ref="root" style={style_A} ></div>
+					  <div id="result" value={this.state.code}>this is result</div>
 					</div>
     		</div>
     	</div>
