@@ -19,7 +19,7 @@ export default class RightColumn extends React.Component {
   }
 
   componentDidMount() {
-    console.log('inside RightColumn', this.props.questions);
+    console.log('inside RightColumn', this.props);
   }
 
   render() {
@@ -44,7 +44,7 @@ export default class RightColumn extends React.Component {
         <Skills />
         <PostQuestionButton showButton={this.state.showButton} showQuestionForm={showQuestionForm.bind(this)} />
         <PostQuestion addQuestion={this.props.addQuestion} showForm={this.state.showForm} hideQuestionForm={hideQuestionForm.bind(this)}/>
-        <ClaimedQuestions />
+        <ClaimedQuestions questionsClaimed={this.props.questionsClaimed} />
         <OpenQuestions questions={this.props.questions} />
         <ClosedQuestions />
       </div>

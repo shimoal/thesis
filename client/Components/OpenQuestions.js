@@ -8,7 +8,7 @@ var OpenQuestions = React.createClass({
     return ( <QuestionItem key={key} index={key} details={this.props.questions[key]}/> )
   },
   componentDidMount: function() {
-    console.log(this.props.questions);
+    console.log('Inside OpenQuestions', this.props.questions);
   },
   render: function() {
     return (
