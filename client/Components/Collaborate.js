@@ -54,10 +54,8 @@ export default class Collaborate extends React.Component {
 
     socket.on('connect', function(){
     	console.log('connected');
-    	// socket.emit('adduser', username);
-      socket.on('welcome', this.handleInfo);
     });
-
+    // socket.on('disconnect', this.exitRoom);
     socket.on('room-exists', function(msg) {
       alert(msg);
     });
@@ -75,50 +73,19 @@ export default class Collaborate extends React.Component {
 		/**************************************/
 
 		/*********** video conference *********/
-  //   socket.on('newUser', function(data) {
-		//   $('#numOfUsers').html(data);
-		// });
-
-		// var configuration = {
-		//   'iceServers': [{
-		//     'url': 'stun:stun.l.google.com:19302'
-		//   }]
-		// };
-
-		// run start(true) to initiate a call
-		// var signalingChannel = socket;
-		// var pc;
-
-		// signalingChannel.on('description', function (evt) {
-		// socket.on('description', function (evt) {
-		//   if (!pc) {
-		//     this.start(false);      
-	 //    }
-	 //    var description = (JSON.parse(evt)).sdp;
-		//   console.log('setting remote description');
-		//   pc.setRemoteDescription(new RTCSessionDescription(description));
-		// });
 		socket.on('description', this.handleDescription);
-		// signalingChannel.on('candidate', function (evt) {
-		// socket.on('candidate', function (evt) {
-		//   if (!pc) {
-		//     this.start(false);
-		//   }
-		//   var candidate = (JSON.parse(evt)).candidate;
-		//   pc.addIceCandidate(new RTCIceCandidate(candidate));
-		// });		
+	
 		socket.on('candidate', this.handleCandidate);
-
 	}
 
 	/************ live coding *************/
 	handleFormChange(e) {
-		// console.log('handleFormChange: ', e.target.value);
 		this.setState({room_name: e.target.value});
 	}
 	handleCreateRoom(e) {
 		e.preventDefault();
     socket.emit('addroom', this.state.username, this.state.room_name);
+    e.target.value = '';
 	}
 	handleJoinRoom(e) {
 		e.preventDefault();
