@@ -14,6 +14,17 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     userNum--;
   });
+
+  /** when the client emits 'adduser', this listens and executes **/
+  // socket.on('adduser', function(username){
+    // store the username in the socket session for this client
+    // socket.username = username;
+    // usernames[username] = username;
+    // userNum++;
+    // console.log('usernames: ', username);
+    // console.log('counter: ', userNum);
+  // });
+
   /** when client emits 'addroom' **/
   socket.on('addroom', function(username, room_name) {
     // if the room_name all ready exists
@@ -66,7 +77,7 @@ io.on('connection', function(socket) {
     io.in(room_name).emit('submit-val', val);
   });
 
-  /** for the video chat - needs refactoring**/
+  /** for the video chat **/
   socket.on('sendDescription', function(room_name, data) {
     io.in(room_name).emit('description', data);
   });
@@ -74,6 +85,10 @@ io.on('connection', function(socket) {
   socket.on('sendCandidate', function(room_name, data){
     io.in(room_name).emit('candidate', data);
   });
+
+  socket.on('stopCall', function(room_name){
+    socket.broadcast.to(room_name).emit('stopCall');
+  })
 
 });
 
