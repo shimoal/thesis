@@ -3,6 +3,10 @@ import Helpers from './Helpers'
 
 var QuestionItem = React.createClass({
   //do conditional rendering
+  
+  componentDidMount: function() {
+    console.log('inside QuestionItem props', this.props);
+  },
   //if helper's children exist, then render the Helpers component
   render: function() {
     return (
@@ -21,7 +25,8 @@ var QuestionItem = React.createClass({
           </tbody>
         </table>
 
-        <Helpers/>
+        <Helpers details={this.props.details} />
+
       </div>
     )
   }
