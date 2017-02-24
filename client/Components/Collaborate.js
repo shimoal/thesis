@@ -1,6 +1,5 @@
 import React from 'react'
 import ace from 'brace'
-import io from 'socket.io-client'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
 

@@ -4,7 +4,7 @@
   "description": "Thesis project for MiniFridge Revoluation",
   "main": "server/server.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
     "build": "webpack -d --watch",
     "test": "mocha spec/**/*Spec.js spec/.setup.js spec/**/*-react-test.js"
   },
@@ -49,6 +49,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "brace": "^0.10.0",
+    "express": "^4.14.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "socket.io": "^1.7.3"
