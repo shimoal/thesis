@@ -1,5 +1,5 @@
 import React from 'react'
-import ace from 'brace'
+// import ace from 'brace'
 
 
 export default class Collaborate extends React.Component {
@@ -73,7 +73,7 @@ export default class Collaborate extends React.Component {
     });
 		/**************************************/
 
-		/*********** video conference *********/
+		// ********** video conference ********
 
 		var signalingChannel = socket;
 		var pc;

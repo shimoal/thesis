@@ -1,6 +1,5 @@
 var chai = require('chai');
 var expect = chai.expect;
-// var should = require('should');
 var io = require('socket.io-client');
 var client1;
 var client2;
