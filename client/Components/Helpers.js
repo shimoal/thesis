@@ -3,8 +3,13 @@ import { Link } from 'react-router'
 
 var Helpers = React.createClass({
   
-  renderHelpers: function() {
-    
+  renderHelpers: function(key) {
+    return ( 
+      <tr>
+        <td>{this.props.details.helpers[key]}</td>
+        <td><Link to="/collaborate">Accept</Link></td>
+      </tr>
+    )
   },
   //pass down all helpers here and map it
   checkHelpers: function() {
@@ -13,14 +18,7 @@ var Helpers = React.createClass({
       return(
         <table className="table">
           <tbody>
-            <tr>
-              <td>Helper A</td>
-              <td><Link to="/collaborate">Accept</Link></td>
-            </tr>
-            <tr>
-              <td>Helper B</td>
-              <td><Link to="/collaborate">Accept</Link></td>
-            </tr>
+            { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
           </tbody>
         </table>
       )
