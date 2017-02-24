@@ -28,6 +28,7 @@ io.on('connection', function(socket) {
     // console.log('usernames: ', username);
     // console.log('counter: ', userNum);
   // });
+
   /** when client emits 'addroom' **/
   socket.on('addroom', function(room_name) {
     if (rooms[room_name]) {
@@ -77,16 +78,19 @@ io.on('connection', function(socket) {
     io.in(room_name).emit('submit-val', val);
   });
 
-  /** for the video chat - needs refactoring**/
+  /** for the video chat **/
   socket.on('sendDescription', function(room_name, data) {
     io.in(room_name).emit('description', data);
-    // socket.broadcast.emit('description', data);
   });
 
   socket.on('sendCandidate', function(room_name, data){
     io.in(room_name).emit('candidate', data);
-    // socket.broadcast.emit('candidate', data);
+
   });
+
+  socket.on('stopCall', function(room_name){
+    socket.broadcast.to(room_name).emit('stopCall');
+  })
 
 });
 

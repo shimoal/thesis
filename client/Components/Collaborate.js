@@ -11,6 +11,9 @@ let pc;
 		    'url': 'stun:stun.l.google.com:19302'
 		  }]
 		};
+
+let localStream;
+
 export default class Collaborate extends React.Component {
 	constructor(props) {
 		super(props);
@@ -70,39 +73,11 @@ export default class Collaborate extends React.Component {
 		/**************************************/
 
 		/*********** video conference *********/
-  //   socket.on('newUser', function(data) {
-		//   $('#numOfUsers').html(data);
-		// });
-
-		// var configuration = {
-		//   'iceServers': [{
-		//     'url': 'stun:stun.l.google.com:19302'
-		//   }]
-		// };
-
-		// run start(true) to initiate a call
-		// var signalingChannel = socket;
-		// var pc;
-
-		// signalingChannel.on('description', function (evt) {
-		// socket.on('description', function (evt) {
-		//   if (!pc) {
-		//     this.start(false);      
-	 //    }
-	 //    var description = (JSON.parse(evt)).sdp;
-		//   console.log('setting remote description');
-		//   pc.setRemoteDescription(new RTCSessionDescription(description));
-		// });
 		socket.on('description', this.handleDescription);
-		// signalingChannel.on('candidate', function (evt) {
-		// socket.on('candidate', function (evt) {
-		//   if (!pc) {
-		//     this.start(false);
-		//   }
-		//   var candidate = (JSON.parse(evt)).candidate;
-		//   pc.addIceCandidate(new RTCIceCandidate(candidate));
-		// });		
+		
 		socket.on('candidate', this.handleCandidate);
+
+    socket.on('stopCall', this.stopCall);
 
 	}
 
@@ -179,7 +154,8 @@ export default class Collaborate extends React.Component {
 
 		// once remote stream arrives, show it in the remote video element
 	  pc.onaddstream = function (evt) {
-	    console.log('adding remote stream');		      
+	    console.log('adding remote stream');		
+      console.log('event: ', evt);      
 	    $("#peer-camera video")[0].src = URL.createObjectURL(evt.stream);
 	  };
 
@@ -193,6 +169,8 @@ export default class Collaborate extends React.Component {
 	      pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
 	    }
 
+      localStream = stream;
+
 		  function gotDescription(desc) {
 		    pc.setLocalDescription(desc);
 	      // signalingChannel.emit('sendDescription', JSON.stringify({ "sdp": desc }));
@@ -203,10 +181,14 @@ export default class Collaborate extends React.Component {
 	startCall() {
 		this.start(true);
 	}
-	stopCall() {
-		// need to disconnect the video 
-		alert('Need to disconnect the video');
+
+	stopCall(isStopper) {
+    if (isStopper) {
+      socket.emit('stopCall', this.state.room_name);
+    }
+    pc.removeStream(localStream);
 	}
+
 	handleDescription(evt) {
 		if (!pc) {
 		  this.start(false);      
@@ -216,7 +198,12 @@ export default class Collaborate extends React.Component {
 	  pc.setRemoteDescription(new RTCSessionDescription(description));
 	}
 	handleCandidate(evt) {
-
+      if (!pc) {
+        this.start(false);
+      }
+      var candidate = (JSON.parse(evt)).candidate;
+      console.log('adding recieved ice candidates')
+      pc.addIceCandidate(new RTCIceCandidate(candidate));
 	}
 	/************************************/	
   render() {
@@ -229,8 +216,8 @@ export default class Collaborate extends React.Component {
     				<video autoPlay muted="muted"></video>
     			</div>
 
-    			<button onClick={this.startCall} id="start-call">Start call</button>
-    			<button onClick={this.stopCall} >Stop call</button>
+    			<button onClick={this.startCall} >Start call</button>
+    			<button  onClick={this.stopCall.bind(this, true)} >Stop call</button>
 
     			<div id="peer-camera">
     				<video width="400" height="400" autoPlay></video>
