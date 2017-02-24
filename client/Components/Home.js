@@ -1,7 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router'
 import OpenQuestions from './OpenQuestions'
 
 export default React.createClass({
+
   render() {
     return (
       <div className="row">
@@ -10,7 +12,7 @@ export default React.createClass({
         <div className="col-sm-10 col-md-10 main">
         
           { /* OpenQuestions.js */}
-          <OpenQuestions />
+          <OpenQuestions questions={this.props.userData.questions} />
 
           { /* FindHelpers Compoent */}
           <div>
@@ -22,7 +24,7 @@ export default React.createClass({
                 <div className="row placeholders">
                   <div className="col-xs-6 col-sm-3 placeholder">
                     <img data-src="holder.js/200x200/auto/sky" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><a href="">Ai Shi</a></h3>
+                    <h3><Link to="/dashboard">Ai Shi</Link></h3>
                     
                     <p>&nbsp;</p>
                     <p>Javascript (5)</p>
@@ -32,7 +34,7 @@ export default React.createClass({
                   </div>
                   <div className="col-xs-6 col-sm-3 placeholder">
                     <img data-src="holder.js/200x200/auto/vine" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><a href="">Allison Reed</a></h3>
+                    <h3><Link to="/dashboard">Allison Reed</Link></h3>
                     
                     <p>&nbsp;</p>
                     <p>Javascript (5)</p>
@@ -42,7 +44,7 @@ export default React.createClass({
                   </div>
                   <div className="col-xs-6 col-sm-3 placeholder">
                     <img data-src="holder.js/200x200/auto/sky" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><a href="">Max Quinn</a></h3>
+                    <h3><Link to="/dashboard">Max Quinn</Link></h3>
                     
                     <p>&nbsp;</p>
                     <p>Javascript (5)</p>
@@ -52,7 +54,7 @@ export default React.createClass({
                   </div>
                   <div className="col-xs-6 col-sm-3 placeholder">
                     <img data-src="holder.js/200x200/auto/vine" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><a href="">Hanyen Widjaja</a></h3>
+                    <h3><Link to="/dashboard">Hanyen Widjaja</Link></h3>
                     
                     <p>&nbsp;</p>
                     <p>Javascript (5)</p>

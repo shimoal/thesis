@@ -14,7 +14,7 @@ export default React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link to="/" className="navbar-brand logo">Hackguru</Link>
+            <Link to="/" className="navbar-brand logo">Hackeroo!</Link>
           </div>
           
           <div id="navbar" className="navbar-collapse collapse">
