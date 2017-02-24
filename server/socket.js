@@ -55,7 +55,11 @@ io.on('connection', function(socket) {
   });
 
   socket.on('exit_room', function(room_name) {
-    delete rooms[room_name];
+    if (rooms[room_name]) {
+      rooms[room_name]--;
+    } else {
+      delete rooms[room_name];
+    }
     io.in(room_name).emit('info', 'the other user exit the room');
     io.to(socket.id).emit('info', 'You left the room');
     io.to(socket.id).emit('exit_room');
