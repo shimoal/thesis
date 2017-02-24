@@ -11,24 +11,23 @@ var rooms = {};
 
 io.on('connection', function(socket) {
   userNum++;
+  console.log('a user connected. counter: ', userNum);
 
-  console.log('a user connected');
   socket.on('disconnect', function() {
     console.log('user disconnected');
     userNum--;
     console.log('counter: ', userNum);
     // delete usernames[username];
   });
-  // /** when the client emits 'adduser', this listens and executes **/
-  socket.on('adduser', function(username){
+  /** when the client emits 'adduser', this listens and executes **/
+  // socket.on('adduser', function(username){
     // store the username in the socket session for this client
     // socket.username = username;
     // usernames[username] = username;
-    console.log(username);
-
-    console.log('counter: ', userNum);
-  });
-
+    // userNum++;
+    // console.log('usernames: ', username);
+    // console.log('counter: ', userNum);
+  // });
   /** when client emits 'addroom' **/
   socket.on('addroom', function(room_name) {
     if (rooms[room_name]) {
@@ -37,39 +36,56 @@ io.on('connection', function(socket) {
     } else {
       rooms[room_name] = 0;
       socket.join(room_name);
-      io.in(room_name).emit('welcome', 'a new user has joined the room');// broadcast to everyone in the room
+      io.in(room_name).emit('info', 'You have created a room ' + room_name);// broadcast to everyone in the room
+      rooms[room_name]++;
+      console.log('counter: ', userNum, '. rooms', JSON.stringify(rooms));      
+    }
+  });
+  /** when client emits 'join-room' */
+  socket.on('join-room', function(room_name) {
+    if (rooms[room_name]) {
+      socket.join(room_name);
+      io.in(room_name).emit('info', 'a new user has joined the room');// broadcast to everyone in the room
+      io.to(socket.id).emit('info', 'You joined the room');
         rooms[room_name]++;
         console.log('counter: ', userNum, '. rooms', JSON.stringify(rooms));      
+    } else {
+      socket.emit('info', 'There is no such room');
     }
   });
 
-
-  // /** when client emits 'join-room' */
-  socket.on('join-room', function(room_name) {
-    socket.join(room_name);
-    io.in(room_name).emit('welcome', 'a new user has joined the room');// broadcast to everyone in the room
-      rooms[room_name]++;
-      console.log('counter: ', userNum, '. rooms', JSON.stringify(rooms));
+  socket.on('exit_room', function(room_name) {
+    if (rooms[room_name]) {
+      rooms[room_name]--;
+    } else {
+      delete rooms[room_name];
+    }
+    io.in(room_name).emit('info', 'the other user exit the room');
+    io.to(socket.id).emit('info', 'You left the room');
+    io.to(socket.id).emit('exit_room');
   });
 
-
   socket.on('editor-content-changes', function(room_name, val) {
-    // io.emit will send to all client, socket.broadcast.emit will NOT send to sender
     socket.broadcast.to(room_name).emit('editor-content-changes', val);
+  });
+
+  socket.on('clear-editor', function(room_name) {
+    io.in(room_name).emit('clear-editor');
   });
 
   socket.on('submit-val', function(room_name, val) {
     io.in(room_name).emit('submit-val', val);
   });
 
-  // /** for the video chat **/
+  /** for the video chat - needs refactoring**/
   socket.on('sendDescription', function(room_name, data) {
-    socket.broadcast.to(room_name).emit('description', data);
+    io.in(room_name).emit('description', data);
+    // socket.broadcast.emit('description', data);
   });
 
-
   socket.on('sendCandidate', function(room_name, data){
-    socket.broadcast.to(room_name).emit('candidate', data);
+    io.in(room_name).emit('candidate', data);
+    // socket.broadcast.emit('candidate', data);
   });
 
 });
@@ -78,4 +94,3 @@ http.listen(port, function() {
   console.log('now listening on port ' + port);
 });
 
-// module.exports.server = http;
