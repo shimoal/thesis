@@ -53,11 +53,14 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "body-parser": "^1.16.1",
     "bootstrap": "^3.3.7",
     "brace": "^0.10.0",
     "express": "^4.14.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "sequelize": "^3.30.2",
     "socket.io": "^1.7.3"
   }
 }
