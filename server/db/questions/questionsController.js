@@ -1,24 +1,27 @@
 const Question = require('./questionsModel.js');
-const jwt = require('jsonwebtoken');
-let dbconfig = require('../dbconfig.js');
-// const mail = require('../../../sendgrid.js');
-
-//For testing
-// const dbconfig = require('../dbconfig.js');
-
-//for prod
-dbconfig = { secret: 'RnPbb8wyxmFwfuCy1glqyjguZ38JyPoo' };
 
 const controller = {
+  save: function(req, res, next) {
+    console.log('In XXXXXXXXXX', req);
+    Question.create({
+        title: 'the title',
+        question: 'the question',
+        status: 'open',
+    })
+    .then(function(task) {
+      task.save();
+      return res.status(200).send('Question successfully saved.');
+    })
+    .catch(function(err) {
+      console.log(err, 'Error saving question');
+      return res.sendStatus(500);
+    });
+  },
   retrieve: function(req, res, next) {
     console.log('calling questionsController retrieve');
-    const token = req.query.token;
-    const payload = jwt.verify(token, dbconfig.secret);
-    console.log(payload.id);
-
     Question.findAll({
       where: {
-        userID: payload.id
+        id: 'something'
       }
     })
     .then(function(questions) {
@@ -29,9 +32,7 @@ const controller = {
       return res.sendStatus(500);
     });
   },
-  // sendMail: function(req, res, next) {
-  //   mail.sendMail(req, res, next);
-  // }
 };
 
 module.exports = controller;
+

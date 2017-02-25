@@ -5,12 +5,14 @@ var path = require("path");
 var fs = require('fs')
 
 //database controllers
-const usersCtrl = require('./db/users/usersController.js');
-const questionsCtrl = require('./db/questions/questionsController.js');
+var usersCtrl = require('./db/users/usersController.js');
+var questionsCtrl = require('./db/questions/questionsController.js');
 
 //executing DB controller's methods
+
+app.post('/question', questionsCtrl.save);
+app.get('/question', questionsCtrl.retrieve);
 app.get('/users/', usersCtrl.retrieve);
-app.get('/questions', questionsCtrl.retrieve);
 
 //routes
 app.use(express.static(__dirname + '/../public'));

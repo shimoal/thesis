@@ -3,15 +3,18 @@ const db = require('../database.js');
 const User = require('../users/usersModel.js');
 
 const Question = db.define('question', {
-  topic: {
+  title: {
     type: Sequelize.STRING
   },
-  content: {
+  question: {
     type: Sequelize.STRING
   },
   status: {
     type: Sequelize.STRING
-  }
+  },
+  deadline: {
+    type: Sequelize.STRING
+  },
   
 });
 

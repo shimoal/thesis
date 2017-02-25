@@ -5,11 +5,13 @@ const db = require('../database.js');
 const User = db.define('user', {
   name: {
     type: Sequelize.STRING,
-    unique: true
   },
   email: {
     type: Sequelize.STRING,
     unique: true
+  },
+  description: {
+    type: Sequelize.STRING,
   }
 });
 

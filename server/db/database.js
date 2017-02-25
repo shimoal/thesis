@@ -12,6 +12,7 @@ const sequelize = new Sequelize(cfg.myLocalDB, cfg.myLocalDBRole, cfg.myLocalDBP
   }
 });
 
+console.log('I am in database.js');
 
 // for production
 
