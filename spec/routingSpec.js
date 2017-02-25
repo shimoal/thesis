@@ -4,26 +4,12 @@ var chaiHTTP = require('chai-http');
 chai.use(chaiHTTP);
 var server = require('./../server/app.js');
 
-
-describe('The test itself!', function() {
-  it ('should test something simple', function() {
-    expect(1).to.equal(1);
-  });
-});
-
-
-//pending tests
 describe('basic routes', function() {
   it ('should make a get request', function (done) {
     chai.request(server)
       .get('/user')
       .end(function(err, result) {
-        if(err) {
-          console.log('there was an error:');
-          console.log('err');
-          done();
-        }
-        expect(result.status).to.equal(900);
+        expect(result.status).to.equal(200);
         done();
       });
   });

@@ -1,8 +1,8 @@
 import React from 'react'
 import io from 'socket.io-client'
-// import ace from 'brace'
-// import 'brace/mode/javascript'
-// import 'brace/theme/github'
+import ace from 'brace'
+import 'brace/mode/javascript'
+import 'brace/theme/github'
 
 let socket = io.connect();
 let pc;
