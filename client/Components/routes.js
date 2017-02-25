@@ -22,7 +22,7 @@ module.exports = (
 
     <Route path="/about" component={About}/>
     <Route path="/collaborate" component={Collaborate}/>
-
+    
     <Route path="/login" component={Login}/>
     <Route path="/signup" component={Signup}/>
 

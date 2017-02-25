@@ -76,17 +76,12 @@ export default class Collaborate extends React.Component {
 		/**************************************/
 
 		/*********** video conference *********/
-		socket.on('description', this.handleDescription);
-<<<<<<< HEAD
+		socket.on('description', this.handleDescription);ß
 		
 		socket.on('candidate', this.handleCandidate);
 
     socket.on('stopCall', this.stopCall);
 
-=======
-	
-		socket.on('candidate', this.handleCandidate);
->>>>>>> master
 	}
 
 	/************ live coding *************/
@@ -205,20 +200,12 @@ export default class Collaborate extends React.Component {
 	  pc.setRemoteDescription(new RTCSessionDescription(description));
 	}
 	handleCandidate(evt) {
-<<<<<<< HEAD
-      if (!pc) {
-        this.start(false);
-      }
-      var candidate = (JSON.parse(evt)).candidate;
-      console.log('adding recieved ice candidates')
-      pc.addIceCandidate(new RTCIceCandidate(candidate));
-=======
 		if (!pc) {
 		  this.start(false);
 		}
 		var candidate = (JSON.parse(evt)).candidate;
 		pc.addIceCandidate(new RTCIceCandidate(candidate));
->>>>>>> master
+
 	}
 	/************************************/	
   render() {
