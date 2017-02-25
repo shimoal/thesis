@@ -10,7 +10,9 @@ var PostQuestion = React.createClass({
      //1. take data from form
      var questionData = {
       title: this.refs.questionTitle.value,
-      question: this.refs.questionBody.value
+      question: this.refs.questionBody.value,
+      status: 'open',
+      // deadline: ''
      }
 
      //2. add question back to App
