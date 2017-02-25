@@ -47,7 +47,7 @@ describe('socket', function() {
       client1.on('info', function(msg) {
         expect(msg).to.equal('You have created a room ' + 'roomB');
         done();
-      })
+      })      
 
     });
   });
