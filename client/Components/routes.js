@@ -8,6 +8,8 @@ import Home from './Home'
 import Dashboard from './Dashboard'
 import Collaborate from './Collaborate'
 import PostQuestionPage from './PostQuestionPage'
+import Login from './Auth/Login'
+import Signup from './Auth/Signup'
 
 module.exports = (
   <Route path="/" component={App}>
@@ -18,5 +20,7 @@ module.exports = (
 
     <Route path="/about" component={About}/>
     <Route path="/collaborate" component={Collaborate}/>
+    <Route path="/login" component={Login}/>
+    <Route path="/signup" component={Signup}/>
   </Route>
 )

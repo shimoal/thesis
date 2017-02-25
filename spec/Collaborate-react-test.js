@@ -11,8 +11,8 @@ describe("Collaborate component", function() {
     expect(shallow(<Collaborate />).find('video').length).to.equal(2);
   });
 
-  it("contains a single button", function() {
-    expect(shallow(<Collaborate />).find('button').length).to.equal(1);
+  it("contains 5 buttons", function() {
+    expect(shallow(<Collaborate />).find('button').length).to.equal(5);
   });
 
 });

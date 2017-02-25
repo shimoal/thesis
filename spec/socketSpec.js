@@ -40,12 +40,12 @@ describe('socket', function() {
     })
   });
 
-  it ('should give welcome message if room is not taken', function (done) {
+  it ('should give info message if room is not taken', function (done) {
     client1.on('connect', function() {
       client1.emit('addroom', 'roomB');
 
-      client1.on('welcome', function(msg) {
-        expect(msg).to.equal('a new user has joined the room');
+      client1.on('info', function(msg) {
+        expect(msg).to.equal('You have created a room ' + 'roomB');
         done();
       })
 
@@ -61,10 +61,11 @@ describe('socket', function() {
       client2.on('connect', function() {
         client2.emit('join-room', 'roomC');
 
-        client1.on('welcome', function(msg) {
+        client1.on('info', function(msg) {
           expect(msg).to.equal('a new user has joined the room');
           done();
-        })
+        });
+
       })
     });
   });
