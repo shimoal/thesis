@@ -27,12 +27,10 @@ io.on('connection', function(socket) {
     if (rooms[room_name]) {
       // console.log('socket.id: ', socket.id);
       io.to(socket.id).emit('room-exists', 'The room name is taken, please try other names');
-      // socket.emit('room-exists', 'The room name is taken, please try other names');
     } else {
       rooms[room_name] = [];
       socket.join(room_name);
       io.to(socket.id).emit('info', 'You have created a room ' + room_name);
-      // io.in(room_name).emit('info', 'You have created a room ' + room_name);// broadcast to everyone in the room
       rooms[room_name].push(username);
       // console.log('counter: ', userNum, '. rooms', JSON.stringify(rooms));      
     }
