@@ -13,7 +13,7 @@ const Question = db.define('question', {
     type: Sequelize.STRING
   },
   deadline: {
-    type: Sequelize.STRING
+    type: Sequelize.DATE
   },
   
 });
