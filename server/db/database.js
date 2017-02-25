@@ -1,29 +1,9 @@
 const Sequelize = require('sequelize');
 
 //For testing only...
-const cfg = require('./dbconfig.js');
-const sequelize = new Sequelize(cfg.myLocalDB, cfg.myLocalDBRole, cfg.myLocalDBPW, {
-  host: 'localhost',
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});
-
-console.log('I am in database.js');
-
-// for production
-
-// const db = 'd8cdfa33iutk0d';
-// const user = 'nretulfnauybhk';
-// const pw = 'fba6aaeb51ea9ef459b8d7932434e50c003995a648bffab4e367afb85cd74e87';
-
-// const sequelize = new Sequelize(db, user, pw, {
-//   host: 'ec2-54-221-210-126.compute-1.amazonaws.com',
-
-//   port: 5432,
+// const cfg = require('./dbconfig.js');
+// const sequelize = new Sequelize(cfg.myLocalDB, cfg.myLocalDBRole, cfg.myLocalDBPW, {
+//   host: 'localhost',
 //   dialect: 'postgres',
 //   pool: {
 //     max: 5,
@@ -31,6 +11,26 @@ console.log('I am in database.js');
 //     idle: 10000
 //   }
 // });
+
+console.log('I am in database.js');
+
+// for production
+
+const db = 'd7oj410eip9o96';
+const user = 'wvdptjfsnehola';
+const pw = 'cdbdbe12e3f23f31f718f75283f2db41eecbb9c2f3dcbb61ac60c247a1451f46';
+
+const sequelize = new Sequelize(db, user, pw, {
+  host: 'ec2-54-243-55-1.compute-1.amazonaws.com',
+
+  port: 5432,
+  dialect: 'postgres',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+});
 
 sequelize
   .authenticate()
