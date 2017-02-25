@@ -2,8 +2,28 @@ import React from 'react'
 import { Link } from 'react-router'
 import OpenQuestions from './OpenQuestions'
 import HomepageSearchBar from './HomepageSearchBar'
+import axios from 'axios'
 
-export default React.createClass({
+export default class Home extends React.Component {
+  constructor() {
+    super(); 
+
+    this.state = {
+      helloMessage: 'Welcome to Hackeroo! Sign in to collaborate.'
+    }
+
+  }
+
+  componentDidMount() {
+    var context = this;
+    axios.get('/session').then( function(response) {
+      console.log('inside response');
+      console.log('response', response);
+      if (response.data.username) {
+        context.setState('helloMessage', ('Hello, ' + response.data.username));
+      }
+    });
+  }
 
   getDefaultProps: function() {
     console.log('getting our default properties');
@@ -35,6 +55,7 @@ export default React.createClass({
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
+         <h1> {this.state.helloMessage} </h1>
         
           { /* OpenQuestions.js */}
           <OpenQuestions 
@@ -106,4 +127,4 @@ export default React.createClass({
       
     )
   }
-})
+}

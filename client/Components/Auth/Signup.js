@@ -19,6 +19,7 @@ export default class Signup extends React.Component{
       console.log('inside signup then');
       console.log('signup response', response);
     });
+
   }
 
   render() {
@@ -35,6 +36,7 @@ export default class Signup extends React.Component{
           <input type="email" id="email" className="form-control" placeholder="Email address" />
           <button className="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         </form>
+
       </div>
   )}
 }

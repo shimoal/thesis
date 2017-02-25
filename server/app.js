@@ -2,9 +2,18 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var app = module.exports = express();
-// var passport = require('passport');
-var path = require("path");
-var fs = require('fs')
+
+
+
+var passport = require('passport');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var githubAuth = require('./auth/githubAuth');
+
+
+app.use(cookieParser());
+
+
 
 //Parse incoming body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -30,11 +39,23 @@ app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
-/**** Authentication routes ****/
-app.get('/user', function(req, res) {
-  //this should be to log in or sign up a user
-  res.status(200).send('response');
-});
+
+app.use(session({
+  secret: "customSecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+app.get('/auth/github', passport.authenticate('github'));
+
+// GitHub will call this URL
+app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
 
 app.get('/logout', function(req, res){
   console.log('logging out');
@@ -42,8 +63,13 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-
-
+//for accessing session to get user data to the client
+app.get('/session',  function(req, res) {
+  console.log('inside session endpoint');
+  console.log(req.session);
+  console.log('req.username:', req.username);
+  res.send(req.session);
+});
 
 
 /****** coding trends routes ******/
