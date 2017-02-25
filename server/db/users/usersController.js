@@ -9,25 +9,17 @@ const dbconfig = require('../dbconfig.js');
 
 const controller = {
   create: function(req, res, next) {
-    const password = User.generateHash(req.body.password);
+    // const password = User.generateHash(req.body.password);
     User.findOrCreate({
-      //need to create a form with email and password
       where: {
-        email: req.body.email
+        email: req.body.email,
       },
       defaults: {
-        password: password
+        name: req.body.name,
       }
     }).spread(function(user, created){
       if (created) {
         console.log('User is successfully created');
-        const token = jwt.sign({ user: user.email, id: user.id }, dbconfig.secret, {
-          expiresIn: 86400 // expires in 24 hours
-        });
-        return res.json({
-          success: true,
-          token: token
-        });
       } else {
         return res.sendStatus(500);
       }
