@@ -5,9 +5,12 @@ var app = module.exports = express();
 
 var passport = require('passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
 
 var fs = require('fs')
+// var sess = githubAuth.sess;
+app.use(cookieParser());
 
 //Parse incoming body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -30,6 +33,10 @@ app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(session({
   secret: "customSecret",
   resave: false,
@@ -37,12 +44,13 @@ app.use(session({
   cookie: { secure: true }
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
 
+var passport = require('passport');
 
-
-app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github', passport.authenticate('github', function(err, user, info) {
+  console.log('inside auth');
+  console.log(user);
+}));
 
 // GitHub will call this URL
 app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
@@ -50,15 +58,22 @@ app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successC
 app.get('/logout', function(req, res){
   console.log('logging out');
   req.logout();
-  res.redirect('/');
+  req.session.destroy(function(err) {
+    if (err) {
+      console.log('error:', err);
+    }
+    res.redirect('/');
+  });
+  // res.redirect('/');
+
 });
 
+
+
 //for accessing session to get user data to the client
-app.get('/session',  function(req, res) {
-  console.log('inside session endpoint');
-  console.log(req.session);
-  console.log('req.username:', req.username);
-  res.send(req.session);
+app.get('/session',  githubAuth.authenticate, function(req, res) {
+  console.log('inside githubAuth');
+  res.send('hi');
 });
 
 
@@ -79,12 +94,20 @@ app.get('/graph2/', function(req, res) {
 	//res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
 	res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
 });
+
 app.get('/graph3', function(req, res) {
 	res.sendFile(path.resolve(__dirname + '/plot/charts.html'));
 });
-app.get('/*', function(req, res) {
+
+app.get('/*', githubAuth.checkUser, function(req, res) {
+console.log('req:', req);
+
+
+  // console.log('sess:', sess);
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
+
+
 
 
 

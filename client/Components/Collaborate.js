@@ -3,6 +3,7 @@ import io from 'socket.io-client'
 import ace from 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
+import axios from 'axios'
 
 let socket = io.connect();
 let pc;
@@ -45,6 +46,8 @@ export default class Collaborate extends React.Component {
 		this.handleCandidate = this.handleCandidate.bind(this);
 	}
 	componentWillMount() {
+    axios.get('/component');
+    
 		var username = prompt("what is your name?");
 		this.setState({username: username});
 		console.log(username);

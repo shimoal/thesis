@@ -10,7 +10,7 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true
   },
-  description: {
+  github_id: {
     type: Sequelize.STRING,
   }
 });

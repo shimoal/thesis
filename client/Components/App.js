@@ -101,12 +101,6 @@ export default class App extends React.Component {
     
         {childrenWithProps}
 
-        <div className="pre">
-          <h3>App.js state</h3>
-          <pre>
-            {JSON.stringify(this.state, null, 2)}
-          </pre>
-        </div>
       </div>
     )
   }

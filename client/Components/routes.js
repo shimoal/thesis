@@ -31,5 +31,6 @@ module.exports = (
 
     <Route path="/logout" component={Logout}/>
 
+
   </Route>
 )
