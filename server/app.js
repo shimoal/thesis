@@ -4,8 +4,16 @@ var app = module.exports = express();
 var path = require("path");
 var fs = require('fs')
 
-app.use(express.static(__dirname + '/../public'));
+//database controllers
+const usersCtrl = require('./db/users/usersController.js');
+const questionsCtrl = require('./db/questions/questionsController.js');
 
+//executing DB controller's methods
+app.get('/users/', usersCtrl.retrieve);
+app.get('/questions', questionsCtrl.retrieve);
+
+//routes
+app.use(express.static(__dirname + '/../public'));
 app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
