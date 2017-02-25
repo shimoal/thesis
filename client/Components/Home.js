@@ -18,9 +18,9 @@ export default class Home extends React.Component {
     var context = this;
     axios.get('/session').then( function(response) {
       console.log('inside response');
-      console.log('response', response);
+      console.log('response', response.data.username);
       if (response.data.username) {
-        context.setState('helloMessage', ('Hello, ' + response.data.username));
+        context.setState({'helloMessage': 'Hello, ' + response.data.username});
       }
     });
   }

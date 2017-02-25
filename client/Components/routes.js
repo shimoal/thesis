@@ -27,5 +27,6 @@ module.exports = (
     <Route path="/login" component={Login}/>
     <Route path="/signup" component={Signup}/>
     <Route path="/logout" component={Logout}/>
+
   </Route>
 )

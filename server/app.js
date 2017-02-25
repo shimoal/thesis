@@ -28,16 +28,25 @@ var claimsCtrl = require('./db/claims/claimsController.js');
 
 app.post('/question', questionsCtrl.save);
 app.get('/question', questionsCtrl.retrieve);
+
+app.get('/users', usersCtrl.retrieve);
+app.post('/users', usersCtrl.save);
+
 app.get('/user-current', usersCtrl.retrieve);
 
 app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
+
 
 //routes
 app.use(express.static(__dirname + '/../public'));
 app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use(session({
@@ -47,12 +56,10 @@ app.use(session({
   cookie: { secure: true }
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-
-app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github', passport.authenticate('github', function(err, user, info) {
+  console.log('inside auth');
+  console.log(user);
+}));
 
 // GitHub will call this URL
 app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
@@ -60,16 +67,26 @@ app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successC
 app.get('/logout', function(req, res){
   console.log('logging out');
   req.logout();
-  res.redirect('/');
+  req.session.destroy(function(err) {
+    if (err) {
+      console.log('error:', err);
+    }
+    res.redirect('/');
+  });
+
 });
 
+
+
 //for accessing session to get user data to the client
-app.get('/session',  function(req, res) {
-  console.log('inside session endpoint');
-  console.log(req.session);
-  console.log('req.username:', req.username);
-  res.send(req.session);
-});
+app.get('/session',  githubAuth.authenticate);
+//  function(req, res) {
+//   console.log('inside githubAuth');
+//   console.log('req.session:', req.session);
+//   console.log('req.headers:', req.headers);
+//   // console.log('res:', res);
+//   res.send('hi');
+// });
 
 
 /****** coding trends routes ******/
@@ -77,24 +94,29 @@ app.get('/session',  function(req, res) {
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
 
 app.get('/graph1', function(req, res) {
-	res.sendFile(img);
+  res.sendFile(img);
 });
 
 app.get('/graph2/', function(req, res) {
-	//var img = fs.readFileSync(path.resolve(__dirname + '/../server/twitter/plot2.png'));
-	// res.type('png');
-	// res.set('Content-Type', 'png');
-	//res.sendFile(path.resolve(__dirname + '/../server/twitterplot2.png'));
-	//console.log('hello');
-	//res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
-	res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
+  //var img = fs.readFileSync(path.resolve(__dirname + '/../server/twitter/plot2.png'));
+  // res.type('png');
+  // res.set('Content-Type', 'png');
+  //res.sendFile(path.resolve(__dirname + '/../server/twitterplot2.png'));
+  //console.log('hello');
+  //res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
+  res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
 });
+
 app.get('/graph3', function(req, res) {
-	res.sendFile(path.resolve(__dirname + '/plot/charts.html'));
+  res.sendFile(path.resolve(__dirname + '/plot/charts.html'));
 });
-app.get('/*', function(req, res) {
+
+app.get('/*', githubAuth.checkUser, function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
+
+
+
 
 
 
