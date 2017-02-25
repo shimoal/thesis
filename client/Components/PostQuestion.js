@@ -5,7 +5,7 @@ var PostQuestion = React.createClass({
 
   processQuestion: function() {
      event.preventDefault();
-     console.log('form submit');
+     // console.log('form submit');
 
      //1. take data from form
      var questionData = {
@@ -36,7 +36,7 @@ var PostQuestion = React.createClass({
         <div className="panel panel-default">
           <div className="panel-body grey noPadding">
             
-            <form ref="questionForm">
+            <form ref="questionForm" onSubmit={this.processQuestion} >
               
               <div className="form-group">
                 <h3>Post a question</h3>
@@ -49,7 +49,7 @@ var PostQuestion = React.createClass({
                 <textarea ref="questionBody" className="form-control" rows="5" required></textarea>
               </div>
 
-              <p><button onClick={this.processQuestion} className="btn btn-primary" type="submit" id="submit">Post</button> &nbsp;
+              <p><button className="btn btn-primary" type="submit" id="submit">Post</button> &nbsp;
                  <a onClick={this.props.hideQuestionForm} className="btn btn-default" href="#" role="button">Cancel</a>
               </p>
 
