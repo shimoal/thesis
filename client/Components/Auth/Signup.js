@@ -18,6 +18,7 @@ export default class Signup extends React.Component{
       console.log('inside signup then');
       console.log('signup response', response);
     });
+
   }
 
   render() {

@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
 var sandBox = require('./sandbox/DockerSandbox');
 
+// var sess = githubAuth.sess;
 app.use(cookieParser());
 
 //Parse incoming body
@@ -62,8 +63,6 @@ app.get('/auth/github', passport.authenticate('github', function(err, user, info
 // GitHub will call this URL
 app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
 
-
-
 app.get('/loggingout', function(req, res){
   console.log('logging out');
   req.logOut();
@@ -78,6 +77,7 @@ app.get('/loggingout', function(req, res){
 
 //for accessing session to get user data to the client
 app.get('/session',  githubAuth.authenticate);
+
 
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
@@ -113,6 +113,8 @@ app.post('/compile', function(req, res) {
       res.send({output:data, errors:err, time:exec_time});
     });
 });
+
+
 
 
 
