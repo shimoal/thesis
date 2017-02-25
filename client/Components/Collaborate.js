@@ -1,8 +1,8 @@
 import React from 'react'
 import io from 'socket.io-client'
-// import ace from 'brace'
-// import 'brace/mode/javascript'
-// import 'brace/theme/github'
+import ace from 'brace'
+import 'brace/mode/javascript'
+import 'brace/theme/github'
 
 let socket = io.connect();
 let pc;
@@ -76,7 +76,7 @@ export default class Collaborate extends React.Component {
 		/**************************************/
 
 		/*********** video conference *********/
-		socket.on('description', this.handleDescription);ß
+		socket.on('description', this.handleDescription);
 		
 		socket.on('candidate', this.handleCandidate);
 

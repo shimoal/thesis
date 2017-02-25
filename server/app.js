@@ -1,7 +1,6 @@
 var express = require('express');
-
 var app = module.exports = express();
-
+var passport = require('passport');
 var path = require("path");
 var fs = require('fs')
 
@@ -12,15 +11,30 @@ app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
+/**** Authentication routes ****/
 app.get('/user', function(req, res) {
-  res.status(304).send('response');
+  //this should be to log in or sign up a user
+  res.status(200).send('response');
 });
+
+app.get('/logout', function(req, res){
+  console.log('logging out');
+  req.logout();
+  res.redirect('/');
+});
+
+
+
+
+
+/****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
 
 app.get('/graph1', function(req, res) {
 	res.sendFile(img);
 });
+
 app.get('/graph2/', function(req, res) {
 	//var img = fs.readFileSync(path.resolve(__dirname + '/../server/twitter/plot2.png'));
 	// res.type('png');

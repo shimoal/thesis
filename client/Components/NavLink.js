@@ -25,6 +25,7 @@ export default React.createClass({
               <li><Link to="/collaborate">Collaborate</Link></li>
               <li><Link to="/login">Log in</Link> </li>
               <li><Link to="/signup">Sign up</Link></li>
+              <li><Link to="/logout">Log out</Link></li>
             </ul>
           </div>
         </div>

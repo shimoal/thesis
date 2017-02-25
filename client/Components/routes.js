@@ -11,6 +11,7 @@ import Graph from './Graph'
 import PostQuestionPage from './PostQuestionPage'
 import Login from './Auth/Login'
 import Signup from './Auth/Signup'
+import Logout from './Auth/Logout'
 
 
 module.exports = (
@@ -27,6 +28,8 @@ module.exports = (
     <Route path="/signup" component={Signup}/>
 
     <Route path="/graphs" component={Graph}/>
+
+    <Route path="/logout" component={Logout}/>
 
   </Route>
 )
