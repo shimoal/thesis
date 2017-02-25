@@ -1,5 +1,6 @@
 import React from 'react'
 import { IndexLink } from 'react-router'
+import axios from 'axios'
 import NavLink from './NavLink'
 import Home from './Home'
 import HomepageSearchBar from './HomepageSearchBar'
@@ -59,13 +60,29 @@ export default class App extends React.Component {
 
 
   addQuestion(questionData) {
-    console.log('addQuestion function is called', questionData);
-    console.log(this.state);
+    console.log('addQuestion this.state.questions',this.state.questions);
     var timeStamp = (new Date()).getTime();
     this.state.questions['id' + timeStamp] = questionData;
     this.setState({
       questions: this.state.questions
     })
+    //write to database
+    //this is where ORM shines, make sure the object that I send here matches
+    //the schema in questionsModel.js
+    //check what this.state.questions contains, then map it to the schema
+
+    console.log('addQuestion questionData object', questionData);
+    
+    axios.post('/question', questionData)
+    .then(function(res) {
+      console.log('Success writing question to database', res);
+
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log('Fail to write question to database')
+      }
+    });  
   }
 
 
