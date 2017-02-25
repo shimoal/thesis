@@ -9,14 +9,17 @@ export default class Signup extends React.Component{
   }
 
   handleSignup() {
-    console.log('e');
+    // axios.get('/auth/github').then( function(response) {
+    //   console.log('inside then');
+    //   console.log('response');
+    // })
   }
 
   render() {
     return (
       <div>
           <h2> Make an account with us! </h2>
-          <button onClick={this.handleSignup}>Sign up with github </button>
+          <a href="/auth/github">Sign up with github </a>
       </div>
   )}
 }
