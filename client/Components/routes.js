@@ -9,6 +9,8 @@ import Dashboard from './Dashboard'
 import Collaborate from './Collaborate'
 import Graph from './Graph'
 import PostQuestionPage from './PostQuestionPage'
+import Login from './Auth/Login'
+import Signup from './Auth/Signup'
 
 
 module.exports = (
@@ -21,5 +23,7 @@ module.exports = (
     <Route path="/about" component={About}/>
     <Route path="/collaborate" component={Collaborate}/>
     <Route path="/graphs" component={Graph}/>
+    <Route path="/login" component={Login}/>
+    <Route path="/signup" component={Signup}/>
   </Route>
 )

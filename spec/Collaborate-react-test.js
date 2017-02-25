@@ -16,6 +16,10 @@ describe("Collaborate component", function() {
 		expect(wrapper.is('#editor')).to.equal(true);
   });
 
+  it("contains 5 buttons", function() {
+    expect(shallow(<Collaborate />).find('button').length).to.equal(5);
+  });
+
   it("contains a area for result", function() {
 		const wrapper = shallow(<div id="result" />);
 		expect(wrapper.is('#result')).to.equal(true);
