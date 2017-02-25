@@ -2,10 +2,10 @@ const Question = require('./questionsModel.js');
 
 const controller = {
   save: function(req, res, next) {
-    console.log('In XXXXXXXXXX', req);
+    console.log('In XXXXXXXXXX', req.body);
     Question.create({
-        title: 'the title',
-        question: 'the question',
+        title: req.body.title,
+        question: req.body.question,
         status: 'open',
     })
     .then(function(task) {

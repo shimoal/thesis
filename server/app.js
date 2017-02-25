@@ -1,8 +1,13 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var path = require('path');
 var app = module.exports = express();
 var path = require("path");
 var fs = require('fs')
+
+//Parse incoming body
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 //database controllers
 var usersCtrl = require('./db/users/usersController.js');

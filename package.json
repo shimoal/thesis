@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.23.0",
     "bcrypt": "^1.0.2",
+    "body-parser": "^1.16.1",
     "chai": "^3.5.0",
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.1",
