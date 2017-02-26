@@ -101,12 +101,18 @@ export default class App extends React.Component {
     });  
   }
 
+  claimQuestion() {
+    console.log('inside claimQuestion!!!!');
+
+  }
+
 
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
        addQuestion: this.addQuestion.bind(this),
+       claimQuestion: this.claimQuestion.bind(this),
        userData: this.state
      })
     );
