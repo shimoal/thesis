@@ -9,10 +9,11 @@ export default class Signup extends React.Component{
   }
 
   handleSignup() {
-    axios.get('/Signup').then( function(response) {
-      console.log('inside then');
-      console.log('response');
-    })
+    console.log('Signup clicked');
+    // axios.get('/Signup').then( function(response) {
+    //   console.log('inside then');
+    //   console.log('response');
+    // });
   }
 
   render() {
