@@ -101,10 +101,10 @@ export default class App extends React.Component {
     });  
   }
 
-  claimQuestion() {
+  claimQuestion(userId, questionId) {
     console.log('inside claimQuestion!!!!');
     //create a new database table
-    axios.post('/claim', {id_user: 1, id_question: 2}) //hard coded
+    axios.post('/claim', {id_user: userId, id_question: questionId}) //hard coded
     .then(function(res) {
       console.log('Success writing claim to database', res);
 
