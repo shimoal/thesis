@@ -1,5 +1,6 @@
 import React from 'react'
 import Helpers from './Helpers'
+import ClaimQuestionButton from './ClaimQuestionButton'
 
 var QuestionItem = React.createClass({
   //do conditional rendering
@@ -20,7 +21,7 @@ var QuestionItem = React.createClass({
               <td><p>{this.props.details.question}</p></td>
             </tr>
             <tr>
-              <td><a href="">Edit</a> | <a href="">Remove</a></td>
+              <ClaimQuestionButton details={this.props.details} claimQuestion={this.props.claimQuestion}/>
             </tr>
           </tbody>
         </table>

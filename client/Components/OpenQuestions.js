@@ -5,7 +5,7 @@ var OpenQuestions = React.createClass({
   
   renderQuestion: function(key) {
     // console.log(this.props.questions);
-    return ( <QuestionItem key={key} index={key} details={this.props.questions[key]}/> )
+    return ( <QuestionItem key={key} index={key} details={this.props.questions[key]} claimQuestion={this.props.claimQuestion}/> )
   },
   componentDidMount: function() {
     console.log('Inside OpenQuestions', this.props.questions);
