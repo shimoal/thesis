@@ -3,7 +3,6 @@ import { IndexLink } from 'react-router'
 import axios from 'axios'
 import NavLink from './NavLink'
 import Home from './Home'
-import HomepageSearchBar from './HomepageSearchBar'
 import style from '../sass/App.scss';
 
 export default class App extends React.Component {
@@ -11,7 +10,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
       user: { //check from user table
         id: 'id1487880252929',
         name: 'Ai Shi',
@@ -102,8 +100,6 @@ export default class App extends React.Component {
   }
 
   claimQuestion(userId, questionId) {
-    console.log('inside claimQuestion!!!!');
-    //create a new database table
     axios.post('/claim', {id_user: userId, id_question: questionId}) //hard coded
     .then(function(res) {
       console.log('Success writing claim to database', res);
@@ -116,7 +112,6 @@ export default class App extends React.Component {
     });
   }
 
-
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
@@ -124,13 +119,14 @@ export default class App extends React.Component {
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
        userData: this.state
+
      })
     );
 
     return (
       <div>
         <NavLink/>
-    
+
         {childrenWithProps}
 
         <div className="pre">

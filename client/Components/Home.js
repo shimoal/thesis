@@ -1,12 +1,37 @@
 import React from 'react'
 import { Link } from 'react-router'
 import OpenQuestions from './OpenQuestions'
+import HomepageSearchBar from './HomepageSearchBar'
 
 export default React.createClass({
 
+  getDefaultProps: function() {
+    console.log('getting our default properties');
+  },
+
+  //Before component is rendered
+  componentWillMount: function() {
+    console.log('Home component is mounting');
+    // this.props.showSearch('yes');
+  },
+
+  //Happens after component has rendered
+  componentDidMount: function() {
+    console.log('Home component has rendered');
+
+  },
+  
+  //Happens when component has rendered and about to unmount
+  componentWillUnmount: function() {
+    // this.props.showSearch('no');
+  },
+
+  //Happen whenever home component's state changes
   render() {
+    console.log('Home component is rendered')
     return (
       <div className="row">
+      <HomepageSearchBar/>
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
