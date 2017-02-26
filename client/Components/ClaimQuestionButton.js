@@ -1,18 +1,29 @@
 import React from 'react'
 
-export default class PostQuestionButton extends React.Component {
+var ClaimQuestionButton = React.createClass({
 
-  render() {
-    // console.log('showButton is', this.props.showButton);
-    // console.log('showQuestionForm', this.props.showQuestionForm);
+  checkStatus: function() {
+    //check question status
     if (this.props.details.status === 'open') {
-      return (
+      return(
         <td>
-          <button onClick={this.props.claimQuestion()} className="btn btn-default" role="button">Claim</button>
-        </td>   
+          <button onClick={this.props.claimQuestion} className="btn btn-default" role="button">Claim</button>
+        </td>
       )
     } else {
-      return (<div/>)
+      return(<div/>)
     }
+  },
+
+  render: function() {
+    // console.log('showButton is', this.props.showButton);
+    // console.log('showQuestionForm', this.props.showQuestionForm);
+    return (
+      <div>
+        { this.checkStatus() } 
+      </div>
+    )
   }
-}
+});
+
+export default ClaimQuestionButton
