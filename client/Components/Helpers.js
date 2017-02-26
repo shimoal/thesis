@@ -28,7 +28,7 @@ var Helpers = React.createClass({
   },
   
   componentDidMount: function() {
-    console.log('In Helpers.js', this.props);
+    // console.log('In Helpers.js', this.props);
   },
 
   render: function() {

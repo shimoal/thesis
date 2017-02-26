@@ -103,7 +103,8 @@ export default class App extends React.Component {
 
   claimQuestion() {
     console.log('inside claimQuestion!!!!');
-
+    //create a new database table
+    
   }
 
 
