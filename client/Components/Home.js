@@ -48,7 +48,7 @@ export default React.createClass({
             
                 <div className="row placeholders">
                   <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/sky" className="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <img src="/photos/photo-ai.png" width="200px"/>
                     <h3><Link to="/dashboard">Ai Shi</Link></h3>
                     
                     <p>&nbsp;</p>
@@ -58,8 +58,8 @@ export default React.createClass({
                     
                   </div>
                   <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/vine" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><Link to="/dashboard">Allison Reed</Link></h3>
+                    <img src="/photos/photo-alison.png" width="200px"/>
+                    <h3><Link to="/dashboard">Alison Reed</Link></h3>
                     
                     <p>&nbsp;</p>
                     <p>Javascript (5)</p>
@@ -68,7 +68,7 @@ export default React.createClass({
 
                   </div>
                   <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/sky" className="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <img src="/photos/photo-max.png" width="200px"/>
                     <h3><Link to="/dashboard">Max Quinn</Link></h3>
                     
                     <p>&nbsp;</p>
@@ -78,7 +78,7 @@ export default React.createClass({
 
                   </div>
                   <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/vine" className="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <img src="/photos/photo-hanyen.png" width="200px"/>
                     <h3><Link to="/dashboard">Hanyen Widjaja</Link></h3>
                     
                     <p>&nbsp;</p>
