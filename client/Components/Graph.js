@@ -5,7 +5,7 @@ import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import { browserHistory } from 'react-router'
 // var request = require('request');
-import axiso from 'axios'
+import axios from 'axios'
 
 export default class Collaborate extends React.Component {
   constructor(props) {
