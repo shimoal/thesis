@@ -7,7 +7,7 @@ export default React.createClass({
       
         <div className="row placeholders">
           <div className="placeholder">
-            <img src="/photos/photo-ai.png" width="200px"/>
+            <img src={this.props.userCurrent.profileImage} width="200px"/>
           </div>
         </div>
         
