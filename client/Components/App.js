@@ -11,7 +11,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       user: { //check from user table
-        id: 'id1487880252929',
+        id: '1',
+        email: 'ai@gmail.com',
         name: 'Ai Shi',
         profileImage: '/photos/photo-ai.png',
         description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
@@ -59,10 +60,22 @@ export default class App extends React.Component {
   componentWillMount() {
     //we can't call 'this' within axios, so need to hold it in 'context'
     var context = this;
-    //do ajax call
+    
+    //do ajax call to get current user info
+    axios.get('/user-current') //currently hardcoded to 1 (Ai Shi) in usersController.js
+    .then(function(response) {
+      console.log('User data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({user: response.data});  
+    })
+    .catch(function(err) {
+      console.log('Error retrieving user from DB',err);
+    })
+
+    //do ajax call to get questions
     axios.get('/question')
     .then(function(response) {
-      console.log('Real response from DB', response.data);
+      console.log('Questions data from DB', response.data);
       //response.data object is in an array, so need to get element 0
       context.setState({questions: response.data});      
     })

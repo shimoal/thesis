@@ -9,6 +9,7 @@ var PostQuestion = React.createClass({
 
      //1. take data from form
      var questionData = {
+      userId: 1,
       title: this.refs.questionTitle.value,
       question: this.refs.questionBody.value,
       status: 'open',
