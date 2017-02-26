@@ -20,9 +20,9 @@ var QuestionItem = React.createClass({
             <tr>
               <td><p>{this.props.details.question}</p></td>
             </tr>
-            <tr>
+              
               <ClaimQuestionButton details={this.props.details} claimQuestion={this.props.claimQuestion}/>
-            </tr>
+          
           </tbody>
         </table>
 

@@ -10,11 +10,9 @@ var ClaimQuestionButton = React.createClass({
     //check question status
     if (this.props.details.status === 'open' ) {
       return(
-        <td>
-          <form>
-            <button onClick={() => this.props.claimQuestion(1,this.props.details.id)} className="btn btn-default" role="button">Claim</button>
-          </form>
-        </td>
+        <form>
+          <button onClick={() => this.props.claimQuestion(1,this.props.details.id)} className="btn btn-default" role="button">Claim</button>
+        </form>
       )
     } else {
       return(<div/>)
