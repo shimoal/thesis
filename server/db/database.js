@@ -1,18 +1,10 @@
 const Sequelize = require('sequelize');
 
 //For testing only...
+
 // const cfg = require('./dbconfig.js');
 // const sequelize = new Sequelize(cfg.myLocalDB, cfg.myLocalDBRole, cfg.myLocalDBPW, {
 //   host: 'localhost',
-//   dialect: 'postgres',
-//   pool: {
-//     max: 5,
-//     min: 0,
-//     idle: 10000
-//   }
-// });
-
-console.log('I am in database.js');
 
 // for production
 
