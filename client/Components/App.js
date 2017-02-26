@@ -13,7 +13,7 @@ export default class App extends React.Component {
       user: { //check from user table
         id: 'id1487880252929',
         name: 'Ai Shi',
-        profileImage: 'photo_aishi.jpg',
+        profileImage: '/photos/photo-ai.png',
         description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
       },
 
