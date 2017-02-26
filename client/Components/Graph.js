@@ -4,7 +4,6 @@ import NavLink from './NavLink'
 import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import { browserHistory } from 'react-router'
-// var request = require('request');
 import axios from 'axios'
 
 export default class Collaborate extends React.Component {
