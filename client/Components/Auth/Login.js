@@ -25,7 +25,6 @@ export default class Login extends React.Component{
   render() {
     return (
       <div>
-
           <h2> Welcome back! </h2>
           <button onClick={this.handleLogIn}>Sign in with github </button>
 
