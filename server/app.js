@@ -18,7 +18,7 @@ var claimsCtrl = require('./db/claims/claimsController.js');
 
 app.post('/question', questionsCtrl.save);
 app.get('/question', questionsCtrl.retrieve);
-app.get('/users/', usersCtrl.retrieve);
+app.get('/user-current', usersCtrl.retrieve);
 
 app.post('/claim', claimsCtrl.save);
 

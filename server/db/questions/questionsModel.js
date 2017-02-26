@@ -3,6 +3,9 @@ const db = require('../database.js');
 const User = require('../users/usersModel.js');
 
 const Question = db.define('question', {
+  userId: {
+    type: Sequelize.INTEGER
+  },
   title: {
     type: Sequelize.STRING
   },

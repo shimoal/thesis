@@ -40,7 +40,7 @@ export default class RightColumn extends React.Component {
 
     return (
       <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
-        <UserProfile />
+        <UserProfile userCurrent={this.props.userCurrent} />
         <Skills />
         <PostQuestionButton showButton={this.state.showButton} showQuestionForm={showQuestionForm.bind(this)} />
         <PostQuestion addQuestion={this.props.addQuestion} showForm={this.state.showForm} hideQuestionForm={hideQuestionForm.bind(this)}/>

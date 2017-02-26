@@ -3,6 +3,7 @@ const Question = require('./questionsModel.js');
 const controller = {
   save: function(req, res, next) {
     Question.create({
+        userId: req.body.userId,
         title: req.body.title,
         question: req.body.question,
         status: 'open',
@@ -48,7 +49,7 @@ const controller = {
         }
       });
       Promise.all(promises).then(function() {
-        console.log('===========', promises, ' >>>> in promise all')
+        // console.log('===========', promises, ' >>>> in promise all')
         //convert array into object
         var object = {};
 
