@@ -63,7 +63,10 @@ export default class App extends React.Component {
     var context = this;
     
     //do ajax call to get current user info
-    axios.get('/user-current') //currently hardcoded to 1 (Ai Shi) in usersController.js
+    var data = {
+      id: 3,
+    }
+    axios.get('/user-current', { params: data }) //currently hardcoded to 1 (Ai Shi) in usersController.js
     .then(function(response) {
       console.log('User data from DB', response.data);
       //response.data object is in an array, so need to get element 0
@@ -79,6 +82,17 @@ export default class App extends React.Component {
       console.log('Questions data from DB', response.data);
       //response.data object is in an array, so need to get element 0
       context.setState({questions: response.data});      
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+
+    //do ajax call to get claimed questions
+    axios.get('/claim')
+    .then(function(response) {
+      console.log('CLaims data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({questionsClaimed: response.data});
     })
     .catch(function(err) {
       console.log(err);
@@ -126,6 +140,86 @@ export default class App extends React.Component {
     });
   }
 
+  loginMax(context) {
+    // var context = this;
+    
+    //do ajax call to get current user info
+    var data = {
+      id: 3,
+    }
+    axios.get('/user-current', { params: data }) //currently hardcoded to 1 (Ai Shi) in usersController.js
+    .then(function(response) {
+      console.log('User data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({user: response.data});
+    })
+    .catch(function(err) {
+      console.log('Error retrieving user from DB',err);
+    })
+
+    //do ajax call to get questions
+    axios.get('/question')
+    .then(function(response) {
+      console.log('Questions data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({questions: response.data});      
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+
+    //do ajax call to get claimed questions
+    axios.get('/claim')
+    .then(function(response) {
+      console.log('CLaims data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({questionsClaimed: response.data});
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
+  loginAi(context) {
+    // var context = this;
+    
+    //do ajax call to get current user info
+    var data = {
+      id: 1,
+    }
+    axios.get('/user-current', { params: data }) //currently hardcoded to 1 (Ai Shi) in usersController.js
+    .then(function(response) {
+      console.log('User data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({user: response.data});
+    })
+    .catch(function(err) {
+      console.log('Error retrieving user from DB',err);
+    })
+
+    //do ajax call to get questions
+    axios.get('/question')
+    .then(function(response) {
+      console.log('Questions data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({questions: response.data});      
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+
+    //do ajax call to get claimed questions
+    axios.get('/claim')
+    .then(function(response) {
+      console.log('CLaims data from DB', response.data);
+      //response.data object is in an array, so need to get element 0
+      context.setState({questionsClaimed: response.data});
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
@@ -137,11 +231,25 @@ export default class App extends React.Component {
      })
     );
 
+    /*
+    <h3>App.js state</h3>
+    <pre>
+      {JSON.stringify(this.state, null, 2)}
+    </pre>
+    */
+
     return (
       <div>
+        
         <NavLink/>
 
         {childrenWithProps}
+
+        <button onClick={ () => this.loginMax(this) }>Max</button> &nbsp;&nbsp;
+        <button onClick={ () => this.loginAi(this)}>Ai</button>
+        <div className="pre">
+          
+        </div>
 
       </div>
     )

@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link, browserHistory} from 'react-router'
+import axios from 'axios'
 import UserProfile from './UserProfile'
 import Skills from './Skills'
 import PostQuestionButton from './PostQuestionButton'
@@ -18,8 +19,11 @@ export default class RightColumn extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log('inside RightColumn', this.props);
+  componentWillMount() {
+    console.log('inside RightColumn componentWillMount', this.props);
+    //do ajax call to get Helpers (those who claim current user's questions)
+    //right now do it in App because the dummy data state is there
+
   }
 
   render() {

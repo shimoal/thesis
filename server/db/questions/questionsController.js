@@ -25,9 +25,9 @@ const controller = {
     db.query('SELECT name, questions.id, title, question, status, deadline, questions."createdAt" \
       from users INNER JOIN questions ON questions."userId" = users.id', { model: Question })
     .then(function(questions) {
-      console.log('XXX RAW results',questions);
+      // console.log('XXX RAW results',questions);
       var promises = questions.map(function(question) {
-        console.log('XXX each question', question);
+        // console.log('XXX each question', question);
         return {
           'id': question.id,
           'title':question.title,
@@ -35,6 +35,7 @@ const controller = {
           'status':question.status,
           'deadline': '',
           'name': question.name,
+          'createdAt': question.createdAt,
         }
       });
     
