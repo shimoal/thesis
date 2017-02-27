@@ -75,7 +75,6 @@ io.on('connection', function(socket) {
 
   socket.on('sendCandidate', function(room_name, data){
     io.in(room_name).emit('candidate', data);
-
   });
 
   socket.on('stopCall', function(room_name){

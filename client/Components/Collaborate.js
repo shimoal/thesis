@@ -1,5 +1,5 @@
 import React from 'react'
-import io from 'socket.io-client'
+
 import ace from 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
@@ -81,10 +81,12 @@ export default class Collaborate extends React.Component {
 
 		/*********** video conference *********/
 		socket.on('description', this.handleDescription);
+
 		
 		socket.on('candidate', this.handleCandidate);
 
     socket.on('stopCall', this.stopCall);
+
 
 	}
 
@@ -144,24 +146,19 @@ export default class Collaborate extends React.Component {
 
 	/********* video conference *********/
 	start(isCaller) {
-
-		console.log('this.state in caller', this.state.room_name);
 		var room_name = this.state.room_name;
+
 	  //pc will be created for both caller and answerer
 	  pc = new RTCPeerConnection(configuration);
-		console.log('set pc: ', pc);
+
 
 		// send any ice candidates to the other peer
 	  pc.onicecandidate = function (evt) {
-	    console.log('send ice candidates:', evt);
-		  // signalingChannel.emit('sendCandidate', (JSON.stringify({ "candidate": evt.candidate })));
 		  socket.emit('sendCandidate', room_name, (JSON.stringify({ "candidate": evt.candidate })));
 	  };
 
 		// once remote stream arrives, show it in the remote video element
-	  pc.onaddstream = function (evt) {
-	    console.log('adding remote stream');		
-      console.log('event: ', evt);      
+	  pc.onaddstream = function (evt) {      
 	    $("#peer-camera video")[0].src = URL.createObjectURL(evt.stream);
 	  };
 
@@ -179,7 +176,6 @@ export default class Collaborate extends React.Component {
 
 		  function gotDescription(desc) {
 		    pc.setLocalDescription(desc);
-	      // signalingChannel.emit('sendDescription', JSON.stringify({ "sdp": desc }));
 	      socket.emit('sendDescription', room_name, JSON.stringify({ "sdp": desc }));
 	    };
 	  });
@@ -193,6 +189,8 @@ export default class Collaborate extends React.Component {
       socket.emit('stopCall', this.state.room_name);
     }
     pc.removeStream(localStream);
+    localStream.getVideoTracks()[0].stop();
+
 	}
 
 	handleDescription(evt) {
@@ -200,10 +198,11 @@ export default class Collaborate extends React.Component {
 		  this.start(false);      
 	  }
     var description = (JSON.parse(evt)).sdp;
-		// console.log('setting remote description');
 	  pc.setRemoteDescription(new RTCSessionDescription(description));
 	}
+
 	handleCandidate(evt) {
+
 		if (!pc) {
 		  this.start(false);
 		}

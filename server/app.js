@@ -4,15 +4,14 @@ var path = require('path');
 var app = module.exports = express();
 
 
+
 var passport = require('passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
 
-var fs = require('fs')
-// var sess = githubAuth.sess;
-app.use(cookieParser());
 
+app.use(cookieParser());
 
 
 
