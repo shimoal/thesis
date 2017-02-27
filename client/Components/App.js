@@ -58,20 +58,20 @@ export default class App extends React.Component {
     }
   }
 
-  componentWillMount() {
-    //we can't call 'this' within axios, so need to hold it in 'context'
-    var context = this;
-    //do ajax call
-    axios.get('/question')
-    .then(function(response) {
-      console.log('Real response from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questions: response.data});      
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
-  }
+  // componentWillMount() {
+  //   //we can't call 'this' within axios, so need to hold it in 'context'
+  //   var context = this;
+  //   //do ajax call
+  //   axios.get('/question')
+  //   .then(function(response) {
+  //     console.log('Real response from DB', response.data);
+  //     //response.data object is in an array, so need to get element 0
+  //     context.setState({questions: response.data});      
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   })
+  // }
 
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);

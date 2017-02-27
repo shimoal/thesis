@@ -10,21 +10,27 @@ export default class Signup extends React.Component{
 
   handleSignup() {
     console.log('Signup clicked');
-    // axios.get('/Signup').then( function(response) {
-    //   console.log('inside then');
-    //   console.log('response');
-    // });
+    var username = $('#username').val();
+    var email = $('#email').val();
+    var data = {
+        username: username,
+        email: email
+      };
+    axios.post('/users', data).then( function(response) {
+      console.log('inside signup then');
+      console.log('signup response', response);
+    });
   }
 
   render() {
     return (
       <div>
           <h2> Make an account with us! </h2>
-          <form>
+          <form onSubmit={this.handleSignup}>
             Username: 
-            <input type="textarea"></input>
+            <input type="textarea" id="username"></input>
             Email: 
-            <input type="textarea"></input>
+            <input type="textarea" id="email"></input>
             <input type="submit" value="submit" />
           </form>
       </div>
