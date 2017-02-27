@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var app = module.exports = express();
 var path = require("path");
-var fs = require('fs')
+var fs = require('fs');
+// var charts = require('./twitter/chartSRCs');
 
 //Parse incoming body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -43,6 +44,7 @@ app.get('/graph2/', function(req, res) {
 app.get('/graph3', function(req, res) {
 	res.sendFile(path.resolve(__dirname + '/plot/charts.html'));
 });
+
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
