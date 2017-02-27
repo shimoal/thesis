@@ -69,6 +69,25 @@ const controller = {
       console.log(user.id);
       res.json(user.id);
     })
+
+  }
+
+  // retrieve: function(req, res, next) {
+  //   console.log('Calling usersController retrieve', req.body);
+  //   User.findOne({
+  //     where: {
+  //       id: req.query.id,
+  //     }
+  //   })
+  //   .then(function(user) {
+  //     console.log('User is successfully retrieved');
+  //     res.json(user);
+  //   })
+  //   .catch(function(err) {
+  //     console.log(' X X X X error retrieving current user');
+  //     return res.sendStatus(500);
+  //   });
+
   }
   // retrieve: function(user) {
   //   console.log('calling usersController retrieve');

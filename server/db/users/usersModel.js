@@ -11,6 +11,11 @@ const User = db.define('user', {
     unique: true
   },
   github_id: {
+
+  profileImage: {
+    type: Sequelize.STRING,
+  },
+  description: {
     type: Sequelize.STRING,
     unigque: true
   },
