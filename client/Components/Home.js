@@ -14,7 +14,27 @@ export default class Home extends React.Component {
 
   }
 
+  // componentDidMount() {
+
+  // }
+
+
+
+
+
+  getDefaultProps() {
+    console.log('getting our default properties');
+  }
+
+  //Before component is rendered
+  componentWillMount() {
+    console.log('Home component is mounting');
+    // this.props.showSearch('yes');
+  }
+
+  //Happens after component has rendered
   componentDidMount() {
+    console.log('Home component has rendered');
     var context = this;
     axios.get('/session').then( function(response) {
       console.log('inside response');
@@ -23,32 +43,13 @@ export default class Home extends React.Component {
         context.setState({'helloMessage': 'Hello, ' + response.data.username});
       }
     });
+
   }
-
-
-
-
-
-  getDefaultProps: function() {
-    console.log('getting our default properties');
-  },
-
-  //Before component is rendered
-  componentWillMount: function() {
-    console.log('Home component is mounting');
-    // this.props.showSearch('yes');
-  },
-
-  //Happens after component has rendered
-  componentDidMount: function() {
-    console.log('Home component has rendered');
-
-  },
   
   //Happens when component has rendered and about to unmount
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     // this.props.showSearch('no');
-  },
+  }
 
   //Happen whenever home component's state changes
   render() {

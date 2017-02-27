@@ -59,36 +59,37 @@ const controller = {
   //   });
 
   // },
-  retrieve: function(req, res, next) {
-    console.log('calling usersController retrieve');
-    User.findOne({
-      where: {
-        email: req.query.email
-      }
-    }).then(function(user) {
-      console.log(user.id);
-      res.json(user.id);
-    })
-
-  }
-
   // retrieve: function(req, res, next) {
-  //   console.log('Calling usersController retrieve', req.body);
+  //   console.log('calling usersController retrieve');
   //   User.findOne({
   //     where: {
-  //       id: req.query.id,
+  //       email: req.query.email
   //     }
-  //   })
-  //   .then(function(user) {
-  //     console.log('User is successfully retrieved');
-  //     res.json(user);
-  //   })
-  //   .catch(function(err) {
-  //     console.log(' X X X X error retrieving current user');
-  //     return res.sendStatus(500);
-  //   });
+  //   }).then(function(user) {
+  //     console.log(user.id);
+  //     res.json(user.id);
+  //   }).catch('')
 
+  // }
+
+  retrieve: function(req, res, next) {
+    console.log('Calling usersController retrieve', req.body);
+    User.findOne({
+      where: {
+        id: req.query.id,
+      }
+    })
+    .then(function(user) {
+      console.log('User is successfully retrieved');
+      res.json(user);
+    })
+    .catch(function(err) {
+      console.log(' X X X X error retrieving current user');
+      return res.sendStatus(500);
+    });
   }
+
+
   // retrieve: function(user) {
   //   console.log('calling usersController retrieve');
   //   User.findOne({
