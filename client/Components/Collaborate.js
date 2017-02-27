@@ -46,30 +46,31 @@ export default class Collaborate extends React.Component {
 		this.setState({username: username});
 		console.log(username);
 	}
-	componentDidMount() {		
+	componentDidMount() {
+		var context = this;		
 		/*********** live coding *********/
 		this.editor = ace.edit(this.refs.root);
-    this.editor.getSession().setMode("ace/mode/javascript");
-    this.editor.setTheme("ace/theme/github");
+	    this.editor.getSession().setMode("ace/mode/javascript");
+	    this.editor.setTheme("ace/theme/github");
 
-    socket.on('connect', function(){
-    	console.log('connected');
-    });
-    // socket.on('disconnect', this.exitRoom);
-    socket.on('room-exists', function(msg) {
-      alert(msg);
-    });
-    // changes in editing board
-    this.editor.on('change', this.handleEditorContentChange);
-    socket.on('editor-content-changes', this.updateEditorContent);
-    // clear editor content
-    socket.on('clear-editor', this.ResetEditor);
-    // 'run code'
-    socket.on('submit-val', this.updateResult);
-    // handle info
-    socket.on('info', this.handleInfo);
-    // exit room
-    socket.on('exit_room', this.handleExitRoom);
+	    socket.on('connect', function(){
+	    	console.log(context.state.username, ' connected');
+	    });
+	    socket.on('disconnect', this.exitRoom);
+	    socket.on('room-exists', function(msg) {
+	      alert(msg);
+	    });
+	    // changes in editing board
+	    this.editor.on('change', this.handleEditorContentChange);
+	    socket.on('editor-content-changes', this.updateEditorContent);
+	    // clear editor content
+	    socket.on('clear-editor', this.ResetEditor);
+	    // 'run code'
+	    socket.on('submit-val', this.updateResult);
+	    // handle info
+	    socket.on('info', this.handleInfo);
+	    // exit room
+	    socket.on('exit_room', this.handleExitRoom);
 		/**************************************/
 
 		/*********** video conference *********/
