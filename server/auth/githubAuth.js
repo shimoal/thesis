@@ -25,7 +25,6 @@ passport.serializeUser(function(user, done) {
   // console.log('name: ', user.displayName);
   // null is for errors
   console.log('inside serializeUser', user);
-
   done(null, user);
 });
 
@@ -35,35 +34,24 @@ passport.deserializeUser(function(name, done) {
   // null is for errors
   // console.log('deserializeUser', user);
   console.log('inside deserializeUser', user);
-  if (registeredUsers[name]) {
-    console.log('insdie registeredUsers', registeredUsers);
-    done(null, user);
-  }
+  done(null, user);
+
 
 });
 
-var registeredUsers = {};
 
 var githubAuth = {
   checkUser: function(req, res, next) {
-    if(sess) {
-      console.log('user has a sess')
-      // console.log('sess:', sess);
-      next('user has a sess');
-    } else {
-      console.log('setting user session');
+    if(!sess) {
       sess = req.session;
-      next();
     }
+      next();
   },
 
   authenticate: function(req, res, next) {
-
-    console.log('authenticate req', sess);
-
     if (sess && sess.username) {
       console.log('authenticated');
-      next(sess.username);
+      res.send(sess);
     } else {
       console.log('not authenticated');
       res.redirect('/login');
@@ -73,28 +61,16 @@ var githubAuth = {
   failureRedirect: passport.authenticate('github', { failureRedirect: '/' }),
 
   successCallback: function(req, res, next) {
-    console.log('inside successCallback');
-
     sess.username = req.user.name;
-    // console.log(sess);
-    registeredUsers[req.user.name] = true;
+
     req.logIn(req.user, function(err) {
       if (err) {
         next(err);
       } else {
-        return res.redirect('/');
+        return res.redirect('/dashboard');
       }
     });
-    // res.redirect('/');
-    // console.log(req.cookieID);
-    // req.cookie.cookieName = 'user';
 
-    // req.cookie.username = req.user.displayName;
-
-    // console.log('cookie:', req.cookie.username);
-    // req.session['username'] = req.user.displayName;
-    // next();
-    // res.redirect('/');
   }
 };
 
