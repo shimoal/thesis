@@ -17,21 +17,37 @@ const controller = {
       defaults: {
         name: req.body.name,
       }
-    }).spread(function(user, created){
+    })
+    .spread(function(user, created){
       if (created) {
         console.log('User is successfully created');
       } else {
         return res.sendStatus(500);
       }
-    }).catch(function(err){
+    })
+    .catch(function(err){
       if (err.original.code === '23505') {
         return res.status(403).send('That email address already exists, please login');
       }
       return res.sendStatus(500);
     })
   },
-  retrieve: function() {
-    console.log('calling usersController retrieve');
+
+  retrieve: function(req, res, next) {
+    console.log('Calling usersController retrieve', req.body);
+    User.findOne({
+      where: {
+        id: req.query.id,
+      }
+    })
+    .then(function(user) {
+      console.log('User is successfully retrieved');
+      res.json(user);
+    })
+    .catch(function(err) {
+      console.log(' X X X X error retrieving current user');
+      return res.sendStatus(500);
+    });
   }
 };
 

@@ -42,9 +42,10 @@ export default class Collaborate extends React.Component {
 		this.handleCandidate = this.handleCandidate.bind(this);
 	}
 	componentWillMount() {
-		var username = prompt("what is your name?");
-		this.setState({username: username});
-		console.log(username);
+		// var username = prompt("what is your name?");
+		console.log('COLLABORATE Username',this.props.userData.user.name);
+		this.setState({username: this.props.userData.user.name});
+		// console.log(username);
 	}
 	componentDidMount() {
 		var context = this;		

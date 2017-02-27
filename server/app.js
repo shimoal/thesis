@@ -12,12 +12,16 @@ app.use(bodyParser.json());
 //database controllers
 var usersCtrl = require('./db/users/usersController.js');
 var questionsCtrl = require('./db/questions/questionsController.js');
+var claimsCtrl = require('./db/claims/claimsController.js');
 
 //executing DB controller's methods
 
 app.post('/question', questionsCtrl.save);
 app.get('/question', questionsCtrl.retrieve);
-app.get('/users/', usersCtrl.retrieve);
+app.get('/user-current', usersCtrl.retrieve);
+
+app.post('/claim', claimsCtrl.save);
+app.get('/claim', claimsCtrl.retrieve);
 
 //routes
 app.use(express.static(__dirname + '/../public'));
