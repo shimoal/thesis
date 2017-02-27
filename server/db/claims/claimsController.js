@@ -24,9 +24,9 @@ const controller = {
         INNER JOIN claims ON claims.id_user = users.id\
         INNER JOIN questions ON claims.id_question = questions.id', { model: Claim })
     .then(function(claims) {
-      console.log('XXX RAW results',claims);
+      // console.log('XXX RAW results',claims);
       var promises = claims.map(function(claim) {
-        console.log('XXX each claim', claim);
+        // console.log('XXX each claim', claim);
         return {
           'id': claim.dataValues.id,
           'title':claim.dataValues.title,
