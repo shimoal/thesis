@@ -20,7 +20,7 @@ export default class Collaborate extends React.Component {
     // request('http://localhost:8080/graphs', function(err, res, body){
     //   console.log(res);
     // });
-    axios.get('http://localhost:8080/graph2')
+    axios.get('/graph2')
       .then(function(response){
       console.log(response.data);
       $('body').append(response.data);
