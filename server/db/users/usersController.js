@@ -41,7 +41,7 @@ const controller = {
       }
     })
     .then(function(user) {
-      console.log('User is successfully retrieved', user);
+      console.log('User is successfully retrieved');
       res.json(user);
     })
     .catch(function(err) {
