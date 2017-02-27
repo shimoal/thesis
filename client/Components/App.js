@@ -37,7 +37,8 @@ export default class App extends React.Component {
           title: 'Enable a button in Swift only if all text fields have been filled out',
           question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
           status: 'open',
-          deadline: ''
+          deadline: '',
+          name: 'Max'
         }
       },
 

@@ -30,7 +30,7 @@ var QuestionItem = React.createClass({
                 claimQuestion={this.props.claimQuestion}/>
             </div>
             <div className="col-sm-9 col-md-2">
-              Asked by {this.props.details.userId}
+              Asked by {this.props.details.name}
             </div>
           </div>
 
