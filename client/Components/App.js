@@ -244,8 +244,15 @@ export default class App extends React.Component {
         <NavLink/>
 
         {childrenWithProps}
-        <button onClick={ () => this.loginMax(this) }>Max</button> &nbsp;&nbsp;
-        <button onClick={ () => this.loginAi(this)}>Ai</button>
+        <div className="row">
+          <div className="col-sm-9 col-md-9 main">
+            &nbsp;
+          </div>
+          <div className="col-sm-3 col-md-3 main">
+            <a className="text-muted" onClick={ () => this.loginMax(this) }>Max</a> &nbsp;&nbsp;
+            <a className="text-muted" onClick={ () => this.loginAi(this)}>Ai</a>
+          </div>
+        </div>
         <div className="pre">
           
         </div>
