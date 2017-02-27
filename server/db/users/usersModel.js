@@ -28,7 +28,6 @@ const User = db.define('user', {
     unique: true
   },
   github_id: {
-<<<<<<< HEAD
     type: Sequelize.STRING,
     unique: true
   },
@@ -36,9 +35,8 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   description: {
-=======
->>>>>>> More work on authentication
     type: Sequelize.STRING,
+    unigque: true
   }
 });
 
