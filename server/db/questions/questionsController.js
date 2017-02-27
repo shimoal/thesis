@@ -26,19 +26,7 @@ const controller = {
       //loop through the response.data array
       var promises = questions.map(function(question){
         // console.log('===========', question.dataValues, ' >>>> in promise all');
-
-        /*
         
-        { id: 25,
-          title: 'helo',
-          question: 'heloleoeo',
-          status: 'open',
-          deadline: null,
-          createdAt: 2017-02-25T19:37:17.678Z,
-          updatedAt: 2017-02-25T19:37:17.678Z,
-          userId: null }
-
-        */
 
         return {
           'id': question.dataValues.id,
@@ -46,12 +34,13 @@ const controller = {
           'question':question.dataValues.question,
           'status':question.dataValues.status,
           'deadline': '',
+          'userId':question.dataValues.userId,
         }
       });
       Promise.all(promises).then(function() {
         // console.log('===========', promises, ' >>>> in promise all')
         //convert array into object
-        var object = {};
+        // var object = {};
 
         res.send(promises);
       })

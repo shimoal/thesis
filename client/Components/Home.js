@@ -37,7 +37,10 @@ export default React.createClass({
         <div className="col-sm-10 col-md-10 main">
         
           { /* OpenQuestions.js */}
-          <OpenQuestions questions={this.props.userData.questions} claimQuestion={this.props.claimQuestion} />
+          <OpenQuestions 
+            userCurrent={this.props.userData.user}
+            questions={this.props.userData.questions} 
+            claimQuestion={this.props.claimQuestion} />
 
           { /* FindHelpers Compoent */}
           <div>

@@ -66,7 +66,7 @@ export default class App extends React.Component {
     .then(function(response) {
       console.log('User data from DB', response.data);
       //response.data object is in an array, so need to get element 0
-      context.setState({user: response.data});  
+      context.setState({user: response.data});
     })
     .catch(function(err) {
       console.log('Error retrieving user from DB',err);

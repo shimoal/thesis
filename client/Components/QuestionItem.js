@@ -20,11 +20,22 @@ var QuestionItem = React.createClass({
             <tr>
               <td><p>{this.props.details.question}</p></td>
             </tr>
-              
-              <ClaimQuestionButton details={this.props.details} claimQuestion={this.props.claimQuestion}/>
-          
           </tbody>
+          
+          <div className="row">
+            <div className="col-sm-9 col-md-9">
+              <ClaimQuestionButton 
+                details={this.props.details} 
+                userCurrent={this.props.userCurrent}
+                claimQuestion={this.props.claimQuestion}/>
+            </div>
+            <div className="col-sm-9 col-md-2">
+              Asked by {this.props.details.userId}
+            </div>
+          </div>
+
         </table>
+
 
         <Helpers details={this.props.details} />
 
