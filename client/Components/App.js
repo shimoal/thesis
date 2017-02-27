@@ -58,20 +58,36 @@ export default class App extends React.Component {
     }
   }
 
+  // componentWillMount() {
+  //   //we can't call 'this' within axios, so need to hold it in 'context'
+  //   var context = this;
+  //   //do ajax call
+  //   axios.get('/question')
+  //   .then(function(response) {
+  //     console.log('Real response from DB', response.data);
+  //     //response.data object is in an array, so need to get element 0
+  //     context.setState({questions: response.data});      
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   })
+  // }
 
   addQuestion(questionData) {
-    console.log('addQuestion this.state.questions',this.state.questions);
+    // console.log('The dummy data', this.state.questions);
+    // console.log('addQuestion questionData object', questionData);
     var timeStamp = (new Date()).getTime();
     this.state.questions['id' + timeStamp] = questionData;
-    this.setState({
-      questions: this.state.questions
-    })
+    console.log('Dummy data', this.state.questions);
+    //Setting state is now done in componentDidMount(), using data from database
+      // this.setState({
+      //   questions: this.state.questions
+      // })
+
     //write to database
     //this is where ORM shines, make sure the object that I send here matches
     //the schema in questionsModel.js
     //check what this.state.questions contains, then map it to the schema
-
-    console.log('addQuestion questionData object', questionData);
     
     axios.post('/question', questionData)
     .then(function(res) {

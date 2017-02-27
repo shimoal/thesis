@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var app = module.exports = express();
 
+
 var passport = require('passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
@@ -11,6 +12,9 @@ var githubAuth = require('./auth/githubAuth');
 var fs = require('fs')
 // var sess = githubAuth.sess;
 app.use(cookieParser());
+
+
+
 
 //Parse incoming body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -24,13 +28,14 @@ var questionsCtrl = require('./db/questions/questionsController.js');
 
 app.post('/question', questionsCtrl.save);
 app.get('/question', questionsCtrl.retrieve);
-app.get('/users/', usersCtrl.retrieve);
+app.get('/users', usersCtrl.retrieve);
+app.post('/users', usersCtrl.save);
 
 //routes
-app.use(express.static(__dirname + '/../public'));
-app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
-app.use(express.static(__dirname + '/../server/twitter'));
+// app.use(express.static(__dirname + '/../public'));
+// app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+// app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+// app.use(express.static(__dirname + '/../server/twitter'));
 
 
 app.use(passport.initialize());
@@ -105,6 +110,7 @@ app.get('/graph3', function(req, res) {
 app.get('/*', githubAuth.checkUser, function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
+
 
 
 

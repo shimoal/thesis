@@ -5,6 +5,7 @@ import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import { browserHistory } from 'react-router'
 // var request = require('request');
+import axios from 'axios'
 
 export default class Collaborate extends React.Component {
   constructor(props) {
@@ -19,9 +20,10 @@ export default class Collaborate extends React.Component {
     // request('http://localhost:8080/graphs', function(err, res, body){
     //   console.log(res);
     // });
-    $.get('http://localhost:8080/graph2', function(data){
-      console.log(data);
-      $('body').append(data);
+    axios.get('/graph2')
+      .then(function(response){
+      console.log(response.data);
+      $('body').append(response.data);
     });
   }
 

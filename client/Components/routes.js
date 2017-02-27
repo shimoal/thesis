@@ -10,8 +10,13 @@ import Collaborate from './Collaborate'
 import Graph from './Graph'
 import PostQuestionPage from './PostQuestionPage'
 import Login from './Auth/Login'
+<<<<<<< HEAD
 import Signup from './Auth/Signup'
 import Logout from './Auth/Logout'
+=======
+import Logout from './Auth/Logout'
+import Signup from './Auth/Signup'
+>>>>>>> simpleAuth
 
 
 module.exports = (
@@ -26,10 +31,13 @@ module.exports = (
     
     <Route path="/login" component={Login}/>
     <Route path="/signup" component={Signup}/>
+    <Route path="/logout" component={Logout}/>
 
     <Route path="/graphs" component={Graph}/>
 
-    <Route path="/logout" component={Logout}/>
+
+
+
 
 
   </Route>
