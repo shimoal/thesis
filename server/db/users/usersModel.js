@@ -10,6 +10,9 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true
   },
+  profileImage: {
+    type: Sequelize.STRING,
+  },
   description: {
     type: Sequelize.STRING,
   }
