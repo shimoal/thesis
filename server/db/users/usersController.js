@@ -37,7 +37,7 @@ const controller = {
     console.log('Calling usersController retrieve', req.body);
     User.findOne({
       where: {
-        id: 3,
+        id: req.query.id,
       }
     })
     .then(function(user) {

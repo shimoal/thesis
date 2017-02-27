@@ -21,6 +21,7 @@ app.get('/question', questionsCtrl.retrieve);
 app.get('/user-current', usersCtrl.retrieve);
 
 app.post('/claim', claimsCtrl.save);
+app.get('/claim', claimsCtrl.retrieve);
 
 //routes
 app.use(express.static(__dirname + '/../public'));
