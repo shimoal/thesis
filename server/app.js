@@ -9,7 +9,6 @@ var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
 var sandBox = require('./sandbox/DockerSandbox');
 
-// var sess = githubAuth.sess;
 app.use(cookieParser());
 
 //Parse incoming body
@@ -22,6 +21,7 @@ var questionsCtrl = require('./db/questions/questionsController.js');
 var claimsCtrl = require('./db/claims/claimsController.js');
 
 //executing DB controller's methods
+
 app.post('/question', questionsCtrl.save);
 app.get('/question', questionsCtrl.retrieve);
 
@@ -47,6 +47,7 @@ app.use(express.static(__dirname + '/../server/twitter'));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(session({
   secret: "customSecret",
   resave: false,
@@ -63,6 +64,8 @@ app.get('/auth/github', passport.authenticate('github', function(err, user, info
 // GitHub will call this URL
 app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
 
+
+
 app.get('/loggingout', function(req, res){
   console.log('logging out');
   req.logOut();
@@ -77,6 +80,7 @@ app.get('/loggingout', function(req, res){
 
 //for accessing session to get user data to the client
 app.get('/session',  githubAuth.authenticate);
+
 
 
 /****** coding trends routes ******/
