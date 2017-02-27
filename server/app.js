@@ -64,17 +64,20 @@ app.get('/logout', function(req, res){
     }
     res.redirect('/');
   });
-  // res.redirect('/');
 
 });
 
 
 
 //for accessing session to get user data to the client
-app.get('/session',  githubAuth.authenticate, function(req, res) {
-  console.log('inside githubAuth');
-  res.send('hi');
-});
+app.get('/session',  githubAuth.authenticate);
+// 	function(req, res) {
+//   console.log('inside githubAuth');
+//   console.log('req.session:', req.session);
+//   console.log('req.headers:', req.headers);
+//   // console.log('res:', res);
+//   res.send('hi');
+// });
 
 
 /****** coding trends routes ******/
@@ -100,10 +103,6 @@ app.get('/graph3', function(req, res) {
 });
 
 app.get('/*', githubAuth.checkUser, function(req, res) {
-console.log('req:', req);
-
-
-  // console.log('sess:', sess);
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
 
