@@ -32,10 +32,10 @@ app.get('/users', usersCtrl.retrieve);
 app.post('/users', usersCtrl.save);
 
 //routes
-// app.use(express.static(__dirname + '/../public'));
-// app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-// app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
-// app.use(express.static(__dirname + '/../server/twitter'));
+app.use(express.static(__dirname + '/../public'));
+app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use(express.static(__dirname + '/../server/twitter'));
 
 
 app.use(passport.initialize());

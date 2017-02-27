@@ -10,13 +10,10 @@ import Collaborate from './Collaborate'
 import Graph from './Graph'
 import PostQuestionPage from './PostQuestionPage'
 import Login from './Auth/Login'
-<<<<<<< HEAD
+
 import Signup from './Auth/Signup'
 import Logout from './Auth/Logout'
-=======
-import Logout from './Auth/Logout'
-import Signup from './Auth/Signup'
->>>>>>> simpleAuth
+
 
 
 module.exports = (

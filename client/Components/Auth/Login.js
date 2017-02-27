@@ -1,8 +1,8 @@
 import React from 'react'
-<<<<<<< HEAD
-=======
+
+
 import axios from 'axios'
->>>>>>> simpleAuth
+
 
 export default class Login extends React.Component{
   constructor(props) {
