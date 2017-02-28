@@ -13,6 +13,8 @@ io.on('connection', function(socket) {
   userNum++;
   socket.on('disconnect', function() {
     userNum--;
+    console.log('user has disconnected');
+  });
   /** when client emits 'addroom' **/
   socket.on('addroom', function(username, room_name) {
     // if the room_name all ready exists
@@ -83,4 +85,3 @@ io.on('connection', function(socket) {
 http.listen(port, function() {
   console.log('now listening on port ' + port);
 });
-

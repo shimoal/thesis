@@ -16,9 +16,6 @@ let pc;
 
 let localStream;
 
-
-let localStream;
-
 export default class Collaborate extends React.Component {
 
   constructor(props) {
