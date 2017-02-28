@@ -243,7 +243,6 @@ export default class App extends React.Component {
         
         <NavLink/>
 
-
         {childrenWithProps}
         <div className="row">
           <div className="col-sm-9 col-md-9 main">
@@ -254,6 +253,12 @@ export default class App extends React.Component {
             <a className="text-muted" onClick={ () => this.loginAi(this)}>Ai</a>
           </div>
         </div>
+        <div className="pre">
+          
+        </div>
+
+        <button onClick={ () => this.loginMax(this) }>Max</button> &nbsp;&nbsp;
+        <button onClick={ () => this.loginAi(this)}>Ai</button>
         <div className="pre">
           
         </div>
