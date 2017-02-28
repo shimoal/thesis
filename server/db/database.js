@@ -24,6 +24,23 @@ const sequelize = new Sequelize(db, user, pw, {
   }
 });
 
+
+const db = 'd7oj410eip9o96';
+const user = 'wvdptjfsnehola';
+const pw = 'cdbdbe12e3f23f31f718f75283f2db41eecbb9c2f3dcbb61ac60c247a1451f46';
+
+const sequelize = new Sequelize(db, user, pw, {
+  host: 'ec2-54-243-55-1.compute-1.amazonaws.com',
+
+  port: 5432,
+  dialect: 'postgres',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+});
+
 sequelize
   .authenticate()
   .then(function(err) {
