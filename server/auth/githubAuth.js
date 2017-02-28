@@ -2,6 +2,7 @@ var githubAuth = require('./githubAuthConfig.js');
 var passport = require('passport');
 var GithubStrategy = require('passport-github2').Strategy;
 var usersCtrl = require('./../db/users/usersController.js');
+var User = require('./../db/users/usersModel.js');
 var sess;
 
 passport.use(new GithubStrategy({
@@ -10,8 +11,9 @@ passport.use(new GithubStrategy({
     callbackURL: "http://localhost:8080/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log('insdie Strategy cb');
-    var user = {name: profile.displayName, email: profile.emails[0].value}
+    console.log('insdie Strategy cb', profile);
+    var user = {name: profile.displayName, email: profile.emails[0].value, profileimg: profile._json.avatar_url, github_id: profile.id}
+    console.log('user:', user);
     return done(null, user);
   }
 ));
@@ -43,17 +45,19 @@ passport.deserializeUser(function(name, done) {
 var githubAuth = {
   checkUser: function(req, res, next) {
     if(!sess) {
+      console.log('GITHUB USER inside !sess');
       sess = req.session;
     }
+      console.log('GITHUB USER outside !sess');
       next();
   },
 
   authenticate: function(req, res, next) {
-    if (sess && sess.username) {
-      console.log('authenticated');
+    if (sess && sess.github_id) {
+      console.log('GITHUB USER authenticated');
       res.send(sess);
     } else {
-      console.log('not authenticated');
+      console.log('GITHUB USER not authenticated');
       res.redirect('/login');
     }
   },
@@ -61,7 +65,23 @@ var githubAuth = {
   failureRedirect: passport.authenticate('github', { failureRedirect: '/' }),
 
   successCallback: function(req, res, next) {
-    sess.username = req.user.name;
+    console.log('inside successCallback', req.user);
+    User.findOne({
+      where: {
+        github_id: req.user.github_id
+      }
+    }).then( function(user) {
+      if (!user) {
+        console.log('user does not exist');
+        usersCtrl.save(req.user);
+
+      } else {
+        console.log('user exists');
+      }
+    })
+
+    // sess.username = req.user.name;
+    sess.github_id = req.user.github_id;
 
     req.logIn(req.user, function(err) {
       if (err) {

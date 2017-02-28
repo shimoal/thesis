@@ -9,42 +9,43 @@ export default class Home extends React.Component {
     super(); 
 
     this.state = {
-      helloMessage: 'Welcome to Hackeroo! Sign in to collaborate.'
+      helloMessage: 'Hello visitor!'
     }
 
   }
 
-  componentDidMount() {
-    var context = this;
-    axios.get('/session').then( function(response) {
-      console.log('inside response');
-      console.log('response', response);
-      if (response.data.username) {
-        context.setState({'helloMessage': 'Hello, ' + response.data.username});
-      }
-    });
+  getDefaultProps() {
+    console.log('getting our default properties');
   }
 
-  getDefaultProps: function() {
-    console.log('getting our default properties');
-  },
-
   //Before component is rendered
-  componentWillMount: function() {
+  componentWillMount() {
     console.log('Home component is mounting');
-    // this.props.showSearch('yes');
-  },
+    
+    //check to make sure user is authenticated
+    this.props.checkUserAuth();
+  }
 
   //Happens after component has rendered
-  componentDidMount: function() {
+  componentDidMount() {
     console.log('Home component has rendered');
 
-  },
+// every component needs to do GET /session to check if the user has been authenticated!!!!
+// need to pass down the following function as props to all components
+
+    // var context = this;
+    // axios.get('/session').then( function(response) {
+    //   console.log('Home.js github auth response', response);
+    //   if (response.data.github_id) {
+    //     context.setState({'helloMessage': 'Hello, ' + response.data.github_id});
+    //   }
+    // });
+  }
   
   //Happens when component has rendered and about to unmount
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     // this.props.showSearch('no');
-  },
+  }
 
   //Happen whenever home component's state changes
   render() {
@@ -55,12 +56,12 @@ export default class Home extends React.Component {
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
-         <h1> {this.state.helloMessage} </h1>
+         <p> {this.state.helloMessage} </p>
         
           { /* OpenQuestions.js */}
           <OpenQuestions 
             userCurrent={this.props.userData.user}
-            questions={this.props.userData.questions} 
+            questions={this.props.userData.questions}
             claimQuestion={this.props.claimQuestion} />
 
           { /* FindHelpers Compoent */}
