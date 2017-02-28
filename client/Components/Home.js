@@ -9,7 +9,7 @@ export default class Home extends React.Component {
     super(); 
 
     this.state = {
-      helloMessage: 'Hello visitor!'
+      helloMessage: ''
     }
 
   }
