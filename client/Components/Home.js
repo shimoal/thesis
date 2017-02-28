@@ -54,7 +54,8 @@ export default class Home extends React.Component {
           <OpenQuestions 
             userCurrent={this.props.userData.user}
             questions={this.props.userData.questions}
-            claimQuestion={this.props.claimQuestion} />
+            claimQuestion={this.props.claimQuestion} 
+            checkUserAuth={this.props.checkUserAuth}/>
 
           { /* FindHelpers Compoent */}
           <div>

@@ -4,6 +4,11 @@ import ClaimQuestionButton from './ClaimQuestionButton'
 
 var QuestionItem = React.createClass({
   //do conditional rendering
+  getInitialState: function() {
+    return {
+      authenticated: 0,
+    }
+  },
   
   componentDidMount: function() {
     console.log('inside QuestionItem props', this.props);
@@ -14,6 +19,20 @@ var QuestionItem = React.createClass({
       return (<span>Asked by {this.props.details.name} </span>) 
     }
   },
+
+  isAuthenticated: function() {
+    if (this.props.authenticated === 1) { // passed down from Home
+      return (
+        <ClaimQuestionButton 
+          details={this.props.details}
+          userCurrent={this.props.userCurrent}
+          claimQuestion={this.props.claimQuestion}/>
+      )
+    } else {
+      return (<div/>)
+    }
+  },
+
 
   //if helper's children exist, then render the Helpers component
   render: function() {
@@ -31,12 +50,7 @@ var QuestionItem = React.createClass({
           
           <div className="row">
             <div className="col-sm-9 col-md-9">
-              
-              <ClaimQuestionButton 
-                details={this.props.details}
-                userCurrent={this.props.userCurrent}
-                claimQuestion={this.props.claimQuestion}/>
-                
+              {this.isAuthenticated}
             </div>
             <div className="col-sm-8 col-md-3">
               {this.isClaimed()}
