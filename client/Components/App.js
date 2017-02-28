@@ -10,6 +10,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      authenticated: 0,
       user: { //check from user table
         id: '1',
         email: 'ai@gmail.com',
@@ -61,27 +62,43 @@ export default class App extends React.Component {
   componentWillMount() {
     //we can't call 'this' within axios, so need to hold it in 'context'
     var context = this;
-    
-    //do ajax call to get current user info
-    var data = {
-      id: 3,
-    }
-    axios.get('/user-current', { params: data }) //currently hardcoded to 1 (Ai Shi) in usersController.js
+
+    //do ajax call
+    axios.get('/session')
     .then(function(response) {
-      console.log('User data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({user: response.data});
-    })
-    .catch(function(err) {
-      console.log('Error retrieving user from DB',err);
-    })
+      console.log('Real response from DB after calling /session', response);
+
+      if (response.data.github_id) {
+        //set authenticated state to 1
+        context.setState({'authenticated': 1});
+
+        var data = {
+          github_id: response.data.github_id
+        }
+
+        //do ajax call to get current user info
+        axios.get('/user-current', { params: data }) 
+        .then(function(response) {
+          console.log('User data from DB', response.data);
+          //response.data object is in an array, so need to get element 0
+          context.setState({user: response.data});
+        })
+        .catch(function(err) {
+          console.log('Error retrieving user from DB',err);
+        })
+      } else {
+        //set authenticated state to 0
+        context.setState({'authenticated': 0});
+      }
+    });
 
     //do ajax call to get questions
     axios.get('/question')
     .then(function(response) {
       console.log('Questions data from DB', response.data);
+
       //response.data object is in an array, so need to get element 0
-      context.setState({questions: response.data});      
+      context.setState({questions: response.data});
     })
     .catch(function(err) {
       console.log(err);
@@ -96,8 +113,15 @@ export default class App extends React.Component {
     })
     .catch(function(err) {
       console.log(err);
-    })
+    });
   }
+
+  // componentDidMount() {
+  //   axios.get('/session').then(function(response) {
+  //     console.log('inside then');
+  //     console.log(response.data);
+  //   })
+  // }
 
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);
@@ -131,93 +155,28 @@ export default class App extends React.Component {
     axios.post('/claim', {id_user: userId, id_question: questionId}) //hard coded
     .then(function(res) {
       console.log('Success writing claim to database', res);
-
     })
     .catch(function(err) {
       if (err) {
-        console.log('Fail to write claim to database')
+        console.log('Fail to write claim to database');
       }
     });
   }
 
-  loginMax(context) {
-    // var context = this;
-    
-    //do ajax call to get current user info
-    var data = {
-      id: 3,
-    }
-    axios.get('/user-current', { params: data }) //currently hardcoded to 1 (Ai Shi) in usersController.js
-    .then(function(response) {
-      console.log('User data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({user: response.data});
-    })
-    .catch(function(err) {
-      console.log('Error retrieving user from DB',err);
-    })
-
-    //do ajax call to get questions
-    axios.get('/question')
-    .then(function(response) {
-      console.log('Questions data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questions: response.data});      
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
-
-    //do ajax call to get claimed questions
-    axios.get('/claim')
-    .then(function(response) {
-      console.log('CLaims data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questionsClaimed: response.data});
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
-  }
-
-  loginAi(context) {
-    // var context = this;
-    
-    //do ajax call to get current user info
-    var data = {
-      id: 1,
-    }
-    axios.get('/user-current', { params: data }) //currently hardcoded to 1 (Ai Shi) in usersController.js
-    .then(function(response) {
-      console.log('User data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({user: response.data});
-    })
-    .catch(function(err) {
-      console.log('Error retrieving user from DB',err);
-    })
-
-    //do ajax call to get questions
-    axios.get('/question')
-    .then(function(response) {
-      console.log('Questions data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questions: response.data});      
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
-
-    //do ajax call to get claimed questions
-    axios.get('/claim')
-    .then(function(response) {
-      console.log('CLaims data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questionsClaimed: response.data});
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
+  checkUserAuth() {
+    var context = this;
+    axios.get('/session').then( function(response) {
+      console.log('GITHUB checkUserAuth response', response);
+      if (response.data.github_id) {
+        //if session is valid, set authenticated to 1
+        console.log('YES, USER IS AUTHENTICATED!!!!')
+        context.setState({'authenticated': 1});
+      } else {
+        //else, set authenticated to 0
+        console.log('OH NO, USER IS NOT AUTHENTICATED!!!!')
+        context.setState({'authenticated': 0});
+      }
+    });
   }
 
   render() {
@@ -226,16 +185,14 @@ export default class App extends React.Component {
      (child) => React.cloneElement(child, {
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
+       checkUserAuth: this.checkUserAuth.bind(this),
        userData: this.state
 
      })
     );
 
     /*
-    <h3>App.js state</h3>
-    <pre>
-      {JSON.stringify(this.state, null, 2)}
-    </pre>
+    
     */
 
     return (
@@ -243,19 +200,13 @@ export default class App extends React.Component {
         
         <NavLink/>
 
+
         {childrenWithProps}
-        <div className="row">
-          <div className="col-sm-9 col-md-9 main">
-            &nbsp;
-          </div>
-          <div className="col-sm-3 col-md-3 main">
-            <a className="text-muted" onClick={ () => this.loginMax(this) }>Max</a> &nbsp;&nbsp;
-            <a className="text-muted" onClick={ () => this.loginAi(this)}>Ai</a>
-          </div>
-        </div>
-        <div className="pre">
-          
-        </div>
+        <h4>App.js state</h4>
+        <pre>
+          {JSON.stringify(this.state, null, 2)}
+        </pre>
+
       </div>
     )
   }

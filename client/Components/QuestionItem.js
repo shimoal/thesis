@@ -31,10 +31,12 @@ var QuestionItem = React.createClass({
           
           <div className="row">
             <div className="col-sm-9 col-md-9">
+              
               <ClaimQuestionButton 
                 details={this.props.details}
                 userCurrent={this.props.userCurrent}
                 claimQuestion={this.props.claimQuestion}/>
+                
             </div>
             <div className="col-sm-8 col-md-3">
               {this.isClaimed()}

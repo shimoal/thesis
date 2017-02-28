@@ -2,29 +2,50 @@ import React from 'react'
 import { Link } from 'react-router'
 import OpenQuestions from './OpenQuestions'
 import HomepageSearchBar from './HomepageSearchBar'
+import axios from 'axios'
 
-export default React.createClass({
+export default class Home extends React.Component {
+  constructor() {
+    super(); 
 
-  getDefaultProps: function() {
+    this.state = {
+      helloMessage: ''
+    }
+
+  }
+
+  getDefaultProps() {
     console.log('getting our default properties');
-  },
+  }
 
   //Before component is rendered
-  componentWillMount: function() {
+  componentWillMount() {
     console.log('Home component is mounting');
-    // this.props.showSearch('yes');
-  },
+    
+    //check to make sure user is authenticated
+    this.props.checkUserAuth();
+  }
 
   //Happens after component has rendered
-  componentDidMount: function() {
+  componentDidMount() {
     console.log('Home component has rendered');
 
-  },
+// every component needs to do GET /session to check if the user has been authenticated!!!!
+// need to pass down the following function as props to all components
+
+    // var context = this;
+    // axios.get('/session').then( function(response) {
+    //   console.log('Home.js github auth response', response);
+    //   if (response.data.github_id) {
+    //     context.setState({'helloMessage': 'Hello, ' + response.data.github_id});
+    //   }
+    // });
+  }
   
   //Happens when component has rendered and about to unmount
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     // this.props.showSearch('no');
-  },
+  }
 
   //Happen whenever home component's state changes
   render() {
@@ -35,11 +56,12 @@ export default React.createClass({
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
+         <p> {this.state.helloMessage} </p>
         
           { /* OpenQuestions.js */}
           <OpenQuestions 
             userCurrent={this.props.userData.user}
-            questions={this.props.userData.questions} 
+            questions={this.props.userData.questions}
             claimQuestion={this.props.claimQuestion} />
 
           { /* FindHelpers Compoent */}
@@ -106,4 +128,4 @@ export default React.createClass({
       
     )
   }
-})
+}
