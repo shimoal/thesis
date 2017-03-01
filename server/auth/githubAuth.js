@@ -12,7 +12,7 @@ passport.use(new GithubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('insdie Strategy cb', profile);
-    var user = {name: profile.displayName, email: profile.emails[0].value, profileimg: profile._json.avatar_url, github_id: profile.id}
+    var user = {name: profile.displayName, email: profile.emails[0].value, profile_img: profile._json.avatar_url, github_id: profile.id}
     console.log('user:', user);
     return done(null, user);
   }
@@ -20,11 +20,6 @@ passport.use(new GithubStrategy({
 
 
 passport.serializeUser(function(user, done) {
-  // placeholder for custom user serialization
-  // console.log('information inside serializeUser:');
-  // console.log('id: ', user.id);
-  // console.log('email: ', user.emails[0].value);
-  // console.log('name: ', user.displayName);
   // null is for errors
   console.log('inside serializeUser', user);
   done(null, user);
@@ -80,7 +75,6 @@ var githubAuth = {
       }
     })
 
-    // sess.username = req.user.name;
     sess.github_id = req.user.github_id;
 
     req.logIn(req.user, function(err) {

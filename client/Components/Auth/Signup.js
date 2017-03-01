@@ -4,7 +4,6 @@ import axios from 'axios'
 export default class Signup extends React.Component{
   constructor(props) {
     super(props);
-    // this.handleSignup = this.handleSignup.bind(this); //we don't need this
   }
 
   handleSignup() {
@@ -29,7 +28,6 @@ export default class Signup extends React.Component{
         <h2 className="form-signin-heading">Please Login</h2>
 
         <a href="/auth/github">Login/signup with github </a>
-
           <label className="sr-only">Username</label>
           <input type="textarea" className="form-control" placeholder="Username" id="username" required autoFocus/>
           <label className="sr-only">Email address</label>

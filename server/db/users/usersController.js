@@ -21,7 +21,7 @@ const controller = {
       email: user.email,
       name: user.name,
       github_id: user.github_id,
-      profileimg: user.profileimg
+      profile_img: user.profile_img
     })
     .then(function(task) {
       task.save();
@@ -33,30 +33,6 @@ const controller = {
       return "error: " + err;
     });
   },
-  // create: function(req, res, next) {
-  //   // const password = User.generateHash(req.body.password);
-  //   // console.log('inside user create', req.body);
-
-  //   User.findOrCreate({
-  //     where: {
-  //       email: req.body.email,
-  //     },
-  //     defaults: {
-  //       name: req.body.username,
-  //     }
-  //   }).spread(function(user, created){
-  //     if (created) {
-  //       console.log('User is successfully created');
-  //       res.end();
-  //       // res.redirect('/dashboard');
-  //     } 
-  //   }).catch(function(err){
-  //     console.log('error:', err);
-  //     if (err.original.code === '23505') {
-  //       return res.status(403).send('That email address already exists, please login');
-  //     }
-  //     return res.status(500);
-  //   });
 
   // },
   // retrieve: function(req, res, next) {

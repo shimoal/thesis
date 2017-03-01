@@ -32,10 +32,6 @@ var Helpers = React.createClass({
       return(<div/>)
     }
   },
-  
-  componentDidMount: function() {
-    // console.log('In Helpers.js', this.props);
-  },
 
   render: function() {
     return (

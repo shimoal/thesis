@@ -1,9 +1,7 @@
 import React from 'react'
-
 import ace from 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
-import axios from 'axios'
 import Signup from './Auth/Signup'
 
 let socket = io.connect();
