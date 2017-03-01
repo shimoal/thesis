@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "webpack -d --watch",
-    "test": "mocha spec/**/*Spec.js spec/.setup.js spec/**/*-react-test.js"
+    "test": "mocha spec/**/*Spec.js spec/.setup.js spec/**/*-react-test.js",
+    "dev": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",

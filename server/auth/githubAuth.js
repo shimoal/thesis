@@ -5,10 +5,22 @@ var usersCtrl = require('./../db/users/usersController.js');
 var User = require('./../db/users/usersModel.js');
 var sess;
 
+var app = require('./../app.js');
+var githubCB
+
+
+if ( app.get('env') === 'development' ) {
+  githubCB = "http://localhost:8080/auth/github/callback"
+} else {
+  githubCB = "https://hackeroos.herokuapp.com/auth/github/callback"
+}
+
+
+
 passport.use(new GithubStrategy({
     clientID: githubAuth.CLIENT_ID,
     clientSecret: githubAuth.CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/github/callback"
+    callbackURL: githubCB
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('insdie Strategy cb', profile);

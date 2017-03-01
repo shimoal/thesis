@@ -13,7 +13,6 @@ io.on('connection', function(socket) {
   userNum++;
   socket.on('disconnect', function() {
     userNum--;
-    console.log('user has disconnected');
   });
   /** when client emits 'addroom' **/
   socket.on('addroom', function(username, room_name) {
