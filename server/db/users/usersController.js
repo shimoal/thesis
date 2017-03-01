@@ -49,7 +49,7 @@ const controller = {
   // }
 
   retrieve: function(req, res, next) {
-    console.log('Calling usersController retrieve', req.body);
+    console.log('Calling usersController retrieve', req.query);
     User.findOne({
       where: {
         github_id: req.query.github_id, //pass github id here
