@@ -3,6 +3,22 @@ import { Link } from 'react-router'
 import style from '../sass/NavLink.scss';
 
 export default React.createClass({
+  
+  displayLoginLogout() {
+    if (this.props.userData.authenticated === 1) {
+      return (
+        <li><Link to="/logout">Logout</Link></li>
+        )
+    } else {
+      return (<li><Link to="/signup">Login/Signup</Link></li>)
+    }
+  },
+  displayDashboardLink() {
+    if (this.props.userData.authenticated === 1) {
+      return (<li><Link to="/dashboard">My Dashboard</Link></li>)
+    }
+  },
+
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -21,11 +37,10 @@ export default React.createClass({
             <ul className="nav navbar-nav navbar-right">
               <li><Link to="/about">How it works</Link></li>
               <li><Link to="/graphs">View coding trends</Link></li>
-              <li><Link to="/dashboard">My account</Link></li>
               <li><Link to="/collaborate">Collaborate</Link></li>
-              <li><Link to="/login">Log in</Link> </li>
-              <li><Link to="/signup">Sign up</Link></li>
-              <li><Link to="/logout">Log out</Link></li>
+              {this.displayDashboardLink()}
+              {this.displayLoginLogout()}
+              
             </ul>
           </div>
         </div>

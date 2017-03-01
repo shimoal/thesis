@@ -21,7 +21,6 @@ export default class Home extends React.Component {
   //Before component is rendered
   componentWillMount() {
     console.log('Home component is mounting');
-    
     //check to make sure user is authenticated and set state to 1 or 0
     this.props.checkUserAuth();
   }

@@ -60,16 +60,18 @@ app.get('/auth/github', passport.authenticate('github', function(err, user, info
 // GitHub will call this URL
 app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
 
-app.get('/logout', function(req, res){
+
+
+app.get('/loggingout', function(req, res){
   console.log('logging out');
-  req.logout();
+  req.logOut();
   req.session.destroy(function(err) {
     if (err) {
       console.log('error:', err);
     }
+    res.clearCookie('connect.sid');
     res.redirect('/');
   });
-
 });
 
 //for accessing session to get user data to the client

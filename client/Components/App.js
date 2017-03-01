@@ -2,7 +2,6 @@ import React from 'react'
 import { IndexLink } from 'react-router'
 import axios from 'axios'
 import NavLink from './NavLink'
-import Home from './Home'
 import style from '../sass/App.scss';
 
 export default class App extends React.Component {
@@ -63,7 +62,7 @@ export default class App extends React.Component {
     //we can't call 'this' within axios, so need to hold it in 'context'
     var context = this;
 
-    //do ajax call
+    //do ajax call to check authentication session
     axios.get('/session')
     .then(function(response) {
       console.log('Real response from DB after calling /session', response);
@@ -156,14 +155,14 @@ export default class App extends React.Component {
   checkUserAuth() {
     var context = this;
     axios.get('/session').then( function(response) {
-      console.log('GITHUB checkUserAuth response', response);
+      console.log('checkUserAuth: response', response);
       if (response.data.github_id) {
         //if session is valid, set authenticated to 1
-        console.log('YES, USER IS AUTHENTICATED!!!!')
+        console.log('checkUserAuth: YES, USER IS AUTHENTICATED!!!!')
         context.setState({'authenticated': 1});
       } else {
         //else, set authenticated to 0
-        console.log('OH NO, USER IS NOT AUTHENTICATED!!!!')
+        console.log('checkUserAuth: OH NO, USER IS NOT AUTHENTICATED!!!!')
         context.setState({'authenticated': 0});
       }
     });
@@ -184,10 +183,14 @@ export default class App extends React.Component {
     return (
       <div>
         
-        <NavLink/>
-
-
+        <NavLink userData={this.state}/>
         {childrenWithProps}
+
+        <h3>App.js state</h3>
+        <pre>
+          {JSON.stringify(this.state, null, 2)}
+        </pre>
+        
         <div className="row">
           <div className="col-sm-9 col-md-9 main">
             &nbsp;
