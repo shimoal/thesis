@@ -1,15 +1,36 @@
 import React from 'react'
+import NavLink from './NavLink'
 
 export default class App extends React.Component {
   constructor() {
     super();
+    this.state = {}
   }
+addQuestion() {
 
-  render() {
+}
+claimQuestion() {
+
+}
+checkUserAuth() {
+  
+}
+render() {
+
+    const childrenWithProps = React.Children.map(this.props.children,
+     (child) => React.cloneElement(child, {
+       addQuestion: this.addQuestion.bind(this),
+       claimQuestion: this.claimQuestion.bind(this),
+       checkUserAuth: this.checkUserAuth.bind(this),
+       userData: this.state
+     })
+    );
+
     return (
       <div>
-        <p>This is inside of my app component. </p>
+        <NavLink/>
+        {childrenWithProps}
       </div>
-      )
+    )
   }
 }

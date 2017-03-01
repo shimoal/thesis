@@ -1,5 +1,9 @@
 import React from 'react'
-import ReactDom from 'react-dom'
-import App from './Components/App'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import ReactDOM from 'react-dom'
+import routes from './Components/routes'
+import NavLink from './Components/NavLink'
 
-ReactDom.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Router routes={routes} history={browserHistory}/>,
+  document.getElementById('app'));
