@@ -7,13 +7,13 @@ var port = process.env.PORT || 3000;
 // app.get('/hikes', hike.index);
 // app.post('/add_hike', hike.add_hike);
 
-// app.use(express.static(__dirname + '/../public'));
+app.use(express.static(__dirname + '/../public'));
 // app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js'));
 // app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css'));
 
-// app.get('/*', function(req, res) {
-//   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
-// });
+app.get('/*', function(req, res) {
+  res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+});
 
 app.listen(port, function() {
   console.log('Server is listening on port ' + port);
