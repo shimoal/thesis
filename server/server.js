@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var port = process.env.PORT || 3000;
-var hike = require('./../routes/hike.js');
+// var hike = require('./../routes/hike.js');
 
-app.get('/hikes', hike.index);
-app.post('/add_hike', hike.add_hike);
+// app.get('/hikes', hike.index);
+// app.post('/add_hike', hike.add_hike);
 
 // app.use(express.static(__dirname + '/../public'));
 // app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js'));
