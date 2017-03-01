@@ -14,7 +14,7 @@ const db = require('../database.js');
     type: Sequelize.STRING,
     unique: true
   },
-  profileimg: {
+  profile_img: {
     type: Sequelize.STRING,
   }
 });*/
@@ -31,7 +31,7 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true
   },
-  profileimg: {
+  profile_img: {
     type: Sequelize.STRING,
   },
   description: {

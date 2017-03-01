@@ -116,12 +116,6 @@ export default class App extends React.Component {
     });
   }
 
-  // componentDidMount() {
-  //   axios.get('/session').then(function(response) {
-  //     console.log('inside then');
-  //     console.log(response.data);
-  //   })
-  // }
 
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);
@@ -129,10 +123,6 @@ export default class App extends React.Component {
     var timeStamp = (new Date()).getTime();
     this.state.questions['id' + timeStamp] = questionData;
     console.log('Dummy data', this.state.questions);
-    //Setting state is now done in componentDidMount(), using data from database
-      // this.setState({
-      //   questions: this.state.questions
-      // })
 
     //write to database
     //this is where ORM shines, make sure the object that I send here matches
@@ -190,10 +180,6 @@ export default class App extends React.Component {
 
      })
     );
-
-    /*
-    
-    */
 
     return (
       <div>

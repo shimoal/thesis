@@ -33,13 +33,6 @@ export default class Home extends React.Component {
 // every component needs to do GET /session to check if the user has been authenticated!!!!
 // need to pass down the following function as props to all components
 
-    // var context = this;
-    // axios.get('/session').then( function(response) {
-    //   console.log('Home.js github auth response', response);
-    //   if (response.data.github_id) {
-    //     context.setState({'helloMessage': 'Hello, ' + response.data.github_id});
-    //   }
-    // });
   }
   
   //Happens when component has rendered and about to unmount
@@ -56,7 +49,6 @@ export default class Home extends React.Component {
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
-         <p> {this.state.helloMessage} </p>
         
           { /* OpenQuestions.js */}
           <OpenQuestions 

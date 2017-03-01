@@ -1,9 +1,7 @@
 import React from 'react'
-
 import ace from 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
-import axios from 'axios'
 import Signup from './Auth/Signup'
 
 let socket = io.connect();
@@ -16,8 +14,8 @@ let pc;
 
 let localStream;
 
-
 export default class Collaborate extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -83,12 +81,9 @@ export default class Collaborate extends React.Component {
     /*********** video conference *********/
     socket.on('description', this.handleDescription);
 
-    
     socket.on('candidate', this.handleCandidate);
 
     socket.on('stopCall', this.stopCall);
-
-
   }
 
   /************ live coding *************/
@@ -191,7 +186,6 @@ export default class Collaborate extends React.Component {
     }
     pc.removeStream(localStream);
     localStream.getVideoTracks()[0].stop();
-
   }
 
   handleDescription(evt) {
@@ -211,10 +205,12 @@ export default class Collaborate extends React.Component {
     pc.addIceCandidate(new RTCIceCandidate(candidate));
 
   }
+
   /************************************/  
   render() {
   if (this.props.userData.authenticated === 1) {
     return (
+
       <div className="row">
 
         <div className="col-sm-4 col-md-3 sidebar">
@@ -271,6 +267,7 @@ export default class Collaborate extends React.Component {
           
         </div>
       </div>
+
     )
   } else {
       return (

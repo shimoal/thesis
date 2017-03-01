@@ -13,18 +13,8 @@ io.on('connection', function(socket) {
   userNum++;
   socket.on('disconnect', function() {
     userNum--;
+    console.log('user has disconnected');
   });
-
-  /** when the client emits 'adduser', this listens and executes **/
-  // socket.on('adduser', function(username){
-    // store the username in the socket session for this client
-    // socket.username = username;
-    // usernames[username] = username;
-    // userNum++;
-    // console.log('usernames: ', username);
-    // console.log('counter: ', userNum);
-  // });
-
   /** when client emits 'addroom' **/
   socket.on('addroom', function(username, room_name) {
     // if the room_name all ready exists
@@ -95,4 +85,3 @@ io.on('connection', function(socket) {
 http.listen(port, function() {
   console.log('now listening on port ' + port);
 });
-
