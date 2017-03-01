@@ -8,6 +8,7 @@ var OpenQuestions = React.createClass({
     return ( <QuestionItem 
                 key={key} 
                 index={key} 
+                authenticated={this.props.authenticated}
                 userCurrent={this.props.userCurrent}
                 details={this.props.questions[key]} 
                 claimQuestion={this.props.claimQuestion}/> 
@@ -15,6 +16,7 @@ var OpenQuestions = React.createClass({
   },
   componentDidMount: function() {
     console.log('Inside OpenQuestions', this.props.questions);
+    console.log('CURRENT USER in OpenQuestions: ', this.props.userCurrent);
   },
   render: function() {
     return (

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import axios from 'axios'
 import NavLink from './NavLink'
 import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
@@ -8,15 +9,8 @@ import { browserHistory } from 'react-router'
 
 export default React.createClass({
 
-  componentWillMount() {
-    //check to make sure user is authenticated
-    // this.props.checkUserAuth();
-    console.log('Dashboard component is mounting', this.props.userData.authenticated)
-  },
-
-  componentDidMount() { 
-    console.log('Dashboard component is mounting', this.props.userData.authenticated)
-    // console.log('In Dashboard props',this.props);
+  componentDidMount() {
+    
   },
 
   render() {

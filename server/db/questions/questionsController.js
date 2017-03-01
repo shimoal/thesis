@@ -21,7 +21,8 @@ const controller = {
   retrieve: function(req, res, next) {
     
     // console.log('XXX calling questionsController retrieve');
-    
+    var currentUser = req.query.userId;
+    console.log('Current User to Retrieve just that users question', currentUser);
     db.query('SELECT name, questions.id, title, question, status, deadline, questions."createdAt" \
       from users INNER JOIN questions ON questions."userId" = users.id', { model: Question })
     .then(function(questions) {

@@ -26,6 +26,10 @@ export default class RightColumn extends React.Component {
 
   }
 
+  componentDidMount() {
+    console.log('CURRENT USER in RightCOlumn: ', this.props.userCurrent);
+  }
+
   render() {
 
     var showQuestionForm = function() {
@@ -49,7 +53,7 @@ export default class RightColumn extends React.Component {
         <PostQuestionButton showButton={this.state.showButton} showQuestionForm={showQuestionForm.bind(this)} />
         <PostQuestion userCurrent={this.props.userCurrent} addQuestion={this.props.addQuestion} showForm={this.state.showForm} hideQuestionForm={hideQuestionForm.bind(this)}/>
         <ClaimedQuestions questionsClaimed={this.props.questionsClaimed} />
-        <OpenQuestions questions={this.props.questions} />
+        <OpenQuestions userCurrent={this.props.userCurrent} questions={this.props.questions} />
         <ClosedQuestions />
       </div>
     )

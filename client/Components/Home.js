@@ -23,7 +23,7 @@ export default class Home extends React.Component {
     console.log('Home component is mounting');
     
     //check to make sure user is authenticated
-    this.props.checkUserAuth();
+    // this.props.checkUserAuth();
   }
 
   //Happens after component has rendered
@@ -55,7 +55,7 @@ export default class Home extends React.Component {
             userCurrent={this.props.userData.user}
             questions={this.props.userData.questions}
             claimQuestion={this.props.claimQuestion} 
-            checkUserAuth={this.props.checkUserAuth}/>
+            authenticated={this.props.userData.authenticated}/>
 
           { /* FindHelpers Compoent */}
           <div>

@@ -12,9 +12,9 @@ export default class App extends React.Component {
     this.state = {
       authenticated: 0,
       user: { //check from user table
-        id: '1',
-        email: 'ai@gmail.com',
-        name: 'Ai Shi',
+        id: '0',
+        email: 'nan',
+        name: 'Visitor',
         profileImage: '/photos/photo-ai.png',
         description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
       },
