@@ -39,7 +39,7 @@ app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
-
+//authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -51,6 +51,7 @@ app.use(session({
   cookie: { secure: true }
 }));
 
+//called when user signup/login using github
 app.get('/auth/github', passport.authenticate('github', function(err, user, info) {
   console.log('inside auth');
   console.log(user);
@@ -71,10 +72,9 @@ app.get('/logout', function(req, res){
 
 });
 
-
-
 //for accessing session to get user data to the client
 app.get('/session',  githubAuth.authenticate);
+
 
 
 /****** coding trends routes ******/
