@@ -2,29 +2,43 @@ import React from 'react'
 import { Link } from 'react-router'
 import OpenQuestions from './OpenQuestions'
 import HomepageSearchBar from './HomepageSearchBar'
+import axios from 'axios'
 
-export default React.createClass({
+export default class Home extends React.Component {
+  constructor() {
+    super(); 
 
-  getDefaultProps: function() {
+    this.state = {
+      helloMessage: ''
+    }
+
+  }
+
+  getDefaultProps() {
     console.log('getting our default properties');
-  },
+  }
 
   //Before component is rendered
-  componentWillMount: function() {
+  componentWillMount() {
     console.log('Home component is mounting');
-    // this.props.showSearch('yes');
-  },
+    
+    //check to make sure user is authenticated
+    this.props.checkUserAuth();
+  }
 
   //Happens after component has rendered
-  componentDidMount: function() {
+  componentDidMount() {
     console.log('Home component has rendered');
 
-  },
+// every component needs to do GET /session to check if the user has been authenticated!!!!
+// need to pass down the following function as props to all components
+
+  }
   
   //Happens when component has rendered and about to unmount
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     // this.props.showSearch('no');
-  },
+  }
 
   //Happen whenever home component's state changes
   render() {
@@ -39,7 +53,7 @@ export default React.createClass({
           { /* OpenQuestions.js */}
           <OpenQuestions 
             userCurrent={this.props.userData.user}
-            questions={this.props.userData.questions} 
+            questions={this.props.userData.questions}
             claimQuestion={this.props.claimQuestion} />
 
           { /* FindHelpers Compoent */}
@@ -106,4 +120,4 @@ export default React.createClass({
       
     )
   }
-})
+}
