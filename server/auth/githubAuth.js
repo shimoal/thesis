@@ -8,7 +8,7 @@ var sess;
 passport.use(new GithubStrategy({
     clientID: githubAuth.CLIENT_ID,
     clientSecret: githubAuth.CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/github/callback"
+    callbackURL: "https://hackeroos.herokuapp.com/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('insdie Strategy cb', profile);
