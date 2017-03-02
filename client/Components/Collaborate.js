@@ -4,6 +4,7 @@ import 'brace/mode/javascript'
 import 'brace/theme/github'
 import Signup from './Auth/Signup'
 import io from 'socket.io-client'
+import axios from 'axios'
 
 let socket = io.connect();
 let pc;
@@ -46,13 +47,13 @@ export default class Collaborate extends React.Component {
     this.handleDescription = this.handleDescription.bind(this);
     this.handleCandidate = this.handleCandidate.bind(this);
   }
-  componentWillMount() {
 
+  componentWillMount() {
     // var username = prompt("what is your name?");
     console.log('COLLABORATE Username',this.props.userData.user.name);
     this.setState({username: this.props.userData.user.name});
-    // console.log(username);
   }
+
   componentDidMount() {
     var context = this;   
     /*********** live coding *********/
@@ -129,7 +130,14 @@ export default class Collaborate extends React.Component {
   handleRunCode() {
     var val = this.editor.getValue();
     console.log('run code', val);
-    socket.emit('submit-val', this.state.room_name, val);
+    /****************************************/
+    var context = this;
+    axios.post('/compile', val).then(function(response) {
+      socket.emit('submit-val', context.state.room_name, response);
+    });
+
+    /****************************************/
+    // socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
   updateResult(results) {
