@@ -57,28 +57,28 @@ export default class Collaborate extends React.Component {
     var context = this;   
     /*********** live coding *********/
     this.editor = ace.edit(this.refs.root);
-      this.editor.getSession().setMode("ace/mode/javascript");
-      this.editor.setTheme("ace/theme/github");
+    this.editor.getSession().setMode("ace/mode/javascript");
+    this.editor.setTheme("ace/theme/github");
 
-      socket.on('connect', function(){
-        console.log(context.state.username, ' connected');
-      });
-      socket.on('disconnect', this.exitRoom);
-      socket.on('room-exists', function(msg) {
-        alert(msg);
-      });
-      // changes in editing board
-      this.editor.on('change', this.handleEditorContentChange);
-      socket.on('editor-content-changes', this.updateEditorContent);
-      socket.on('setup-editor', this.setupEditor);
-      // clear editor content
-      socket.on('clear-editor', this.ResetEditor);
-      // 'run code'
-      socket.on('submit-val', this.updateResult);
-      // handle info
-      socket.on('info', this.handleInfo);
-      // exit room
-      socket.on('exit_room', this.handleExitRoom);
+    socket.on('connect', function(){
+      console.log(context.state.username, ' connected');
+    });
+    socket.on('disconnect', this.exitRoom);
+    socket.on('room-exists', function(msg) {
+      alert(msg);
+    });
+    // changes in editing board
+    this.editor.on('change', this.handleEditorContentChange);
+    socket.on('editor-content-changes', this.updateEditorContent);
+    socket.on('setup-editor', this.setupEditor);
+    // clear editor content
+    socket.on('clear-editor', this.ResetEditor);
+    // 'run code'
+    socket.on('submit-val', this.updateResult);
+    // handle info
+    socket.on('info', this.handleInfo);
+    // exit room
+    socket.on('exit_room', this.handleExitRoom);
     /**************************************/
 
     /*********** video conference *********/
@@ -132,10 +132,15 @@ export default class Collaborate extends React.Component {
     socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
-  updateResult(val) {
-    console.log('update result area: ', val);
+  updateResult(results) {
+    console.log('update result area: ', results);
+    var resultsArr = [];
+    for (var i = 0; i < results.length; i++) {
+      resultsArr.push(<p key={i}>{results[i]}</p>);
+    } 
+    console.log(resultsArr);
     this.setState({applyingChanges: true});
-    this.setState({code: val});
+    this.setState({results: resultsArr});
     this.setState({applyingChanges: false});
   }
   handleInfo(msg) {
@@ -272,7 +277,7 @@ export default class Collaborate extends React.Component {
 
           <div className="panel panel-default">
             <div className="panel-body">
-              <div id="result">{this.state.code}</div>
+              <div id="result">{this.state.results}</div>
             </div>
           </div>
           
