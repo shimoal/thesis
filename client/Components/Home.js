@@ -14,15 +14,10 @@ export default class Home extends React.Component {
 
   }
 
-  getDefaultProps() {
-    console.log('getting our default properties');
-  }
-
   //Before component is rendered
   componentWillMount() {
     console.log('Home component is mounting');
-    
-    //check to make sure user is authenticated
+    //check to make sure user is authenticated and set state to 1 or 0
     this.props.checkUserAuth();
   }
 
@@ -42,7 +37,7 @@ export default class Home extends React.Component {
 
   //Happen whenever home component's state changes
   render() {
-    console.log('Home component is rendered')
+    console.log('Home component is rendered');
     return (
       <div className="row">
       <HomepageSearchBar/>
@@ -54,7 +49,8 @@ export default class Home extends React.Component {
           <OpenQuestions 
             userCurrent={this.props.userData.user}
             questions={this.props.userData.questions}
-            claimQuestion={this.props.claimQuestion} />
+            claimQuestion={this.props.claimQuestion} 
+            authenticated={this.props.userData.authenticated}/>
 
           { /* FindHelpers Compoent */}
           <div>

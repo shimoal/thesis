@@ -20,7 +20,7 @@ const controller = {
     
     // console.log('XXX calling questionsController retrieve');
     
-    db.query('select claims.id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.name from users\
+    db.query('select claims.id, questions."userId" AS learner_id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.id AS helper_id, users.name from users\
         INNER JOIN claims ON claims.id_user = users.id\
         INNER JOIN questions ON claims.id_question = questions.id', { model: Claim })
     .then(function(claims) {
@@ -34,6 +34,8 @@ const controller = {
           'status':claim.dataValues.status,
           'deadline':'',
           'createdAt':claim.dataValues.createdAt,
+          'learnerId':claim.dataValues.learner_id,
+          'helperId':claim.dataValues.helper_id,
           'helpers': {
             name:claim.dataValues.name,
             }
