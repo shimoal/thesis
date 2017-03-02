@@ -1,5 +1,6 @@
 const db = require('../database.js'); //for raw sql query
 const Question = require('./questionsModel.js');
+const QuestionOneUser = require('./questionsUserSpecificModel.js');
 
 const controller = {
   save: function(req, res, next) {
@@ -27,7 +28,8 @@ const controller = {
 
     //retrieve all questions
     db.query('SELECT name, questions.id, title, question, status, deadline, questions."createdAt" \
-      from users INNER JOIN questions ON questions."userId" = users.id', { model: Question })
+              from users INNER JOIN questions ON questions."userId" = users.id \
+              ORDER BY id DESC', { model: Question })
     .then(function(questions) {
       // console.log('XXX RAW results',questions);
       var promises = questions.map(function(question) {
@@ -57,8 +59,9 @@ const controller = {
     var currentUserId = req.query.userId;
     console.log('Current User Id to Retrieve just that users question', currentUserId);
     
-    Question.findAll({
-      where: { userId: 2 }
+    QuestionOneUser.findAll({
+      where: { userId: 2 },
+      order: [['id', 'DESC']],
     })
     .then(function(questions) {
       var promises = questions.map(function(question){
