@@ -35,6 +35,7 @@ export default class Collaborate extends React.Component {
     this.handleRunCode = this.handleRunCode.bind(this);
     this.updateResult = this.updateResult.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.setupEditor = this.setupEditor.bind(this);
     this.ResetEditor = this.ResetEditor.bind(this);
     this.handleInfo = this.handleInfo.bind(this);
     this.exitRoom = this.exitRoom.bind(this);
@@ -69,6 +70,7 @@ export default class Collaborate extends React.Component {
       // changes in editing board
       this.editor.on('change', this.handleEditorContentChange);
       socket.on('editor-content-changes', this.updateEditorContent);
+      socket.on('setup-editor', this.setupEditor);
       // clear editor content
       socket.on('clear-editor', this.ResetEditor);
       // 'run code'
@@ -102,7 +104,9 @@ export default class Collaborate extends React.Component {
   }
   handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
+      console.log('content change', JSON.stringify(e));
       socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
+      // socket.emit('save-content', this.state.room_name, JSON.stringify(e));
     }
     return false;
   }
@@ -115,21 +119,27 @@ export default class Collaborate extends React.Component {
   handleReset() {
     socket.emit('clear-editor', this.state.room_name);
   }
+  setupEditor(val) {
+    console.log('setup editor', val);
+    this.editor.getSession().getDocument().applyDeltas(val);
+  }
   ResetEditor() {
     this.editor.getSession().setValue("");
   }
   handleRunCode() {
     var val = this.editor.getValue();
+    console.log('run code', val);
     socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
   updateResult(val) {
+    console.log('update result area: ', val);
     this.setState({applyingChanges: true});
     this.setState({code: val});
     this.setState({applyingChanges: false});
   }
   handleInfo(msg) {
-    // console.log('handle info', msg);
+    console.log('handle info', msg);
     this.setState({info: msg});
   }
   exitRoom() {
@@ -209,7 +219,7 @@ export default class Collaborate extends React.Component {
 
   /************************************/  
   render() {
-  if (this.props.userData.authenticated === 1) {
+  // if (this.props.userData.authenticated === 1) {
     return (
 
       <div className="row">
@@ -270,11 +280,11 @@ export default class Collaborate extends React.Component {
       </div>
 
     )
-  } else {
-      return (
-        <Signup/>
-      )
+  // } else {
+  //     return (
+  //       <Signup/>
+  //     )
 
-  }
+  // }
   }
 }
