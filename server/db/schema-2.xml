@@ -44,23 +44,29 @@
 <row name="email" null="1" autoincrement="0">
 <datatype>VARCHAR(30)</datatype>
 <default>NULL</default></row>
-<row name="password" null="1" autoincrement="0">
-<datatype>VARCHAR</datatype>
-<default>NULL</default></row>
 <row name="name" null="1" autoincrement="0">
 <datatype>VARCHAR(20)</datatype>
 <default>NULL</default></row>
-<row name="profileImage" null="1" autoincrement="0">
+<row name="profile_img" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
 <row name="description" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
+<row name="github_id" null="1" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>NULL</default></row>
+<row name="createdAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="updatedAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="1402" y="193" name="Questions">
+<table x="1315" y="216" name="Questions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -79,6 +85,12 @@
 <default>NULL</default><comment>open, closed, or claimed</comment>
 </row>
 <row name="deadline" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="createdAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="updatedAt" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -109,14 +121,11 @@
 <part>id</part>
 </key>
 </table>
-<table x="509" y="349" name="Sessions">
+<table x="479" y="384" name="Sessions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="datetime" null="1" autoincrement="0">
-<datatype>DATETIME</datatype>
-<default>NULL</default></row>
-<row name="id_user" null="1" autoincrement="0">
+<row name="id_learner" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Users" row="id" />
 </row>
@@ -124,6 +133,15 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Users" row="id" />
 </row>
+<row name="id_question" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="createdAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="updatedAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -140,6 +158,12 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Questions" row="id" />
 </row>
+<row name="createdAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="updatedAt" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

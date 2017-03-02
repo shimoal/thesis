@@ -15,6 +15,10 @@ describe("QuestionItem component", function() {
     // expect(shallow(<QuestionItem />).find('').length).to.equal(2);
   });
 
+  it("User should not be able to claim his own question", function() {
+    // expect(shallow(<QuestionItem />).find('').length).to.equal(2);
+  });  
+
 
   // it("contains a Ace editor", function() {
 		// const wrapper = shallow(<div id="editor" />);

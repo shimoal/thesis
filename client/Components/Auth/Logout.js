@@ -2,17 +2,20 @@ import React from 'react'
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 
-export default class Logout extends React.Component{
-  constructor(props) {
-    super(props);
-  }
+export default React.createClass({
+  componentWillMount() {
+    console.log('inside handleLogout this.props ',this.props);
+  },
 
   handleLogout() {
-    axios.get('/logout')
-          .then( function (response){
-            browserHistory.push('/');
-          });
-  }
+    var context = this;
+    axios.get('/loggingout')
+    .then( function (response){
+        browserHistory.push('/');
+        console.log('inside handleLogout: success?');
+        context.props.checkUserAuth();
+      });
+  },
 
   render() {
     return (
@@ -21,4 +24,5 @@ export default class Logout extends React.Component{
           <button onClick={this.handleLogout}>Log out </button>
       </div>
   )}
-}
+
+})
