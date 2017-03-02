@@ -3,6 +3,10 @@ import { Link } from 'react-router'
 
 var Helpers = React.createClass({
   
+  componentWillMount: function(key) {
+    console.log('In Helpers.s willMount this.props.details', this.props.details);
+  },
+
   renderHelpers: function(key) {
     return ( 
       

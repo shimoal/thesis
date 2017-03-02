@@ -174,6 +174,20 @@ export default class App extends React.Component {
     });
   }
 
+  //user click on accept button
+  acceptQuestion() {
+    //create session table
+    axios.post('/accept', {id_user: userId, id_question: questionId}) //hard coded
+    .then(function(res) {
+      console.log('Success writing claim to database', res);
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log('Fail to write claim to database');
+      }
+    });
+  }
+
   checkUserAuth() {
     var context = this;
     axios.get('/session').then( function(response) {
