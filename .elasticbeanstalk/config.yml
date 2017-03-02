@@ -1,0 +1,14 @@
+branch-defaults:
+  deployAWS:
+    environment: node-express-env
+environment-defaults:
+  node-express-env:
+    branch: null
+    repository: null
+global:
+  application_name: thesis
+  default_ec2_keyname: null
+  default_platform: 64bit Amazon Linux 2016.09 v3.3.1 running Node.js
+  default_region: us-west-2
+  profile: eb-cli
+  sc: git
