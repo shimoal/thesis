@@ -2,7 +2,7 @@ import React from 'react'
 import QuestionItem from './QuestionItem'
 
 var OpenQuestions = React.createClass({
-  
+
   componentWillMount: function(key) {
     console.log('in OpenQuestions, Authenticated?', this.props.authenticated);  
   },
@@ -24,10 +24,20 @@ var OpenQuestions = React.createClass({
     console.log('Inside OpenQuestions', this.props.questions);
     console.log('CURRENT USER in OpenQuestions: ', this.props.userCurrent);
   },
+
+  checkIfInDashboard: function() {
+    if (this.props.dashboard) {
+      return(<h3>My Open Questions</h3>)
+    } else {
+      return(<h3>Open Questions</h3>)  
+    }
+  },
+
   render: function() {
     return (
       <div>
-        <h3>Open Questions</h3>
+        
+        { this.checkIfInDashboard() }
         <div className="panel panel-default">
           <div className="panel-body">
             { Object.keys(this.props.questions).map(this.renderQuestion) }

@@ -9,6 +9,12 @@ import { browserHistory } from 'react-router'
 
 export default React.createClass({
 
+  getInitialState: function() {
+    return {
+      dashboard: 1,
+    }
+  },
+
   componentWillMount() {
     
   },
@@ -21,6 +27,7 @@ export default React.createClass({
           <div className="row">
             <LeftColumn userCurrent={this.props.userData.user} />
             <RightColumn 
+              dashboard={this.state.dashboard}
               userCurrent={this.props.userData.user} 
               authenticated={this.props.userData.authenticated}
               questions={this.props.userData.currentUserQuestions}

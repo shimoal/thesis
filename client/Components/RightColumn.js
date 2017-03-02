@@ -65,6 +65,7 @@ export default class RightColumn extends React.Component {
         <ClaimedQuestions 
           questionsClaimed={this.props.questionsClaimed} />
         <OpenQuestions 
+          dashboard={this.props.dashboard}
           userCurrent={this.props.userCurrent} 
           questions={this.props.questions} />
         <ClosedQuestions />
