@@ -5,15 +5,18 @@ import routes from './Components/routes'
 
 //redux experiment
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers/index';
-import App from './Components/App';
+import { applyMiddleware, createStore } from 'redux';
+import logger from 'redux-logger';
 
-let store = createStore(reducers);
-//<Router routes={routes} history={browserHistory}/>
+import reducers from './reducers/index';
+// import App from './Components/App';
+
+const middleware = applyMiddleware(logger())
+
+let store = createStore(reducers, middleware);
+
 ReactDOM.render(
   <Provider store={store}>
-    
-    <App/>
+    <Router routes={routes} history={browserHistory}/>
   </Provider>,
   document.getElementById('app'));

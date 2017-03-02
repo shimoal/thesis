@@ -10,10 +10,10 @@ class ContainerTwo extends Component {
   render() {
     return(
       <div className="counter">
-        <h2>Spanish Counter</h2>
-        <div onClick={()=> this.props.actionTwoIncrease()}> actionTwoIncrease </div>
-        <div onClick={()=> this.props.actionTwoDecrease()}> actionTwoDecrease </div>
-        <div>{this.props.StateTwoCurrent} </div>
+        <h3>Spanish Counter</h3>
+        <button onClick={()=> this.props.actionTwoIncrease()}> actionTwoIncrease </button> &nbsp;
+        <button onClick={()=> this.props.actionTwoDecrease()}> actionTwoDecrease </button>
+        <p>The result: {this.props.StateTwoCurrent} </p>
       </div>
     )
   }

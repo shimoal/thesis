@@ -7,13 +7,16 @@ import { actionOneIncrease, actionOneDecrease } from '../actions/index';
 
 class ContainerOne extends Component {
 
+  componentDidMount() {
+    console.log('this.props.StateOneCurrent', this.props.StateOneCurrent);
+  }
   render() {
     return(
       <div className="counter">
-        <h2>English Counter</h2>
-        <button onClick={()=> this.props.actionOneIncrease()}> actionOneIncrease </button>
+        <h3>English Counter</h3>
+        <button onClick={()=> this.props.actionOneIncrease()}> actionOneIncrease </button> &nbsp;
         <button onClick={()=> this.props.actionOneDecrease()}> actionOneDecrease </button>
-        <p>{this.props.StateOneCurrent} </p>
+        <p>The result: {this.props.StateOneCurrent} </p>
       </div>
     )
   }
