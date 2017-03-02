@@ -4,6 +4,10 @@ import axios from 'axios'
 import NavLink from './NavLink'
 import style from '../sass/App.scss';
 
+//redux experiment
+import ContainerOne from '../containers/ContainerOne';
+import ContainerTwo from '../containers/ContainerTwo';
+
 export default class App extends React.Component {
 
   constructor(props) {
@@ -137,6 +141,15 @@ export default class App extends React.Component {
     });
   }
 
+<<<<<<< HEAD
+=======
+  componentDidMount() {
+    //redux experiment
+    //check store in props
+    console.log('REDUX store props in App.js', this.props.store);
+  }
+
+>>>>>>> Setting up redux, still doesn't work
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);
     // console.log('addQuestion questionData object', questionData);
@@ -219,7 +232,8 @@ export default class App extends React.Component {
         
         <NavLink userData={this.state}/>
         {childrenWithProps}
-
+        <ContainerOne/>
+        <ContainerTwo/>
         <h3>App.js state</h3>
         <pre>
           {JSON.stringify(this.state, null, 2)}
