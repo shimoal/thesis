@@ -9,11 +9,9 @@ var app = require('./../app.js');
 var githubCB;
 
 
-if ( app.get('env') === 'development' ) {
-  githubCB = "http://localhost:8080/auth/github/callback"
-} else {
+
   githubCB = "http://hackeroo.xyz/auth/github/callback"
-}
+
 
 passport.use(new GithubStrategy({
     clientID: githubAuth.CLIENT_ID,
