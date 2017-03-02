@@ -9,7 +9,7 @@ export default React.createClass({
 
   handleLogout() {
     var context = this;
-    axios.get('/logingout')
+    axios.get('/loggingout')
     .then( function (response){
         browserHistory.push('/');
         console.log('inside handleLogout: success?');

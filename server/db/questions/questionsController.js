@@ -18,11 +18,14 @@ const controller = {
       return res.sendStatus(500);
     });
   },
+  
   retrieve: function(req, res, next) {
     
     // console.log('XXX calling questionsController retrieve');
-    var currentUser = req.query.userId;
-    console.log('Current User to Retrieve just that users question', currentUser);
+    var currentUserId = req.query.userId;
+    console.log('Current User Id to Retrieve just that users question', currentUserId);
+
+    //retrieve all questions
     db.query('SELECT name, questions.id, title, question, status, deadline, questions."createdAt" \
       from users INNER JOIN questions ON questions."userId" = users.id', { model: Question })
     .then(function(questions) {
@@ -39,48 +42,47 @@ const controller = {
           'createdAt': question.createdAt,
         }
       });
-    
-    /*Question.findAll()
-    .then(function(questions) {
-      console.log('XXX results',questions);
-      //after getting data, set the state
-      //need to make sure the shape of object from DB match the state's
-      //loop through the response.data array
-      var promises = questions.map(function(question){
-        // console.log('===========', question.dataValues, ' >>>> in promise all');
-        console.log('XXX each question', question);
-        return {
-          'id': question.dataValues.id,
-          'title':question.dataValues.title,
-          'question':question.dataValues.question,
-          'status':question.dataValues.status,
-          'deadline': '',
-          
-        }
-      });*/
       Promise.all(promises).then(function() {
-        // console.log('===========', promises, ' >>>> in promise all')
-        //convert array into object
-        // var object = {};
-
         res.send(promises);
       })
-
-
-      // var newShape = {};
-
-      // for (var i = 0; i < questions.length; i++) {
-      //   console.log('Question object', JSON.parse(questions[i]));
-
-      // }
-      // res.json(newShape);
-      // res.json(questions);
     })
     .catch(function(err) {
       console.log(' X X X X error retrieving question');
       return res.sendStatus(500);
     });
   },
+
+  retrieveForOneUser: function(req, res, next) {
+    
+    var currentUserId = req.query.userId;
+    console.log('Current User Id to Retrieve just that users question', currentUserId);
+    
+    Question.findAll({
+      where: { userId: 2 }
+    })
+    .then(function(questions) {
+      var promises = questions.map(function(question){
+        // console.log('===========', question.dataValues, ' >>>> in promise all');
+        return {
+          'id': question.dataValues.id,
+          'title':question.dataValues.title,
+          'question':question.dataValues.question,
+          'status':question.dataValues.status,
+          'deadline': '',
+          'createdAt': question.createdAt,
+          'userId': question.userId,
+        }
+      });
+      Promise.all(promises).then(function() {
+        res.send(promises);
+      })
+    })
+    .catch(function(err) {
+      console.log(' X X X X error retrieving one user questions');
+      return res.sendStatus(500);
+    });
+  },
+
 };
 
 module.exports = controller;

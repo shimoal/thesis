@@ -3,8 +3,13 @@ import QuestionItem from './QuestionItem'
 
 var OpenQuestions = React.createClass({
   
+  componentWillMount: function(key) {
+    console.log('in OpenQuestions, Authenticated?', this.props.authenticated);  
+  },
+
   renderQuestion: function(key) {
-    // console.log(this.props.questions);
+    console.log('OpenQuestions', this.props.questions);
+    console.log('OpenQuestions', this.props.userCurrent.name);
     return ( <QuestionItem 
                 key={key} 
                 index={key} 
@@ -15,6 +20,7 @@ var OpenQuestions = React.createClass({
             )
   },
   componentDidMount: function() {
+    console.log('PROPS in OpenQuestions',this.props);
     console.log('Inside OpenQuestions', this.props.questions);
     console.log('CURRENT USER in OpenQuestions: ', this.props.userCurrent);
   },

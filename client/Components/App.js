@@ -8,54 +8,67 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      authenticated: 0,
-      user: { //check from user table
-        id: '0',
-        email: 'nan',
-        name: 'Visitor',
-        profileImage: '/photos/photo-ai.png',
-        description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
-      },
+    if (!this.state) {
+      this.state = {
+        authenticated: 0,
+        user: { //check from user table
+          id: '0',
+          email: 'nan',
+          name: 'Visitor',
+          profileImage: '/photos/photo-ai.png',
+          description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
+        },
 
-      user_skills: { //check skills table and user_skills
-        javaScript: 5,
-        CSS: 4,
-        React: 4,
-        Angular: 5,
-        MySQL: 5
-      },
+        user_skills: { //check skills table and user_skills
+          javaScript: 5,
+          CSS: 4,
+          React: 4,
+          Angular: 5,
+          MySQL: 5
+        },
 
-      ratings: { //check the review table
-        Knowledge: 4,
-        Helpfulness: 4,
-        Experience: 5
-      },
+        ratings: { //check the review table
+          Knowledge: 4,
+          Helpfulness: 4,
+          Experience: 5
+        },
 
-      questions: {
-        id1487880252929: { //check the question
-          title: 'Enable a button in Swift only if all text fields have been filled out',
-          question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
-          status: 'open',
-          deadline: '',
-          name: 'Max'
-        }
-      },
-
-      questionsClaimed: { //check the question's status
-        id1487880583646: {
-          title: 'This is a claimed question #1',
-          question: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh',
-          status: 'claimed',
-          deadline: '',
-          helpers: { //check from claims table
-            id1487880467435: 'Alison Reed',
-            id1487880908457: 'Max Quinn',
-            id1487880443267: 'Hanyen'
+        questions: {
+          id1487880252929: { //check the question
+            title: 'Enable a button in Swift only if all text fields have been filled out',
+            question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
+            status: 'open',
+            deadline: '',
+            name: 'Max'
           }
-        }
+        },
+
+        questionsClaimed: { //check the question's status
+          id1487880583646: {
+            title: 'This is a claimed question #1',
+            question: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh',
+            status: 'claimed',
+            deadline: '',
+            helpers: { //check from claims table
+              id1487880467435: 'Alison Reed',
+              id1487880908457: 'Max Quinn',
+              id1487880443267: 'Hanyen'
+            }
+          }
+        },
+
+        currentUserQuestions: {
+          id2: { //check the question
+            title: 'One user question',
+            question: 'this is just one user questions',
+            status: 'open',
+            deadline: '',
+            name: 'The ONe'
+          }
+        },
       }
     }
+    
   }
 
   componentWillMount() {
@@ -79,8 +92,17 @@ export default class App extends React.Component {
         axios.get('/user-current', { params: data })
         .then(function(response) {
           console.log('User data from DB', response.data);
-          //response.data object is in an array, so need to get element 0
           context.setState({user: response.data});
+
+          //get user's questions
+          var data = {
+            userId: response.data.id
+          }
+          axios.get('/question-for-one-user', { params: data })
+          .then(function(response) {
+            console.log('One User Question data from DB', response.data);
+            context.setState({currentUserQuestions: response.data});
+          })
         })
         .catch(function(err) {
           console.log('Error retrieving user from DB',err);
@@ -175,8 +197,7 @@ export default class App extends React.Component {
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
        checkUserAuth: this.checkUserAuth.bind(this),
-       userData: this.state
-
+       userData: this.state,
      })
     );
 

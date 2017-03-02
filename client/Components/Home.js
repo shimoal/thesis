@@ -14,10 +14,6 @@ export default class Home extends React.Component {
 
   }
 
-  getDefaultProps() {
-    console.log('getting our default properties');
-  }
-
   //Before component is rendered
   componentWillMount() {
     console.log('Home component is mounting');
@@ -41,7 +37,7 @@ export default class Home extends React.Component {
 
   //Happen whenever home component's state changes
   render() {
-    console.log('Home component is rendered')
+    console.log('Home component is rendered');
     return (
       <div className="row">
       <HomepageSearchBar/>

@@ -9,7 +9,7 @@ import { browserHistory } from 'react-router'
 
 export default React.createClass({
 
-  componentDidMount() {
+  componentWillMount() {
     
   },
 
@@ -20,7 +20,12 @@ export default React.createClass({
         <div className="container-fluid">
           <div className="row">
             <LeftColumn userCurrent={this.props.userData.user} />
-            <RightColumn userCurrent={this.props.userData.user} questions={this.props.userData.questions} questionsClaimed={this.props.userData.questionsClaimed} addQuestion={this.props.addQuestion} />
+            <RightColumn 
+              userCurrent={this.props.userData.user} 
+              authenticated={this.props.userData.authenticated}
+              questions={this.props.userData.currentUserQuestions}
+              questionsClaimed={this.props.userData.questionsClaimed} 
+              addQuestion={this.props.addQuestion} />
           </div>
         </div>
       )
