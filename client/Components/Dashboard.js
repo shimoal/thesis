@@ -16,12 +16,12 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    
+    console.log('In Dashboard this.props', this.props);
   },
 
   render() {
     console.log('Dashboard component is rendering', this.props.userData.authenticated)
-    if (this.props.userData.authenticated === 1) {
+    if (this.props.userData.authenticated === 1) { //need to check localStorage instead
       return (
         <div className="container-fluid">
           <div className="row">
@@ -32,6 +32,7 @@ export default React.createClass({
               authenticated={this.props.userData.authenticated}
               questions={this.props.userData.currentUserQuestions}
               questionsClaimed={this.props.userData.questionsClaimed} 
+              acceptQuestion={this.props.acceptQuestion}
               addQuestion={this.props.addQuestion} />
           </div>
         </div>

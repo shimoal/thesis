@@ -175,7 +175,7 @@ export default class App extends React.Component {
   }
 
   claimQuestion(userId, questionId) {
-    axios.post('/claim', {id_user: userId, id_question: questionId}) //hard coded
+    axios.post('/claim', {id_user: userId, id_question: questionId})
     .then(function(res) {
       console.log('Success writing claim to database', res);
     })
@@ -187,15 +187,15 @@ export default class App extends React.Component {
   }
 
   //user click on accept button
-  acceptQuestion() {
+  acceptQuestion(learnerId, helperId, questionId) {
     //create session table
-    axios.post('/accept', {id_user: userId, id_question: questionId}) //hard coded
+    axios.post('/accept', {id_learner: learnerId, id_helper: helperId, id_question: questionId})
     .then(function(res) {
-      console.log('Success writing claim to database', res);
+      console.log('Success writing accept question session to database', res);
     })
     .catch(function(err) {
       if (err) {
-        console.log('Fail to write claim to database');
+        console.log('Fail to write accept question session to database');
       }
     });
   }
@@ -220,10 +220,12 @@ export default class App extends React.Component {
 
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
+       userData: this.state,
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
-       checkUserAuth: this.checkUserAuth.bind(this),
-       userData: this.state,
+       acceptQuestion: this.acceptQuestion.bind(this),       
+       
+       checkUserAuth: this.checkUserAuth.bind(this), //need to refactor this
      })
     );
 

@@ -55,7 +55,8 @@ var QuestionItem = React.createClass({
         </table>
 
 
-        <Helpers details={this.props.details} />
+        <Helpers details={this.props.details}
+                 acceptQuestion={this.props.acceptQuestion} />
 
       </div>
     )

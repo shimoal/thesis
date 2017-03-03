@@ -12,8 +12,8 @@ export default React.createClass({
     axios.get('/loggingout')
     .then( function (response){
         browserHistory.push('/');
-        console.log('inside handleLogout: success?');
-        context.props.checkUserAuth();
+        // console.log('inside handleLogout: success?');
+        // context.props.checkUserAuth();
       });
   },
 
