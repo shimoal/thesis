@@ -171,8 +171,8 @@ export default class App extends React.Component {
     });  
   }
 
-  claimQuestion(userId, questionId) {
-    axios.post('/claim', {id_user: userId, id_question: questionId})
+  claimQuestion(currentUserId, learnerId, questionId) {
+    axios.post('/claim', {id_helper: currentUserId, id_learner: learnerId, id_question: questionId})
     .then(function(res) {
       console.log('Success writing claim to database', res);
     })
