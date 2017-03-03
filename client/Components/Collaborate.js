@@ -3,7 +3,7 @@ import ace from 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
 
-let socket = io.connect('https://hackeroo.xyz:80');
+let socket = io.connect();
 let pc;
     let configuration = {
       'iceServers': [{

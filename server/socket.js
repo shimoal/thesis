@@ -9,6 +9,11 @@ var users = {};
 var userNum = 0;
 var rooms = {};
 
+io.use(function(socket, next) {
+  var handshake = socket.request;
+  next();
+});
+
 io.on('connection', function(socket) {
   userNum++;
   socket.on('disconnect', function() {
