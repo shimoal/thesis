@@ -6,6 +6,7 @@ import Signup from './Auth/Signup'
 import io from 'socket.io-client'
 import axios from 'axios'
 
+
 let socket = io.connect();
 let pc;
     let configuration = {
@@ -83,9 +84,9 @@ export default class Collaborate extends React.Component {
     socket.on('exit_room', this.handleExitRoom);
     /**************************************/
 
-    /*********** video conference *********/
-    socket.on('description', this.handleDescription);
-
+		/*********** video conference *********/
+		socket.on('description', this.handleDescription);
+		
     socket.on('candidate', this.handleCandidate);
 
     socket.on('stopCall', this.stopCall);

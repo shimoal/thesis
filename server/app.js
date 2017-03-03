@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
 var sandBox = require('./sandbox/DockerSandbox');
 
+
 app.use(cookieParser());
 
 //Parse incoming body
@@ -81,10 +82,23 @@ app.get('/loggingout', function(req, res){
 //for accessing session to get user data to the client
 app.get('/session',  githubAuth.authenticate);
 
-/****** coding trends routes ******/
+/**** Authentication routes ****/
 app.get('/user', function(req, res) {
-  res.status(304).send('response');
+  //this should be to log in or sign up a user
+  res.status(200).send('response');
 });
+
+app.get('/logout', function(req, res){
+  console.log('logging out');
+  req.logout();
+  res.redirect('/');
+});
+
+
+
+
+
+/****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
 

@@ -10,7 +10,7 @@ var options ={
     };
 
 
-describe('socket', function() {
+xdescribe('socket', function() {
 
   beforeEach(function (done) {
     client1 = io("http://localhost:8080", options);
