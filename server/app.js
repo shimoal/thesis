@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 var usersCtrl = require('./db/users/usersController.js');
 var questionsCtrl = require('./db/questions/questionsController.js');
 var claimsCtrl = require('./db/claims/claimsController.js');
+var sessionsCtrl = require('./db/sessions/sessionsController.js');
 
 //executing DB controller's methods
 
@@ -36,6 +37,7 @@ app.get('/user-current', usersCtrl.retrieve);
 app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
 
+app.post('/accept', sessionsCtrl.save);
 
 //routes
 app.use(express.static(__dirname + '/../public'));

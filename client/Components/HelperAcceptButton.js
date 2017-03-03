@@ -3,7 +3,7 @@ import React from 'react'
 var HelperAcceptButton = React.createClass({
 
   componentDidMount: function() {
-    console.log('In HelperAcceptButton', this.props.details);
+    console.log('In HelperAcceptButton', this.props);
   },
 
   // checkStatus: function() {
@@ -25,7 +25,7 @@ var HelperAcceptButton = React.createClass({
     return (
       <div>
         <form>
-          <button onClick={() => this.props.acceptQuestion(this.props.learnerId, this.props.details.helperId, this.props.details.id)} className="btn btn-default" role="button">Accept</button>
+          <button onClick={() => this.props.acceptQuestion(this.props.details.learnerId, this.props.details.helperId, this.props.details.id)} className="btn btn-default" role="button">Accept</button>
         </form>
       </div>
     )

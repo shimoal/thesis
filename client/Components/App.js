@@ -192,6 +192,8 @@ export default class App extends React.Component {
     axios.post('/accept', {id_learner: learnerId, id_helper: helperId, id_question: questionId})
     .then(function(res) {
       console.log('Success writing accept question session to database', res);
+      // setState to include learnerId, helperId, questionId, roomNumber
+      // redirect to collaborate
     })
     .catch(function(err) {
       if (err) {
