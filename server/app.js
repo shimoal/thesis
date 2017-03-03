@@ -7,6 +7,7 @@ var passport = require('passport');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
+var sandBox = require('./sandbox/DockerSandbox');
 
 app.use(cookieParser());
 
@@ -41,6 +42,7 @@ app.use(express.static(__dirname + '/../public'));
 app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
+
 
 //authentication
 app.use(passport.initialize());
@@ -94,6 +96,28 @@ app.get('/*', githubAuth.checkUser, function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
 
+/************** sandbox routes ***************/
+app.post('/compile', function(req, res) {
+    // var language = req.body.language;
+    var code = req.body.code;
+    // var stdin = req.body.stdin;
+   
+    // var folder= 'temp/' + random(10); //folder in which the temporary folder will be saved
+    // var path=__dirname+"/"; //current working path
+    var vm_name='virtual_machine'; //name of virtual machine that we want to execute
+    var timeout_value=20;//Timeout Value, In Seconds
+
+    //details of this are present in DockerSandbox.js
+    var sandboxType = new sandBox(timeout_value, vm_name, code);
+
+    //data will contain the output of the compiled/interpreted code
+    //the result maybe normal program output, list of error messages or a Timeout error
+    sandboxType.run(function(data,exec_time,err) {
+        console.log("Data: received: "+ data);
+        if (err) {console.log('err in sandboxType.run: ', err.message)}
+      res.send({output:data, errors:err, time:exec_time});
+    });
+});
 
 
 

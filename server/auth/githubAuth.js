@@ -38,16 +38,15 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(name, done) {
-  // placeholder for custom user deserialization.
-  // maybe you are going to get the user from mongo by id?
+  // placeholder for custom user serialization
+  // console.log('information inside serializeUser:');
+  // console.log('id: ', user.id);
+  // console.log('email: ', user.emails[0].value);
+  // console.log('name: ', user.displayName);
   // null is for errors
-  // console.log('deserializeUser', user);
-  console.log('inside deserializeUser', user);
+  console.log('inside serializeUser', user);
   done(null, user);
-
-
 });
-
 
 var githubAuth = {
   checkUser: function(req, res, next) {
@@ -96,7 +95,6 @@ var githubAuth = {
         return res.redirect('/dashboard');
       }
     });
-
   }
 };
 

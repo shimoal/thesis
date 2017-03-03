@@ -137,7 +137,6 @@ export default class App extends React.Component {
     });
   }
 
-
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);
     // console.log('addQuestion questionData object', questionData);

@@ -44,6 +44,7 @@ export default class Home extends React.Component {
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
+         <h1> {this.state.helloMessage} </h1>
         
           { /* OpenQuestions.js */}
           <OpenQuestions 

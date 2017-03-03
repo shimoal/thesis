@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 
+
 export default class Login extends React.Component{
   constructor(props) {
     super(props);
@@ -20,16 +21,14 @@ export default class Login extends React.Component{
     axios.get('/users', {params: data}).then(function(response) {
       console.log('inside login then', response);
     })
-
   }
 
   render() {
     return (
       <div>
-
           <h2> Welcome back! </h2>
           <button onClick={this.handleLogIn}>Sign in with github </button>
-
+          
           <h2> Welcome back! Log in: </h2>
           <form onSubmit={this.handleLogIn}>
             Username: 
@@ -38,7 +37,6 @@ export default class Login extends React.Component{
             <input type="textarea" id="email"></input>
             <input type="submit" value="submit" />
           </form>
-
       </div>
   )}
 }
