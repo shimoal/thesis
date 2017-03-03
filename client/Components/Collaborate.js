@@ -49,9 +49,10 @@ export default class Collaborate extends React.Component {
   }
 
   componentWillMount() {
-    // var username = prompt("what is your name?");
-    console.log('COLLABORATE Username',this.props.userData.user.name);
-    this.setState({username: this.props.userData.user.name});
+    var username = prompt("what is your name?");
+    this.setState({username: username});
+    // console.log('COLLABORATE Username',this.props.userData.user.name);
+    // this.setState({username: this.props.userData.user.name});
   }
 
   componentDidMount() {
@@ -136,13 +137,13 @@ export default class Collaborate extends React.Component {
     var val = this.editor.getValue();
     console.log('run code', val);
     /****************************************/
-    var context = this;
-    axios.post('/compile', val).then(function(response) {
-      socket.emit('submit-val', context.state.room_name, response);
-    });
+    // var context = this;
+    // axios.post('/compile', val).then(function(response) {
+    //   socket.emit('submit-val', context.state.room_name, response);
+    // });
 
     /****************************************/
-    // socket.emit('submit-val', this.state.room_name, val);
+    socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
   updateResult(results) {
