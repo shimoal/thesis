@@ -74,7 +74,7 @@ io.on('connection', function(socket) {
 
   socket.on('submit-val', function(room_name, val) {
     console.log('run code in server, ', room_name, val);
-    /************ Use node.js vm to sandbox untrusted code ************/
+    /************ Use vm2 to sandbox untrusted code ************/
     var sandbox = {
       _output: JSON.parse('[]'),
       console: {
@@ -83,18 +83,42 @@ io.on('connection', function(socket) {
         }
       }
     };
-      const vm = require('vm');
-      var context = new vm.createContext(sandbox);
+    const {VM, VMScript} = require('vm2');
+    const vm = new VM({
+      timeout: 1000,
+      sandbox: sandbox
+    });
     try {
-      var script = new vm.Script(val);
-      script.runInContext(context);    
+      var script = new VMScript(val).compile();
+      vm.run(script);
     } catch (error) {
       console.log('error in vm\n', error.message);
       sandbox._output.push(error.message);
     }
     console.log('vm: ', sandbox._output);
     /****************************************/
-    io.in(room_name).emit('submit-val', JSON.stringify(sandbox._output));
+
+    /************ Use node.js vm to sandbox untrusted code ************/
+    // var sandbox = {
+    //   _output: JSON.parse('[]'),
+    //   console: {
+    //     log: function(input) {
+    //       sandbox._output.push(input);
+    //     }
+    //   }
+    // };
+    //   const vm = require('vm');
+    //   var context = new vm.createContext(sandbox);
+    // try {
+    //   var script = new vm.Script(val);
+    //   script.runInContext(context);    
+    // } catch (error) {
+    //   console.log('error in vm\n', error.message);
+    //   sandbox._output.push(error.message);
+    // }
+    // console.log('vm: ', sandbox._output);
+    /****************************************/
+    io.in(room_name).emit('submit-val', sandbox._output);
   });
 
   /** for the video chat **/
