@@ -107,7 +107,6 @@ export default class Collaborate extends React.Component {
     if (!this.state.applyingChanges) {
       console.log('content change', JSON.stringify(e));
       socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
-      // socket.emit('save-content', this.state.room_name, JSON.stringify(e));
     }
     return false;
   }
@@ -124,12 +123,10 @@ export default class Collaborate extends React.Component {
     this.setState({applyingChanges: true});
     console.log('setup editor', val);
     var context = this;
-    // val = JSON.parse(val);
     val.forEach(function(element) {
       element = JSON.parse(element);
       context.editor.getSession().getDocument().applyDeltas([element]);
     })
-    // this.editor.getSession().getDocument().applyDeltas(val);
     this.setState({applyingChanges: false});
   }
   ResetEditor() {
@@ -261,8 +258,10 @@ export default class Collaborate extends React.Component {
 
         <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
           <h2>Collaborate</h2>
+            <div className="panel panel-default">
+              <div className="panel-body">
                 <h4>{this.state.info}</h4>
-                <div className="row">
+                
                   <form className="col-5" id="roomForm" onSubmit={this.handleCreateRoom}>
                     <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
                     <input type="submit" value="Submit" />
@@ -274,7 +273,8 @@ export default class Collaborate extends React.Component {
                   </form>    
 
                   <button onClick={this.exitRoom}>Stop Connection</button>
-                </div>
+              </div> 
+            </div>
 
           <div className="panel panel-default">
             <div className="panel-heading">
@@ -292,6 +292,9 @@ export default class Collaborate extends React.Component {
           </div>
 
           <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">Result</h3>
+            </div>
             <div className="panel-body">
               <div id="result">{this.state.results}</div>
             </div>
