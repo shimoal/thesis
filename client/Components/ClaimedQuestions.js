@@ -12,7 +12,7 @@ var ClaimedQuestions = React.createClass({
                 acceptHelper={this.props.acceptHelper} 
                 details={this.props.questionsClaimed[key]}/> )
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
     console.log('Inside ClaimedQuestions this.props', this.props);
 
   },

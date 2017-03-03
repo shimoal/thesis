@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../database.js');
 // const User = require('../users/usersModel.js');
 
-const Session = db.define('session', {
+const Collaborate = db.define('collaborate', {
   id_learner: {
     type: Sequelize.INTEGER
   },
@@ -18,4 +18,4 @@ const Session = db.define('session', {
 
 db.sync();
 
-module.exports = Session;
+module.exports = Collaborate;

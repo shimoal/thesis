@@ -1,9 +1,9 @@
 const db = require('../database.js'); //for raw sql query
-const Session = require('./sessionsModel.js');
+const Session = require('./collaborateModel.js');
 
 const controller = {
   save: function(req, res, next) {
-    console.log('inside sessionsController.js req.body', req.body);
+    console.log('inside collaborateController.js req.body', req.body);
     Session.create({
       id_learner: req.body.id_learner,
       id_helper: req.body.id_helper,
