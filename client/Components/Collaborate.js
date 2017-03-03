@@ -3,6 +3,7 @@ import ace from 'brace'
 import 'brace/mode/javascript'
 import 'brace/theme/github'
 import Signup from './Auth/Signup'
+import io from 'socket.io-client'
 
 let socket = io.connect();
 let pc;

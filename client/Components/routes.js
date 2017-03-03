@@ -12,7 +12,6 @@ import PostQuestionPage from './PostQuestionPage'
 import Signup from './Auth/Signup'
 import Logout from './Auth/Logout'
 
-
 module.exports = (
   <Route path="/" component={App}>
     <IndexRoute component={Home}/>
@@ -26,5 +25,7 @@ module.exports = (
     <Route path="/signup" component={Signup}/>
     <Route path="/logout" component={Logout}/>
 
+    <Route path="/login" component={Login}/>
+    <Route path="/signup" component={Signup}/>
   </Route>
 )

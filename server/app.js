@@ -83,6 +83,9 @@ app.get('/session',  githubAuth.authenticate);
 
 
 /****** coding trends routes ******/
+app.get('/user', function(req, res) {
+  res.send('response').statusCode(304);
+});
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
 

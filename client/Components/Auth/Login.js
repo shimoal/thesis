@@ -20,7 +20,6 @@ export default class Login extends React.Component{
     axios.get('/users', {params: data}).then(function(response) {
       console.log('inside login then', response);
     })
-
   }
 
   render() {
