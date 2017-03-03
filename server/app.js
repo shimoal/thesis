@@ -45,17 +45,8 @@ app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
-<<<<<<< HEAD
-
-//authentication
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-=======
 //need to use the express-session middleware before app.use(passport.session()) to actually store the session in memory/database
 // http://stackoverflow.com/questions/36486397/passport-login-and-persisting-session
->>>>>>> Create HelperAcceptButton component with all the necessary props
 app.use(session({
   secret: "customSecret",
   resave: false,

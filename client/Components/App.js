@@ -141,15 +141,12 @@ export default class App extends React.Component {
     });
   }
 
-<<<<<<< HEAD
-=======
   componentDidMount() {
     //redux experiment
     //check store in props
     console.log('REDUX store props in App.js', this.props.store);
   }
 
->>>>>>> Setting up redux, still doesn't work
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);
     // console.log('addQuestion questionData object', questionData);
@@ -187,7 +184,7 @@ export default class App extends React.Component {
   }
 
   //user click on accept button
-  acceptQuestion(learnerId, helperId, questionId) {
+  acceptHelper(learnerId, helperId, questionId) {
     //create session table
     axios.post('/accept', {id_learner: learnerId, id_helper: helperId, id_question: questionId})
     .then(function(res) {
@@ -225,7 +222,7 @@ export default class App extends React.Component {
        userData: this.state,
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
-       acceptQuestion: this.acceptQuestion.bind(this),       
+       acceptHelper: this.acceptHelper.bind(this),       
        
        checkUserAuth: this.checkUserAuth.bind(this), //need to refactor this
      })

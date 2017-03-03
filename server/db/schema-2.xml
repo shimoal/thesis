@@ -37,7 +37,7 @@
     <type label="SET" length="1" sql="SET" quote=""/>
     <type label="Bit" length="0" sql="bit" quote=""/>
   </group>
-</datatypes><table x="444" y="129" name="Users">
+</datatypes><table x="444" y="129" name="users">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -66,13 +66,13 @@
 <part>id</part>
 </key>
 </table>
-<table x="1315" y="216" name="Questions">
+<table x="1315" y="216" name="questions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="id_user" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="title" null="1" autoincrement="0">
 <datatype>VARCHAR(100)</datatype>
@@ -97,7 +97,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="731" y="498" name="Reviews">
+<table x="731" y="498" name="reviews">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -115,23 +115,23 @@
 <default>NULL</default></row>
 <row name="id_session" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Sessions" row="id" />
+<default>NULL</default><relation table="collaborate" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="479" y="384" name="Sessions">
+<table x="479" y="384" name="collaborate">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="id_learner" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="id_helper" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="id_question" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -152,11 +152,11 @@
 <default>NULL</default></row>
 <row name="id_user" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="id_question" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Questions" row="id" />
+<default>NULL</default><relation table="questions" row="id" />
 </row>
 <row name="createdAt" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
@@ -189,9 +189,17 @@
 </row>
 <row name="id_user" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="Users" row="id" />
+<default>NULL</default><relation table="users" row="id" />
 </row>
 <row name="level" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="1075" y="511" name="auth_sessions">
+<row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">

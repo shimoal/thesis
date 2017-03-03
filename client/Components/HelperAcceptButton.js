@@ -25,7 +25,7 @@ var HelperAcceptButton = React.createClass({
     return (
       <div>
         <form>
-          <button onClick={() => this.props.acceptQuestion(this.props.details.learnerId, this.props.details.helperId, this.props.details.id)} className="btn btn-default" role="button">Accept</button>
+          <button onClick={() => this.props.acceptHelper(this.props.details.learnerId, this.props.details.helperId, this.props.details.id)} className="btn btn-default" role="button">Accept</button>
         </form>
       </div>
     )

@@ -17,7 +17,7 @@ var Helpers = React.createClass({
           {this.props.details.helpers[key]}
         </div>
         <div className="col-sm-8 col-md-3">
-          <HelperAcceptButton details={this.props.details} acceptQuestion={this.props.acceptQuestion} />
+          <HelperAcceptButton details={this.props.details} acceptHelper={this.props.acceptHelper} />
         </div>
       </div>
 

@@ -9,7 +9,7 @@ var ClaimedQuestions = React.createClass({
     return ( <QuestionItem 
                 key={key} 
                 index={key} 
-                acceptQuestion={this.props.acceptQuestion} 
+                acceptHelper={this.props.acceptHelper} 
                 details={this.props.questionsClaimed[key]}/> )
   },
   componentDidMount: function() {

@@ -32,7 +32,7 @@ export default React.createClass({
               authenticated={this.props.userData.authenticated}
               questions={this.props.userData.currentUserQuestions}
               questionsClaimed={this.props.userData.questionsClaimed} 
-              acceptQuestion={this.props.acceptQuestion}
+              acceptHelper={this.props.acceptHelper}
               addQuestion={this.props.addQuestion} />
           </div>
         </div>

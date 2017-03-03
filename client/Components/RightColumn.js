@@ -64,7 +64,7 @@ export default class RightColumn extends React.Component {
           hideQuestionForm={hideQuestionForm.bind(this)}/>
         <ClaimedQuestions 
           questionsClaimed={this.props.questionsClaimed}
-          acceptQuestion={this.props.acceptQuestion} />
+          acceptHelper={this.props.acceptHelper} />
         <OpenQuestions 
           dashboard={this.props.dashboard}
           userCurrent={this.props.userCurrent} 
