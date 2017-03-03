@@ -121,8 +121,16 @@ export default class Collaborate extends React.Component {
     socket.emit('clear-editor', this.state.room_name);
   }
   setupEditor(val) {
+    this.setState({applyingChanges: true});
     console.log('setup editor', val);
-    this.editor.getSession().getDocument().applyDeltas(val);
+    var context = this;
+    // val = JSON.parse(val);
+    val.forEach(function(element) {
+      element = JSON.parse(element);
+      context.editor.getSession().getDocument().applyDeltas([element]);
+    })
+    // this.editor.getSession().getDocument().applyDeltas(val);
+    this.setState({applyingChanges: false});
   }
   ResetEditor() {
     this.editor.getSession().setValue("");
