@@ -91,12 +91,12 @@ export default class Collaborate extends React.Component {
     socket.on('stopCall', this.stopCall);
   }
 
-  /************ live coding *************/
-  handleFormChange(e) {
-    this.setState({room_name: e.target.value});
-  }
-  handleCreateRoom(e) {
-    e.preventDefault();
+	/************ live coding *************/
+	handleFormChange(e) {
+		this.setState({room_name: e.target.value});
+	}
+	handleCreateRoom(e) {
+		e.preventDefault();
     socket.emit('addroom', this.state.username, this.state.room_name);
     e.target.value = '';
   }
@@ -223,20 +223,19 @@ export default class Collaborate extends React.Component {
       this.start(false);      
     }
     var description = (JSON.parse(evt)).sdp;
-    pc.setRemoteDescription(new RTCSessionDescription(description));
-  }
 
-  handleCandidate(evt) {
+		// console.log('setting remote description');
+	  pc.setRemoteDescription(new RTCSessionDescription(description));
+	}
+	handleCandidate(evt) {
+		if (!pc) {
+		  this.start(false);
+		}
+		var candidate = (JSON.parse(evt)).candidate;
+		pc.addIceCandidate(new RTCIceCandidate(candidate));
 
-    if (!pc) {
-      this.start(false);
-    }
-    var candidate = (JSON.parse(evt)).candidate;
-    pc.addIceCandidate(new RTCIceCandidate(candidate));
-
-  }
-
-  /************************************/  
+	}
+	/************************************/	
   render() {
   // if (this.props.userData.authenticated === 1) {
     return (
