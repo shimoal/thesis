@@ -4,6 +4,10 @@ import axios from 'axios'
 import NavLink from './NavLink'
 import style from '../sass/App.scss';
 
+//redux experiment
+import ContainerOne from '../containers/ContainerOne';
+import ContainerTwo from '../containers/ContainerTwo';
+
 export default class App extends React.Component {
 
   constructor(props) {
@@ -137,6 +141,12 @@ export default class App extends React.Component {
     });
   }
 
+  componentDidMount() {
+    //redux experiment
+    //check store in props
+    console.log('REDUX store props in App.js', this.props.store);
+  }
+
   addQuestion(questionData) {
     // console.log('The dummy data', this.state.questions);
     // console.log('addQuestion questionData object', questionData);
@@ -161,8 +171,8 @@ export default class App extends React.Component {
     });  
   }
 
-  claimQuestion(userId, questionId) {
-    axios.post('/claim', {id_user: userId, id_question: questionId}) //hard coded
+  claimQuestion(currentUserId, learnerId, questionId) {
+    axios.post('/claim', {id_helper: currentUserId, id_learner: learnerId, id_question: questionId})
     .then(function(res) {
       console.log('Success writing claim to database', res);
     })
@@ -174,15 +184,17 @@ export default class App extends React.Component {
   }
 
   //user click on accept button
-  acceptQuestion() {
+  acceptHelper(learnerId, helperId, questionId) {
     //create session table
-    axios.post('/accept', {id_user: userId, id_question: questionId}) //hard coded
+    axios.post('/accept', {id_learner: learnerId, id_helper: helperId, id_question: questionId})
     .then(function(res) {
-      console.log('Success writing claim to database', res);
+      console.log('Success writing accept question session to database', res);
+      // setState to include learnerId, helperId, questionId, roomNumber
+      // redirect to collaborate
     })
     .catch(function(err) {
       if (err) {
-        console.log('Fail to write claim to database');
+        console.log('Fail to write accept question session to database');
       }
     });
   }
@@ -207,10 +219,12 @@ export default class App extends React.Component {
 
     const childrenWithProps = React.Children.map(this.props.children,
      (child) => React.cloneElement(child, {
+       userData: this.state,
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
-       checkUserAuth: this.checkUserAuth.bind(this),
-       userData: this.state,
+       acceptHelper: this.acceptHelper.bind(this),       
+       
+       checkUserAuth: this.checkUserAuth.bind(this), //need to refactor this
      })
     );
 
@@ -219,7 +233,8 @@ export default class App extends React.Component {
         
         <NavLink userData={this.state}/>
         {childrenWithProps}
-
+        <ContainerOne/>
+        <ContainerTwo/>
         <h3>App.js state</h3>
         <pre>
           {JSON.stringify(this.state, null, 2)}

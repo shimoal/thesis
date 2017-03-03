@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router'
+import HelperAcceptButton from './HelperAcceptButton'
 
 var Helpers = React.createClass({
   
-  componentWillMount: function(key) {
-    console.log('In Helpers.s willMount this.props.details', this.props.details);
+  componentDidMount: function(key) {
+    console.log('In Helpers.s DidMount this.props', this.props);
+    console.log('In Helpers.s DidMount this.props.details', this.props.details);
   },
 
   renderHelpers: function(key) {
@@ -15,7 +17,7 @@ var Helpers = React.createClass({
           {this.props.details.helpers[key]}
         </div>
         <div className="col-sm-8 col-md-3">
-          <Link to="/collaborate">Accept</Link>
+          <HelperAcceptButton details={this.props.details} acceptHelper={this.props.acceptHelper} />
         </div>
       </div>
 

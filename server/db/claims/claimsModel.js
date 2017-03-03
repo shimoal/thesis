@@ -3,7 +3,10 @@ const db = require('../database.js');
 // const User = require('../users/usersModel.js');
 
 const Claim = db.define('claim', {
-  id_user: {
+  id_helper: {
+    type: Sequelize.INTEGER
+  },
+  id_learner: {
     type: Sequelize.INTEGER
   },
   id_question: {

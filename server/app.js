@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 var usersCtrl = require('./db/users/usersController.js');
 var questionsCtrl = require('./db/questions/questionsController.js');
 var claimsCtrl = require('./db/claims/claimsController.js');
+var collaborateCtrl = require('./db/collaborate/collaborateController.js');
 
 //executing DB controller's methods
 
@@ -36,6 +37,7 @@ app.get('/user-current', usersCtrl.retrieve);
 app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
 
+app.post('/accept', collaborateCtrl.save);
 
 //routes
 app.use(express.static(__dirname + '/../public'));
@@ -43,18 +45,19 @@ app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
-
-//authentication
-app.use(passport.initialize());
-app.use(passport.session());
-
-
+//need to use the express-session middleware before app.use(passport.session()) to actually store the session in memory/database
+// http://stackoverflow.com/questions/36486397/passport-login-and-persisting-session
 app.use(session({
   secret: "customSecret",
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true }
 }));
+
+//authentication
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //called when user signup/login using github
 app.get('/auth/github', passport.authenticate('github', function(err, user, info) {
@@ -69,14 +72,15 @@ app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successC
 
 app.get('/loggingout', function(req, res){
   console.log('logging out');
-  req.logOut();
-  req.session.destroy(function(err) {
-    if (err) {
-      console.log('error:', err);
-    }
-    res.clearCookie('connect.sid');
-    res.redirect('/');
-  });
+  req.logout();
+  res.redirect('/');
+  // req.session.destroy(function(err) {
+  //   if (err) {
+  //     console.log('error:', err);
+  //   }
+  //   // res.clearCookie('connect.sid');
+    
+  // });
 });
 
 //for accessing session to get user data to the client

@@ -27,7 +27,7 @@ const controller = {
     console.log('Current User Id to Retrieve just that users question', currentUserId);
 
     //retrieve all questions
-    db.query('SELECT name, questions.id, title, question, status, deadline, questions."createdAt" \
+    db.query('SELECT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt" \
               from users INNER JOIN questions ON questions."userId" = users.id \
               ORDER BY id DESC', { model: Question })
     .then(function(questions) {
@@ -40,6 +40,7 @@ const controller = {
           'question':question.question,
           'status':question.status,
           'deadline': '',
+          'userId':question.userId,
           'name': question.name,
           'createdAt': question.createdAt,
         }
