@@ -22,14 +22,12 @@ io.on('connection', function(socket) {
     if (rooms[room_name]) {
       io.to(socket.id).emit('room-exists', 'The room name is taken, please try other names');
     } else {
-      rooms[room_name] = {};
-      rooms[room_name].users = [];
-      rooms[room_name].code = '';
+      rooms[room_name] = {users:[], code:[]};
       rooms[room_name].users.push(username);
       console.log('rooms', rooms);
       socket.join(room_name);
       io.to(socket.id).emit('info', 'You have created a room ' + room_name);
-      io.to(socket.id).emit('setup-editor', rooms[room_name].code);
+      // io.to(socket.id).emit('setup-editor', rooms[room_name].code);
     }
   });
   /** when client emits 'join-room' */
@@ -40,10 +38,10 @@ io.on('connection', function(socket) {
         socket.join(room_name);
         io.in(room_name).emit('info', 'a new user has joined the room');// broadcast to everyone in the room
         io.to(socket.id).emit('info', 'You joined the room');
+        io.to(socket.id).emit('setup-editor', rooms[room_name].code);
       } else {
         console.log('rooms', rooms);
         io.to(socket.id).emit('info', 'You are already in the room');
-        io.to(socket.id).emit('setup-editor', rooms[room_name].code);
       }
     } else {
       socket.emit('info', 'There is no such room');
