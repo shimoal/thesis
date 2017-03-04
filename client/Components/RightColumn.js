@@ -1,6 +1,5 @@
 import React from 'react'
 import {Link, browserHistory} from 'react-router'
-import axios from 'axios'
 import UserProfile from './UserProfile'
 import Skills from './Skills'
 import PostQuestionButton from './PostQuestionButton'

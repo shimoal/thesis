@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router'
-import axios from 'axios'
-import NavLink from './NavLink'
 import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import Signup from './Auth/Signup'

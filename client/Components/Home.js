@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import OpenQuestions from './OpenQuestions'
 import HomepageSearchBar from './HomepageSearchBar'
-import axios from 'axios'
 
 export default class Home extends React.Component {
   constructor() {
