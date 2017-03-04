@@ -29,24 +29,12 @@ const controller = {
 
   retrieve: function(req, res, next) {
     Collaborate.findOne({
-      where: {
-        roomnumber: req.body.roomnumber
-      }
+      where: { room_number: req.body.room_number },
+      include: [ {all: true} ]
     })
     .then(function(collaborate) {
-      var body = collaborate;
-      Question.findOne({
-        where: {
-          id: collaborate.id_question
-        }
-      })
-      .then(function(question) {
-        body.id_question = question; // replace id_question with question obj
-        res.json(body);
-      })
-      .catch(function(err) {
-        console.log('err in retrieving question through collaborate: ', err.message);
-      });
+      console.log('eager loading in retrieving collaborate', collaborate);
+      res.json(collaborate);
     })
     .catch(function(err) {
       console.log('err in retrieving collaborate: ', err.message);
