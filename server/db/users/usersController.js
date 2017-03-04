@@ -2,20 +2,6 @@ const User = require('./usersModel.js');
 
 const controller = {
 
-  // save: function(req, res, next) {
-  //   User.create({
-  //       email: req.body.email,
-  //       username: req.body.username
-  //   })
-  //   .then(function(task) {
-  //     task.save();
-  //     return res.status(200).send('User Created');
-  //   })
-  //   .catch(function(err) {
-  //     console.log(' X X X X Error saving user');
-  //     return res.sendStatus(500);
-  //   });
-  // },
   save: function(user) {
     User.create({
       email: user.email,
@@ -34,20 +20,6 @@ const controller = {
     });
   },
 
-  // },
-  // retrieve: function(req, res, next) {
-  //   console.log('calling usersController retrieve');
-  //   User.findOne({
-  //     where: {
-  //       email: req.query.email
-  //     }
-  //   }).then(function(user) {
-  //     console.log(user.id);
-  //     res.json(user.id);
-  //   }).catch('')
-
-  // }
-
   retrieve: function(req, res, next) {
     console.log('Calling usersController retrieve', req.query);
     User.findOne({
@@ -65,18 +37,6 @@ const controller = {
     });
   }
 
-
-  // retrieve: function(user) {
-  //   console.log('calling usersController retrieve');
-  //   User.findOne({
-  //     where: {
-  //       email: req.query.email
-  //     }
-  //   }).then(function(user) {
-  //     console.log(user.id);
-  //     res.json(user.id);
-  //   })
-  // }
 };
 
 module.exports = controller;

@@ -10,7 +10,7 @@ const Question = db.define('questions', {
     type: Sequelize.STRING
   },
   question: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   status: {
     type: Sequelize.STRING

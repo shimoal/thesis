@@ -12,7 +12,23 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      return res.status(200).send('Claim successfully saved');
+      
+      //Change the question status to claimed
+      Question.findOne({ 
+          where: {
+            id: req.body.id_question} })
+        .then(function(question) {
+          console.log('change question status in', question);
+          if (question) {
+            question.updateAttributes({
+              status: 'claimed'
+            })
+            .then(function() {
+              return res.status(200).send('Claim successfully saved');
+            })
+          }
+        }) //---- end change question status to claimed
+      
     })
     .catch(function(err) {
       console.log(err,' X X X X Error saving claim');
@@ -24,9 +40,6 @@ const controller = {
     // console.log('XXX calling questionsController retrieve');
     var currentUserId = req.query.userId;
 
-    // User.hasMany(Question, {foreignKey: 'id_user'}); //user has many questions
-    // User.hasMany(Question, {foreignKey: 'userId'}); //user has many questions
-    
     Question.belongsTo(User, {foreignKey: 'userId'});
     Question.hasMany(Claim, {foreignKey: 'id_question'});
     Claim.belongsTo(Question, {foreignKey: 'id_question'});
@@ -35,14 +48,11 @@ const controller = {
                                                                   }]
                                                                 })
     
-    // db.query('select claims.id, questions."userId" AS learner_id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.id AS helper_id, users.name from users\
-    //     INNER JOIN claims ON claims.id_helper = users.id\
-    //     INNER JOIN questions ON claims.id_question = questions.id', { model: Claim })
     .then(function(claims) {
       // console.log('XXX CLAIM RAW results', claims);
       var promises = claims.map(function(claim) {
-        console.log('XXX each claim', claim);
-        console.log('XXX each claim claim.question.user', claim.question.user);
+        // console.log('XXX each claim', claim);
+        // console.log('XXX each claim claim.question.user', claim.question.user);
         return {
           'id': claim.dataValues.id,
           'title':claim.question.title,
@@ -63,7 +73,7 @@ const controller = {
 
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving claims');
+      // console.log(' X X X X error retrieving claims');
       return res.sendStatus(500);
     });
   },
