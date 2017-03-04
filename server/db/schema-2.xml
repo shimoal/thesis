@@ -136,6 +136,9 @@
 <row name="id_question" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="room_number" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <row name="createdAt" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>

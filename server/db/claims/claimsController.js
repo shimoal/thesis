@@ -1,6 +1,7 @@
 const db = require('../database.js'); //for raw sql query
 const Claim = require('./claimsModel.js');
 const Question = require('../questions/questionsUserSpecificModel.js');
+const User = require('../users/usersModel.js');
 
 const controller = {
   save: function(req, res, next) {
@@ -23,9 +24,16 @@ const controller = {
     // console.log('XXX calling questionsController retrieve');
     var currentUserId = req.query.userId;
 
+    // User.hasMany(Question, {foreignKey: 'id_user'}); //user has many questions
+    // User.hasMany(Question, {foreignKey: 'userId'}); //user has many questions
+    
+    Question.belongsTo(User, {foreignKey: 'userId'});
     Question.hasMany(Claim, {foreignKey: 'id_question'});
     Claim.belongsTo(Question, {foreignKey: 'id_question'});
-    Claim.findAll({ where: {id_learner: currentUserId}, include: [Question]})
+    Claim.findAll({ where: {id_learner: currentUserId}, include: [{model: Question, 
+                                                                    include: [User]
+                                                                  }]
+                                                                })
     
     // db.query('select claims.id, questions."userId" AS learner_id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.id AS helper_id, users.name from users\
     //     INNER JOIN claims ON claims.id_helper = users.id\
@@ -34,6 +42,7 @@ const controller = {
       // console.log('XXX CLAIM RAW results', claims);
       var promises = claims.map(function(claim) {
         console.log('XXX each claim', claim);
+        console.log('XXX each claim claim.question.user', claim.question.user);
         return {
           'id': claim.dataValues.id,
           'title':claim.question.title,
@@ -44,7 +53,7 @@ const controller = {
           'learnerId':claim.dataValues.id_learner,
           'helperId':claim.dataValues.id_helper,
           'helpers': {
-            name:claim.dataValues.id_helper,
+            name:claim.question.user.name,
             }
           }
       });
