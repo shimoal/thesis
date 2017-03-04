@@ -29,8 +29,8 @@ app.get('/question', questionsCtrl.retrieve);
 app.get('/question-for-one-user', questionsCtrl.retrieveForOneUser);
 
 
-app.get('/users', usersCtrl.retrieve);
-app.post('/users', usersCtrl.save);
+app.get('/users', usersCtrl.retrieveAll);
+// app.post('/users', usersCtrl.save);
 
 app.get('/user-current', usersCtrl.retrieve);
 

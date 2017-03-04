@@ -21,7 +21,7 @@ const controller = {
   },
 
   retrieve: function(req, res, next) {
-    console.log('Calling usersController retrieve', req.query);
+    // console.log('Calling usersController retrieve', req.query);
     User.findOne({
       where: {
         github_id: req.query.github_id, //pass github id here
@@ -30,6 +30,18 @@ const controller = {
     .then(function(user) {
       console.log('User is successfully retrieved');
       res.json(user);
+    })
+    .catch(function(err) {
+      console.log(' X X X X error retrieving current user');
+      return res.sendStatus(500);
+    });
+  },
+
+  retrieveAll: function(req, res, next) {
+    User.findAll()
+    .then(function(users) {
+      console.log('User is successfully retrieved');
+      res.json(users);
     })
     .catch(function(err) {
       console.log(' X X X X error retrieving current user');

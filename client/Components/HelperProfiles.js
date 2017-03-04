@@ -3,7 +3,23 @@ import { Link } from 'react-router';
 import HelperProfileItem from './HelperProfileItem';
 
 export default React.createClass({
+  
+  // getInitialState: function() {
+  //   return {
+  //     allUsers: {key: {}},
+  //   }
+  // },
+
+  renderProfile(key) {
+    return(
+      <HelperProfileItem key={key}
+                      index={key} 
+                      details={this.props.allUsers[key]} />
+    )
+  },
+
   render() {
+    //{ Object.keys(this.props.allUsers).map(this.renderProfiles) }
     return (
       <div>
         <h3>Find Helpers</h3>
@@ -11,7 +27,7 @@ export default React.createClass({
           <div className="panel-body">
             <div className="row placeholders">
               
-              <HelperProfileItem/>
+              { Object.keys(this.props.allUsers).map(this.renderProfile) }
               
             </div>
           </div>

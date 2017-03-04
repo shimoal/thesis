@@ -54,7 +54,7 @@ export default class Home extends React.Component {
             authenticated={this.props.userData.authenticated}/>
 
           { /* FindHelpers Compoent */}
-          <HelperProfiles/>
+          <HelperProfiles allUsers={this.props.userData.allUsers}/>
 
         </div>
 

@@ -16,60 +16,65 @@ export default class App extends React.Component {
       this.state = {
         authenticated: 0,
         user: {
-          id: '0',
-          email: 'nan',
-          name: 'Visitor',
-          profileImage: '/photos/photo-ai.png',
-          description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
+          // id: '0',
+          // email: 'nan',
+          // name: 'Visitor',
+          // profileImage: '/photos/photo-ai.png',
+          // description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
         },
 
         user_skills: { 
-          javaScript: 5,
-          CSS: 4,
-          React: 4,
-          Angular: 5,
-          MySQL: 5
+          // javaScript: 5,
+          // CSS: 4,
+          // React: 4,
+          // Angular: 5,
+          // MySQL: 5
         },
 
         ratings: { 
-          Knowledge: 4,
-          Helpfulness: 4,
-          Experience: 5
+          // Knowledge: 4,
+          // Helpfulness: 4,
+          // Experience: 5
         },
 
         questions: {
-          id1487880252929: { 
-            title: 'Enable a button in Swift only if all text fields have been filled out',
-            question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
-            status: 'open',
-            deadline: '',
-            name: 'Max'
-          }
+          // id1487880252929: { 
+          //   title: 'Enable a button in Swift only if all text fields have been filled out',
+          //   question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
+          //   status: 'open',
+          //   deadline: '',
+          //   name: 'Max'
+          // }
         },
 
         questionsClaimed: { 
-          id1487880583646: {
-            title: 'This is a claimed question #1',
-            question: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh',
-            status: 'claimed',
-            deadline: '',
-            helpers: { //check from claims table
-              id1487880467435: 'Alison Reed',
-              id1487880908457: 'Max Quinn',
-              id1487880443267: 'Hanyen'
-            }
-          }
+          // id1487880583646: {
+          //   title: 'This is a claimed question #1',
+          //   question: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh',
+          //   status: 'claimed',
+          //   deadline: '',
+          //   helpers: { //check from claims table
+          //     id1487880467435: 'Alison Reed',
+          //     id1487880908457: 'Max Quinn',
+          //     id1487880443267: 'Hanyen'
+          //   }
+          // }
         },
 
         currentUserQuestions: {
-          id2: { 
-            title: 'One user question',
-            question: 'this is just one user questions',
-            status: 'open',
-            deadline: '',
-            name: 'The ONe'
-          }
+          // id2: { 
+          //   title: 'One user question',
+          //   question: 'this is just one user questions',
+          //   status: 'open',
+          //   deadline: '',
+          //   name: 'The ONe'
+          // }
         },
+
+        allUsers: {}
+        
+
+
       }
     }
     
@@ -79,7 +84,7 @@ export default class App extends React.Component {
     //we can't call 'this' within axios, so need to hold it in 'context'
     var context = this;
 
-    //do ajax call to check authentication session
+    //Check Authentication Session
     axios.get('/session')
     .then(function(response) {
       // console.log('Real response from DB after calling /session', response);
@@ -130,27 +135,40 @@ export default class App extends React.Component {
         //set authenticated state to 0
         context.setState({'authenticated': 0});
       }
-    });
+    })
+    .catch(function(err) {
+      console.log('Error checking User\'s Authentication Session');
+    }) // ------- End of check authentication session
 
-    //do ajax call to get questions
+
+    //Get all questions
     axios.get('/question')
     .then(function(response) {
-      console.log('========== Success getting All Questions from DB');
+      console.log('========== Success getting All Questions from DB', response);
 
       //response.data object is in an array, so need to get element 0
       context.setState({questions: response.data});
     })
     .catch(function(err) {
       console.log('Error getting All Questions from DB');
-    })
+    }) // -------- End of get all questions
 
+    //Get all users
+    axios.get('/users')
+    .then(function(response) {
+      console.log('========== Success getting All Users from DB', response);
+
+      //response.data object is in an array, so need to get element 0
+      context.setState({allUsers: response.data});
+    })
+    .catch(function(err) {
+      console.log('Error getting All Users from DB');
+    }) // -------- End of get all users
     
   }
 
   componentDidMount() {
-    //redux experiment
-    //check store in props
-    // console.log('REDUX store props in App.js', this.props.store);
+    
   }
 
   addQuestion(questionData) {
