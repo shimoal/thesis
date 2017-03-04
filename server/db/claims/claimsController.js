@@ -1,5 +1,6 @@
 const db = require('../database.js'); //for raw sql query
 const Claim = require('./claimsModel.js');
+const Question = require('../questions/questionsUserSpecificModel.js');
 
 const controller = {
   save: function(req, res, next) {
@@ -20,25 +21,30 @@ const controller = {
   retrieve: function(req, res, next) {
     
     // console.log('XXX calling questionsController retrieve');
+    var currentUserId = req.query.userId;
+
+    Question.hasMany(Claim, {foreignKey: 'id_question'});
+    Claim.belongsTo(Question, {foreignKey: 'id_question'});
+    Claim.findAll({ where: {id_learner: currentUserId}, include: [Question]})
     
-    db.query('select claims.id, questions."userId" AS learner_id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.id AS helper_id, users.name from users\
-        INNER JOIN claims ON claims.id_helper = users.id\
-        INNER JOIN questions ON claims.id_question = questions.id', { model: Claim })
+    // db.query('select claims.id, questions."userId" AS learner_id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.id AS helper_id, users.name from users\
+    //     INNER JOIN claims ON claims.id_helper = users.id\
+    //     INNER JOIN questions ON claims.id_question = questions.id', { model: Claim })
     .then(function(claims) {
-      // console.log('XXX RAW results',claims);
+      // console.log('XXX CLAIM RAW results', claims);
       var promises = claims.map(function(claim) {
-        // console.log('XXX each claim', claim);
+        console.log('XXX each claim', claim);
         return {
           'id': claim.dataValues.id,
-          'title':claim.dataValues.title,
-          'question':claim.dataValues.question,
-          'status':claim.dataValues.status,
+          'title':claim.question.title,
+          'question':claim.question.question,
+          'status':claim.question.status,
           'deadline':'',
           'createdAt':claim.dataValues.createdAt,
-          'learnerId':claim.dataValues.learner_id,
-          'helperId':claim.dataValues.helper_id,
+          'learnerId':claim.dataValues.id_learner,
+          'helperId':claim.dataValues.id_helper,
           'helpers': {
-            name:claim.dataValues.name,
+            name:claim.dataValues.id_helper,
             }
           }
       });

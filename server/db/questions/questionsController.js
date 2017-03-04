@@ -61,7 +61,7 @@ const controller = {
     console.log('Current User Id to Retrieve just that users question', currentUserId);
     
     QuestionOneUser.findAll({
-      where: { userId: 2 },
+      where: { userId: currentUserId },
       order: [['id', 'DESC']],
     })
     .then(function(questions) {

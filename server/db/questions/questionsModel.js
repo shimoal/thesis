@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../database.js');
 const User = require('../users/usersModel.js');
 
-const Question = db.define('question', {
+const Question = db.define('questions', {
   userId: {
     type: Sequelize.INTEGER
   },

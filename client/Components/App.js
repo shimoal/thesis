@@ -107,6 +107,21 @@ export default class App extends React.Component {
             console.log('One User Question data from DB', response.data);
             context.setState({currentUserQuestions: response.data});
           })
+          .catch(function(err) {
+            console.log(err);
+          });
+          
+          //do ajax call to get claimed questions
+          axios.get('/claim', { params: data })
+          .then(function(response) {
+            console.log('CLaims data from DB', response.data);
+            //response.data object is in an array, so need to get element 0
+            context.setState({questionsClaimed: response.data});
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
+
         })
         .catch(function(err) {
           console.log('Error retrieving user from DB',err);
@@ -129,16 +144,7 @@ export default class App extends React.Component {
       console.log(err);
     })
 
-    //do ajax call to get claimed questions
-    axios.get('/claim')
-    .then(function(response) {
-      console.log('CLaims data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questionsClaimed: response.data});
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
+    
   }
 
   componentDidMount() {

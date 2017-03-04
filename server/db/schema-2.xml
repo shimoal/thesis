@@ -115,13 +115,13 @@
 <default>NULL</default></row>
 <row name="id_session" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="collaborate" row="id" />
+<default>NULL</default><relation table="collaborates" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="479" y="384" name="collaborate">
+<table x="479" y="384" name="collaborates">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
