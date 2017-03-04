@@ -1,6 +1,7 @@
 const db = require('../database.js'); //for raw sql query
 const Collaborate = require('./collaborateModel.js');
 const UserController = require('./../users/usersController.js');
+const Question = require('../questions/questionsModel.js');
 
 const controller = {
   save: function(req, res, next) {
@@ -27,39 +28,30 @@ const controller = {
   },
 
   retrieve: function(req, res, next) {
-    
-    // console.log('XXX calling questionsController retrieve');
-    /*
-    db.query('select claims.id, questions."userId" AS learner_id, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", users.id AS helper_id, users.name from users\
-        INNER JOIN claims ON claims.id_user = users.id\
-        INNER JOIN questions ON claims.id_question = questions.id', { model: Claim })
-    .then(function(claims) {
-      // console.log('XXX RAW results',claims);
-      var promises = claims.map(function(claim) {
-        // console.log('XXX each claim', claim);
-        return {
-          'id': claim.dataValues.id,
-          'title':claim.dataValues.title,
-          'question':claim.dataValues.question,
-          'status':claim.dataValues.status,
-          'deadline':'',
-          'createdAt':claim.dataValues.createdAt,
-          'learnerId':claim.dataValues.learner_id,
-          'helperId':claim.dataValues.helper_id,
-          'helpers': {
-            name:claim.dataValues.name,
-            }
-          }
-      });
-      Promise.all(promises).then(function() {
-        res.send(promises);
+    Collaborate.findOne({
+      where: {
+        roomnumber: req.body.roomnumber
+      }
+    })
+    .then(function(collaborate) {
+      var body = collaborate;
+      Question.findOne({
+        where: {
+          id: collaborate.id_question
+        }
       })
-
+      .then(function(question) {
+        body.id_question = question; // replace id_question with question obj
+        res.json(body);
+      })
+      .catch(function(err) {
+        console.log('err in retrieving question through collaborate: ', err.message);
+      });
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving claims');
-      return res.sendStatus(500);
-    });*/
+      console.log('err in retrieving collaborate: ', err.message);
+      res.sendStatus(404);
+    });
   },
 
 };
