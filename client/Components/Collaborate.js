@@ -103,6 +103,9 @@ export default class Collaborate extends React.Component {
   handleJoinRoom(e) {
     e.preventDefault();
     socket.emit('join-room', this.state.username, this.state.room_name);
+    /*** get the learnerId, helperId, questionId, questionContent from db ***/
+
+    /*************************************/    
   }
   handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
@@ -141,7 +144,6 @@ export default class Collaborate extends React.Component {
     // axios.post('/compile', val).then(function(response) {
     //   socket.emit('submit-val', context.state.room_name, response);
     // });
-
     /****************************************/
     socket.emit('submit-val', this.state.room_name, val);
     return false;
@@ -258,8 +260,11 @@ export default class Collaborate extends React.Component {
 
         <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
           <h2>Collaborate</h2>
+
             <div className="panel panel-default">
               <div className="panel-body">
+                Render the question here with QuestionItem component
+
                 <h4>{this.state.info}</h4>
                 
                   <form className="col-5" id="roomForm" onSubmit={this.handleCreateRoom}>

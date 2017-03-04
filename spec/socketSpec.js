@@ -10,7 +10,7 @@ var options ={
     };
 
 
-xdescribe('socket', function() {
+describe('socket', function() {
 
   beforeEach(function (done) {
     client1 = io("http://localhost:8080", options);
@@ -21,6 +21,10 @@ xdescribe('socket', function() {
     client1.disconnect();
     client2.disconnect();
     done();
+  });
+
+  xit ('0. should get username from session info', function() {
+
   });
 
   it ('1. should give error message if room is already taken', function (done) {
@@ -67,7 +71,6 @@ xdescribe('socket', function() {
       })
     });
   });
-
 
   it ('4. should notify others in the room when a user joins', function () {
     client1.on('connect', function() {
@@ -156,7 +159,21 @@ xdescribe('socket', function() {
     });
   });
 
-  it ('9. should broadcast submit value to others in room', function(done) {
+  it ('9. should render existing code to client who enter the room later', function(done) {
+    client1.on('connect', function() {
+      client1.emit('addroom', 'client1', 'roomD');
+      client1.emit('editor-content-changes', 'roomD', 'changes to editor from client1');
+
+      client2.on('connect', function() {
+        client2.emit('join-room', 'client2', 'roomD');
+        client2.on('setup-editor', function(val) {
+          expect(val).to.equal(['changes to editor from client1']);
+        });
+      });
+    });
+  });
+
+  it ('10. should broadcast submit value to others in room', function(done) {
     client1.on('connect', function() {
       client1.emit('addroom', 'client1','roomE');
 
@@ -175,7 +192,7 @@ xdescribe('socket', function() {
     });
   });
 
-  it ('10. should send the description to peer connection', function(done) {
+  it ('11. should send the description to peer connection', function(done) {
     client1.on('connect', function() {
       client1.emit('addroom', 'client1','roomF');
 
@@ -194,7 +211,7 @@ xdescribe('socket', function() {
     });
   });
 
-  it ('11. should send the ice Candidates to peer connection', function(done) {
+  it ('12. should send the ice Candidates to peer connection', function(done) {
     client1.on('connect', function() {
       client1.emit('addroom', 'client1','roomG');
 
@@ -212,5 +229,5 @@ xdescribe('socket', function() {
       });
     });
   });
-
+});
 });

@@ -7,7 +7,7 @@ var port = process.env.PORT || 8080;
 /************** dynamic rooms ***************/
 var users = {};
 var userNum = 0;
-// rooms = {room_name: {users:[], code: ''}}
+// rooms = {room_name: {users:[], code: []}}
 var rooms = {};
 
 io.on('connection', function(socket) {
