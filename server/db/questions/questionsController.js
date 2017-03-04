@@ -17,8 +17,7 @@ const controller = {
       return res.status(200).send('========== Success saving Question');
     })
     .catch(function(err) {
-      console.log('Error saving question', err);
-      return res.sendStatus(500);
+      return return res.status(500).send("Having trouble saving question.");
     });
   },
   
@@ -79,11 +78,12 @@ const controller = {
       })
     })
     .catch(function(err) {
-      console.log('Error getting question');
-      return res.sendStatus(500);
+      console.log('@_@ Error getting questions');
+      return res.status(500).send("Having trouble retrieving questions.");
     });
   },
 
+  // need refactor
   retrieveForOneUser: function(req, res, next) {
     var currentUserId = req.query.userId;
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
@@ -110,10 +110,20 @@ const controller = {
       });
     })
     .catch(function(err) {
-      console.log('Error getting one user questions', err);
-      return res.sendStatus(500);
+      return res.status(500).send("Having trouble retrieving questions.");
     });
   },
+
+  changeStatus: function(req, res, next) {
+    var old = Question.findById(req.body.id_question);
+    old.update({status: req.body.status})
+      .then(function() {
+        res.status(200);
+      })
+      .catch(function(err) {
+        res.status(500).send("Having trouble updating the status");
+      });
+  }
 
 };
 
