@@ -3,7 +3,7 @@ import React from 'react'
 var ClaimQuestionButton = React.createClass({
 
   componentDidMount: function() {
-    console.log('In CLaimButton', this.props.details);
+    // console.log('In CLaimButton', this.props.details);
   },
 
   checkStatus: function() {

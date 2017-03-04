@@ -16,11 +16,11 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    console.log('In Dashboard this.props', this.props);
+    // console.log('In Dashboard this.props', this.props);
   },
 
   render() {
-    console.log('Dashboard component is rendering', this.props.userData.authenticated)
+    // console.log('Dashboard component is rendering', this.props.userData.authenticated)
     if (this.props.userData.authenticated === 1) { //need to check localStorage instead
       return (
         <div className="container-fluid">

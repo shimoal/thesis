@@ -3,7 +3,7 @@ import React from 'react'
 var HelperAcceptButton = React.createClass({
 
   componentDidMount: function() {
-    console.log('In HelperAcceptButton', this.props);
+    // console.log('In HelperAcceptButton', this.props);
   },
 
   // checkStatus: function() {

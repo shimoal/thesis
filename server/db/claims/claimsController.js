@@ -4,6 +4,7 @@ const Question = require('../questions/questionsUserSpecificModel.js');
 const User = require('../users/usersModel.js');
 
 const controller = {
+  
   save: function(req, res, next) {
     Claim.create({
       id_helper: req.body.id_helper,
@@ -18,13 +19,13 @@ const controller = {
           where: {
             id: req.body.id_question} })
         .then(function(question) {
-          console.log('change question status in', question);
+          // console.log('change question status in', question);
           if (question) {
             question.updateAttributes({
               status: 'claimed'
             })
             .then(function() {
-              return res.status(200).send('Claim successfully saved');
+              return res.status(200).send('========== Success saving Claim');
             })
           }
         }) //---- end change question status to claimed
@@ -49,6 +50,7 @@ const controller = {
                                                                 })
     
     .then(function(claims) {
+      console.log('========== Success getting claimed questions');
       // console.log('XXX CLAIM RAW results', claims);
       var promises = claims.map(function(claim) {
         // console.log('XXX each claim', claim);
@@ -73,7 +75,7 @@ const controller = {
 
     })
     .catch(function(err) {
-      // console.log(' X X X X error retrieving claims');
+      console.log('Error retrieving claimed questions');
       return res.sendStatus(500);
     });
   },

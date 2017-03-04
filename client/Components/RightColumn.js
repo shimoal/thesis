@@ -21,14 +21,14 @@ export default class RightColumn extends React.Component {
   }
 
   componentWillMount() {
-    console.log('inside RightColumn componentWillMount', this.props);
-    console.log('in RIghtCOlumn, Authenticated?', this.props.authenticated);  
+    // console.log('inside RightColumn componentWillMount', this.props);
+    // console.log('in RIghtCOlumn, Authenticated?', this.props.authenticated);  
     //do ajax call to get Helpers (those who claim current user's questions)
     //right now do it in App because the dummy data state is there
   }
 
   componentDidMount() {
-    console.log('CURRENT USER in RightCOlumn: ', this.props.userCurrent);
+    // console.log('CURRENT USER in RightCOlumn: ', this.props.userCurrent);
   }
 
   

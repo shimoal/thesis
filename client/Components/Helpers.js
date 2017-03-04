@@ -5,8 +5,8 @@ import HelperAcceptButton from './HelperAcceptButton'
 var Helpers = React.createClass({
   
   componentDidMount: function(key) {
-    console.log('In Helpers.s DidMount this.props', this.props);
-    console.log('In Helpers.s DidMount this.props.details', this.props.details);
+    // console.log('In Helpers.s DidMount this.props', this.props);
+    // console.log('In Helpers.s DidMount this.props.details', this.props.details);
   },
 
   renderHelpers: function(key) {
@@ -28,11 +28,9 @@ var Helpers = React.createClass({
     //check helper object
     if (this.props.details.helpers) {
       return(
-        <table className="table">
-          <tbody>
-            { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
-          </tbody>
-        </table>
+        <div>
+          { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
+        </div>
       )
     } else {
       return(<div/>)
