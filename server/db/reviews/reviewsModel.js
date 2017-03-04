@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../database.js');
-const Question = require('../questions.js');
+const Collaborate = require('../collaborate/collaborateModel.js');
 
 const Review = db.define('review', {
 	knowledge: {
@@ -17,6 +17,7 @@ const Review = db.define('review', {
 	}
 });
 
-Review.belongsTo(Collaborate);
+// Review.belongsTo(Collaborate);
+
 db.sync();
-module.exports = Reivew;
+module.exports = Review;
