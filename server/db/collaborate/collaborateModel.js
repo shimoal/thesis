@@ -15,7 +15,6 @@ const Collaborate = db.define('collaborate', {
   room_number: {
     type: Sequelize.STRING
   }, 
-  
 });
 
 // User.hasMany(Question);
