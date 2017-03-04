@@ -20,20 +20,12 @@ export default React.createClass({
   },
 
   render() {
-    console.log('Dashboard component is rendering', this.props.userData.authenticated)
-    if (this.props.userData.authenticated === 1) {
+    console.log('Dashboard component is rendering');
+    if (1) {
       return (
         <div className="container-fluid">
-          <div className="row">
-            <LeftColumn userCurrent={this.props.userData.user} />
-            <RightColumn 
-              dashboard={this.state.dashboard}
-              userCurrent={this.props.userData.user} 
-              authenticated={this.props.userData.authenticated}
-              questions={this.props.userData.currentUserQuestions}
-              questionsClaimed={this.props.userData.questionsClaimed} 
-              addQuestion={this.props.addQuestion} />
-          </div>
+        <h1>dashboard</h1>
+
         </div>
       )
     } else {

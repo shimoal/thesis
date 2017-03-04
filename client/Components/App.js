@@ -80,61 +80,61 @@ export default class App extends React.Component {
     .then(function(response) {
       console.log('Real response from DB after calling /session', response);
 
-      if (response.data.github_id) {
-        //set authenticated state to 1
-        context.setState({'authenticated': 1});
+      // if (response.data.github_id) {
+      //   //set authenticated state to 1
+      //   context.setState({'authenticated': 1});
 
-        var data = {
-          github_id: response.data.github_id
-        }
+      //   var data = {
+      //     github_id: response.data.github_id
+      //   }
 
-        //do ajax call to get current user info
-        axios.get('/user-current', { params: data })
-        .then(function(response) {
-          console.log('User data from DB', response.data);
-          context.setState({user: response.data});
+      //   //do ajax call to get current user info
+      //   axios.get('/user-current', { params: data })
+      //   .then(function(response) {
+      //     console.log('User data from DB', response.data);
+      //     context.setState({user: response.data});
 
-          //get user's questions
-          var data = {
-            userId: response.data.id
-          }
-          axios.get('/question-for-one-user', { params: data })
-          .then(function(response) {
-            console.log('One User Question data from DB', response.data);
-            context.setState({currentUserQuestions: response.data});
-          })
-        })
-        .catch(function(err) {
-          console.log('Error retrieving user from DB',err);
-        })
-      } else {
-        //set authenticated state to 0
-        context.setState({'authenticated': 0});
+      //     //get user's questions
+      //     var data = {
+      //       userId: response.data.id
+      //     }
+      //     axios.get('/question-for-one-user', { params: data })
+      //     .then(function(response) {
+      //       console.log('One User Question data from DB', response.data);
+      //       context.setState({currentUserQuestions: response.data});
+      //     })
+      //   })
+      //   .catch(function(err) {
+      //     console.log('Error retrieving user from DB',err);
+      //   })
+      // } else {
+      //   //set authenticated state to 0
+      //   context.setState({'authenticated': 0});
       }
-    });
+    );
 
     //do ajax call to get questions
-    axios.get('/question')
-    .then(function(response) {
-      console.log('Questions data from DB', response.data);
+    // axios.get('/question')
+    // .then(function(response) {
+    //   console.log('Questions data from DB', response.data);
 
-      //response.data object is in an array, so need to get element 0
-      context.setState({questions: response.data});
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
+    //   //response.data object is in an array, so need to get element 0
+    //   context.setState({questions: response.data});
+    // })
+    // .catch(function(err) {
+    //   console.log(err);
+    // })
 
-    //do ajax call to get claimed questions
-    axios.get('/claim')
-    .then(function(response) {
-      console.log('CLaims data from DB', response.data);
-      //response.data object is in an array, so need to get element 0
-      context.setState({questionsClaimed: response.data});
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
+    // //do ajax call to get claimed questions
+    // axios.get('/claim')
+    // .then(function(response) {
+    //   console.log('CLaims data from DB', response.data);
+    //   //response.data object is in an array, so need to get element 0
+    //   context.setState({questionsClaimed: response.data});
+    // })
+    // .catch(function(err) {
+    //   console.log(err);
+    // });
   }
 
 
