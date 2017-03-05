@@ -1,7 +1,7 @@
-import React from 'react'
-import { IndexLink } from 'react-router'
-import axios from 'axios'
-import NavLink from './NavLink'
+import React from 'react';
+import { IndexLink } from 'react-router';
+import axios from 'axios';
+import NavLink from './NavLink';
 import style from '../sass/App.scss';
 
 //redux experiment
@@ -14,6 +14,7 @@ export default class App extends React.Component {
     super(props); 
 
       this.state = {
+
         user_skills:{},
         ratings:{},
         questions:{},
@@ -45,7 +46,6 @@ export default class App extends React.Component {
           var data = {
             userId: response.data.id
           }
-
           //get users questions and claims
           context.getUserQuestions(data);
           context.getUserClaimedQuestions(data);
@@ -68,7 +68,7 @@ export default class App extends React.Component {
     })
     .catch(function(err) {
       console.log('Error getting All Questions from DB');
-    }) // -------- End of get all questions
+    }); // -------- End of get all questions
 
     //Get all users
     axios.get('/users')
@@ -139,7 +139,7 @@ export default class App extends React.Component {
     })
     .catch(function(err) {
       if (err) {
-        console.log('Error writing question to database')
+        console.log('Error writing question to database');
       }
     });  
   }
@@ -220,7 +220,7 @@ export default class App extends React.Component {
         claimQuestion: this.claimQuestion.bind(this),
         acceptHelper: this.acceptHelper.bind(this),
         removeUser: this.removeUser.bind(this)
-     })
+      })
     );
 
     return (
@@ -239,6 +239,6 @@ export default class App extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

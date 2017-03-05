@@ -11,11 +11,11 @@ export default React.createClass({
   // },
 
   renderProfile(key) {
-    return(
+    return (
       <HelperProfileItem key={key}
         index={key} 
         details={this.props.allUsers[key]} />
-    )
+    );
   },
 
   render() {
@@ -33,6 +33,6 @@ export default React.createClass({
           </div>
         </div>
       </div>
-    )
+    );
   }
-})
+});

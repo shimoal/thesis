@@ -75,6 +75,8 @@ app.post('/users', usersCtrl.save);
 
 app.get('/user-current', usersCtrl.retrieve);
 
+app.get('/public-profile', usersCtrl.retrievePublic);
+
 app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
 

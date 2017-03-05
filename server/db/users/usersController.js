@@ -16,7 +16,7 @@ const controller = {
     })
     .catch(function(err) {
       console.log('error saving user:', err);
-      return "error: " + err;
+      return 'error: ' + err;
     });
   },
 
@@ -28,24 +28,41 @@ const controller = {
       }
     })
     .then(function(user) {
-      console.log('User is successfully retrieved', user);
+      console.log('========== Successful retrieving Current User', user);
       res.json(user);
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving current user');
+      console.log('Error retrieving Current user');
       return res.sendStatus(500);
     });
   },
-
+  
+  retrievePublic: function(req, res, next) {
+    console.log('req.query.userId', req.query.userId);
+    User.findOne({
+      where: {
+        id: req.query.userId,
+      }
+    })
+    .then(function(user) {
+      console.log('========== Successful retrieving User Public Profile', user);
+      res.json(user);
+    })
+    .catch(function(err) {
+      console.log('Error retrieving User Public Profile');
+      return res.sendStatus(500);
+    });
+  },
+  
   retrieveAll: function(req, res, next) {
     User.findAll()
     .then(function(users) {
-      console.log('Users are successfully retrieved');
+      console.log('========== Successful retrieving All User');
       console.log('users:', users);
       res.json(users);
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving all users');
+      console.log('Error retrieving All User');
       return res.sendStatus(500);
     });
   }
