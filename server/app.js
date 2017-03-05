@@ -6,13 +6,14 @@ var app = module.exports = express();
 //For sessions and authentication
 var passport = require('passport');
 var session = require('express-session');
-var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
 var pgSession = require('connect-pg-simple')(session);
-//require auth_sessions to build the auth_sessions table if it doesn't exist
 
-
-app.use(cookieParser());
+//routes for static files (must be before all middleware)
+app.use(express.static(__dirname + '/../public'));
+app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use(express.static(__dirname + '/../server/twitter'));
 
 app.use(session({
   store: new pgSession({                            
@@ -21,9 +22,8 @@ app.use(session({
   }),
   secret: "customSecret",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { 
-    secure: true,
     maxAge: 1000 * 60 * 60 * 5 
   } //cookie expires in 5 hours
 }));
@@ -38,16 +38,15 @@ app.get('/auth/github', passport.authenticate('github'));
 // GitHub will call this URL
 app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
 
-app.get('/loggingout', function(req, res){
+app.post('/logout', function(req, res){
   console.log('logging out');
-  req.logOut();
   req.session.destroy(function(err) {
     if (err) {
       console.log('error:', err);
     }
-    res.clearCookie('connect.sid');
-    res.redirect('/');
   });
+  res.json('session logged out');
+
 });
 
 //for accessing session to get user data to the client
@@ -75,12 +74,6 @@ app.get('/user-current', usersCtrl.retrieve);
 
 app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
-
-//routes
-app.use(express.static(__dirname + '/../public'));
-app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
-app.use(express.static(__dirname + '/../server/twitter'));
 
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths

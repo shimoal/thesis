@@ -22,13 +22,12 @@ export default class RightColumn extends React.Component {
 
   componentWillMount() {
     console.log('inside RightColumn componentWillMount', this.props);
-    console.log('in RIghtCOlumn, Authenticated?', this.props.authenticated);  
     //do ajax call to get Helpers (those who claim current user's questions)
     //right now do it in App because the dummy data state is there
   }
 
   componentDidMount() {
-    console.log('CURRENT USER in RightCOlumn: ', this.props.userCurrent);
+    console.log('CURRENT USER in RightCOlumn: ', this.props.user);
   }
 
   
@@ -52,23 +51,7 @@ export default class RightColumn extends React.Component {
     //currently we are not passing authenticated={this.props.authenticated} to OpenQuestions to hide the claim button from user dashboard
     return (
       <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
-        <UserProfile userCurrent={this.props.userCurrent} />
-        <Skills />
-        <PostQuestionButton 
-          showButton={this.state.showButton} 
-          showQuestionForm={showQuestionForm.bind(this)} />
-        <PostQuestion 
-          userCurrent={this.props.userCurrent} 
-          addQuestion={this.props.addQuestion} 
-          showForm={this.state.showForm} 
-          hideQuestionForm={hideQuestionForm.bind(this)}/>
-        <ClaimedQuestions 
-          questionsClaimed={this.props.questionsClaimed} />
-        <OpenQuestions 
-          dashboard={this.props.dashboard}
-          userCurrent={this.props.userCurrent} 
-          questions={this.props.questions} />
-        <ClosedQuestions />
+        <UserProfile user={this.props.user} />
       </div>
     )
   }

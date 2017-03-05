@@ -9,23 +9,15 @@ import { browserHistory } from 'react-router'
 
 export default React.createClass({
 
-  getInitialState: function() {
-    return {
-      dashboard: 1,
-    }
-  },
-
-  componentWillMount() {
-    
-  },
-
   render() {
-    console.log('Dashboard component is rendering');
-    if (1) {
+    if (this.props.user) {
       return (
         <div className="container-fluid">
-        <h1>dashboard</h1>
-
+          <div className="row">
+            <LeftColumn user={this.props.user} />
+            <RightColumn 
+              user={this.props.user} />
+          </div>
         </div>
       )
     } else {

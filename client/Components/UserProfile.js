@@ -5,8 +5,8 @@ export default React.createClass({
     return (
       <div className="row">
         <div className="col-md-10">
-          <h2>{this.props.userCurrent.name}</h2>
-          <p>{this.props.userCurrent.description}</p>
+          <h2>{this.props.user.name}</h2>
+          <p>{this.props.user.description}</p>
         </div>
       </div>
     )

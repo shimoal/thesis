@@ -19,10 +19,10 @@ const controller = {
     });
   },
   retrieve: function(req, res, next) {
-    console.log('Calling usersController retrieve', req.query);
+    console.log('inside user retrieve', req.session);
     User.findOne({
       where: {
-        github_id: req.query.github_id, //pass github id here
+        github_id: req.session.passport.user,
       }
     })
     .then(function(user) {

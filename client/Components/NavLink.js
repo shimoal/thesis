@@ -5,7 +5,7 @@ import style from '../sass/NavLink.scss';
 export default React.createClass({
   
   displayLoginLogout() {
-    if (this.props.userData.authenticated === 1) {
+    if (this.props.user) {
       return (
         <li><Link to="/logout">Logout</Link></li>
         )
@@ -14,7 +14,7 @@ export default React.createClass({
     }
   },
   displayDashboardLink() {
-    if (this.props.userData.authenticated === 1) {
+    if (this.props.user) {
       return (<li><Link to="/dashboard">My Dashboard</Link></li>)
     }
   },

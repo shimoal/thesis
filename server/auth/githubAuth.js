@@ -19,8 +19,13 @@ passport.use(new GithubStrategy({
     callbackURL: githubCB
   },
   function(accessToken, refreshToken, profile, done) {
-    var user = {name: profile.displayName, email: profile.emails[0].value, profile_img: profile._json.avatar_url, github_id: profile.id}
-    console.log('inside cb, user:', user);
+    var user = {
+      name: profile.displayName, 
+      email: profile.emails[0].value, 
+      profile_img: profile._json.avatar_url, 
+      github_id: profile.id
+    };
+    
     User.findOne({
       where: {
         github_id: user.github_id
@@ -44,31 +49,44 @@ passport.use(new GithubStrategy({
 passport.serializeUser(function(user, done) {
   // null is for errors
   console.log('inside serializeUser', user);
-  done(null, user);
+  done(null, user.github_id);
 });
 
-passport.deserializeUser(function(name, done) {
+passport.deserializeUser(function(github_id, done) {
   // placeholder for custom user deserialization.
   // maybe you are going to get the user from mongo by id?
   // null is for errors
   // console.log('deserializeUser', user);
-  console.log('inside deserializeUser', user);
-  done(null, user);
+  console.log('inside deserialization', github_id);
+
+  User.findOne({
+    where: {
+      github_id: github_id
+    }
+  }).then(function(userFound) {
+    if (userFound) {
+      done(null, userFound);
+    }
+  }).catch(function(err) {
+    console.log('there was an error: ', err);
+    done(err);
+  });
 });
 
 
 var githubAuth = {
   authenticate: function(req, res, next) {
-    console.log('inside authenticate', req.session);
-    res.send(req.session);
+    if (req.session.passport) {
+      usersCtrl.retrieve(req, res, next);
+    } else {
+      res.send('not authenticated');      
+    }
   },
 
   failureRedirect: passport.authenticate('github', { failureRedirect: '/' }),
 
   successCallback: function(req, res, next) {
-    console.log('inside sucess callback:', req.session);
-    console.log('inside successCallback', req.user);
-    res.send(req.session);
+    res.redirect('/dashboard');
   }
 };
 
