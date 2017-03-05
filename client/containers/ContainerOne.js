@@ -8,7 +8,7 @@ import { actionOneIncrease, actionOneDecrease } from '../actions/index';
 class ContainerOne extends Component {
 
   componentDidMount() {
-    console.log('this.props.StateOneCurrent', this.props.StateOneCurrent);
+    // console.log('this.props.StateOneCurrent', this.props.StateOneCurrent);
   }
   render() {
     return(

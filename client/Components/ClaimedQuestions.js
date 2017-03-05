@@ -5,7 +5,7 @@ import QuestionItem from './QuestionItem'
 var ClaimedQuestions = React.createClass({
 
   renderQuestion: function(key) {
-    console.log('Inside ClaimedQuestions renderQuestion', this.props.questionsClaimed);
+    // console.log('Inside ClaimedQuestions renderQuestion', this.props.questionsClaimed);
     return ( <QuestionItem 
                 key={key} 
                 index={key} 
@@ -13,7 +13,7 @@ var ClaimedQuestions = React.createClass({
                 details={this.props.questionsClaimed[key]}/> )
   },
   componentWillMount: function() {
-    console.log('Inside ClaimedQuestions this.props', this.props);
+    // console.log('Inside ClaimedQuestions this.props', this.props);
 
   },
   render: function() {

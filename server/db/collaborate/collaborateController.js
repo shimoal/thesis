@@ -11,7 +11,7 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      return res.status(200).send('Session successfully saved');
+      return res.status(200).send('========== Success saving collaborate session');
     })
     .catch(function(err) {
       console.log(err, ' X X X X Error saving session');

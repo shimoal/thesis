@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router'
-import axios from 'axios'
-import NavLink from './NavLink'
 import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import Signup from './Auth/Signup'
@@ -16,11 +14,11 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    console.log('In Dashboard this.props', this.props);
+    // console.log('In Dashboard this.props', this.props);
   },
 
   render() {
-    console.log('Dashboard component is rendering', this.props.userData.authenticated)
+    // console.log('Dashboard component is rendering', this.props.userData.authenticated)
     if (this.props.userData.authenticated === 1) { //need to check localStorage instead
       return (
         <div className="container-fluid">
