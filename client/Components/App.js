@@ -14,67 +14,17 @@ export default class App extends React.Component {
     super(props); 
     if (!this.state) {
       this.state = {
-        authenticated: 0,
-        user: {
-    
-        },
-
-        user_skills: { 
-          // javaScript: 5,
-          // CSS: 4,
-          // React: 4,
-          // Angular: 5,
-          // MySQL: 5
-        },
-
-        ratings: { 
-          // Knowledge: 4,
-          // Helpfulness: 4,
-          // Experience: 5
-        },
-
-        questions: {
-          // id1487880252929: { 
-          //   title: 'Enable a button in Swift only if all text fields have been filled out',
-          //   question: 'I am having trouble figuring out how to change my code to make it so the Done button in the navigation bar is enabled when my three text fields are filled out...',
-          //   status: 'open',
-          //   deadline: '',
-          //   name: 'Max'
-          // }
-        },
-
-        questionsClaimed: { 
-          // id1487880583646: {
-          //   title: 'This is a claimed question #1',
-          //   question: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh',
-          //   status: 'claimed',
-          //   deadline: '',
-          //   helpers: { //check from claims table
-          //     id1487880467435: 'Alison Reed',
-          //     id1487880908457: 'Max Quinn',
-          //     id1487880443267: 'Hanyen'
-          //   }
-          // }
-        },
-
-        currentUserQuestions: {
-          // id2: { 
-          //   title: 'One user question',
-          //   question: 'this is just one user questions',
-          //   status: 'open',
-          //   deadline: '',
-          //   name: 'The ONe'
-          // }
-        },
-
-        allUsers: {},
-        userPublicProfile: {},
-        
-
-
+        authenticated:0,
+        user:{},
+        user_skills:{},
+        ratings:{},
+        questions:{},
+        questionsClaimed:{},
+        currentUserQuestions:{},
+        allUsers:{},
+        userPublicProfile:{},
       }
     }
-    
   }
 
   componentWillMount() {
@@ -141,7 +91,7 @@ export default class App extends React.Component {
     //Get all questions
     axios.get('/question')
     .then(function(response) {
-      console.log('========== Success getting All Questions from DB', response);
+      console.log('========== Success getting All Questions from DB');
 
       //response.data object is in an array, so need to get element 0
       context.setState({questions: response.data});
@@ -153,7 +103,7 @@ export default class App extends React.Component {
     //Get all users
     axios.get('/users')
     .then(function(response) {
-      console.log('========== Success getting All Users from DB', response);
+      console.log('========== Success getting All Users from DB');
 
       //response.data object is in an array, so need to get element 0
       context.setState({allUsers: response.data});
@@ -161,10 +111,6 @@ export default class App extends React.Component {
     .catch(function(err) {
       console.log('Error getting All Users from DB');
     }) // -------- End of get all users
-    
-  }
-
-  componentDidMount() {
     
   }
 
