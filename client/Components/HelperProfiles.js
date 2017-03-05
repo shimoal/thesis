@@ -13,8 +13,8 @@ export default React.createClass({
   renderProfile(key) {
     return(
       <HelperProfileItem key={key}
-                      index={key} 
-                      details={this.props.allUsers[key]} />
+        index={key} 
+        details={this.props.allUsers[key]} />
     )
   },
 

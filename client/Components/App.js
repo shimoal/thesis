@@ -11,16 +11,12 @@ import ContainerTwo from '../containers/ContainerTwo';
 export default class App extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props); 
     if (!this.state) {
       this.state = {
         authenticated: 0,
         user: {
-          // id: '0',
-          // email: 'nan',
-          // name: 'Visitor',
-          // profileImage: '/photos/photo-ai.png',
-          // description: 'Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.',
+    
         },
 
         user_skills: { 
@@ -71,7 +67,8 @@ export default class App extends React.Component {
           // }
         },
 
-        allUsers: {}
+        allUsers: {},
+        userPublicProfile: {},
         
 
 
@@ -222,7 +219,8 @@ export default class App extends React.Component {
 
   checkUserAuth() {
     var context = this;
-    axios.get('/session').then( function(response) {
+    axios.get('/session')
+    .then( function(response) {
       console.log('checkUserAuth: response', response);
       if (response.data.github_id) {
         //if session is valid, set authenticated to 1
@@ -236,6 +234,23 @@ export default class App extends React.Component {
     });
   }
 
+  getUserPublicProfile(githubId) {
+    var context = this;
+    var data = {
+          github_id: githubId
+        }
+    axios.get('/user-current', { params: data })
+    .then(function(response) {
+      console.log('========== Success getting User Profile data from DB');
+      context.setState({userPublicProfile: response.data});
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log('Error getting User Profile data from DB');
+      }
+    });
+  }
+
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
@@ -244,7 +259,7 @@ export default class App extends React.Component {
        addQuestion: this.addQuestion.bind(this),
        claimQuestion: this.claimQuestion.bind(this),
        acceptHelper: this.acceptHelper.bind(this),       
-       
+       getUserPublicProfile: this.getUserPublicProfile.bind(this),
        checkUserAuth: this.checkUserAuth.bind(this), //need to refactor this
      })
     );

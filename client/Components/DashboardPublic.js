@@ -1,19 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router'
 import LeftColumn from './LeftColumn'
-import RightColumn from './RightColumn'
+import RightColumnPublic from './RightColumnPublic'
 import { browserHistory } from 'react-router'
 
 export default React.createClass({
 
-  getInitialState: function() {
-    return {
-      dashboard: 1,
-    }
-  },
+  // getInitialState: function() {
+  //   return {
+  //     dashboard: 1,
+  //   }
+  // },
 
   componentWillMount() {
-    // console.log('In Dashboard this.props', this.props);
+    //invoke a method in App that will fetch the current userId to populate this form
+    this.props.getUserPublicProfile(this.props.params.githubId)
   },
 
   render() {
@@ -22,16 +23,12 @@ export default React.createClass({
       return (
         <div className="container-fluid">
           <div className="row">
-            <LeftColumn userCurrent={this.props.userData.user} />
-            <RightColumnPublic 
-              dashboard={this.state.dashboard}
-              userCurrent={this.props.userData.user} 
-              // authenticated={this.props.userData.authenticated}
-              questions={this.props.userData.currentUserQuestions}
-              // questionsClaimed={this.props.userData.questionsClaimed} 
-              // acceptHelper={this.props.acceptHelper}
-              // addQuestion={this.props.addQuestion} 
-              />
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <h1>Profile page</h1>
+            <p>{this.props.userData.userPublicProfile.name}</p>
+            
           </div>
         </div>
       )
