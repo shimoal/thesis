@@ -225,6 +225,8 @@ export default class App extends React.Component {
   }
 
   removeUser() {
+    this.setState({questionsClaimed: {}});
+    this.setState({currentUserQuestions: {}});
     this.setState({user: {}});
   }
 

@@ -22,6 +22,7 @@ export default React.createClass({
       this.props.getUserPublicQuestions(this.props.params.userId);
     }
 
+  componentDidMount() {
     var userId = this.props.userData.user.id;
     console.log('userId:', this.props.userData);
 

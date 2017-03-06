@@ -1,16 +1,15 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-import App from './App';
-import About from './About';
-import Repos from './Repos';
-import Repo from './Repo';
-import Home from './Home';
-import Dashboard from './Dashboard';
-import Collaborate from './Collaborate';
-import Graph from './Graph';
-import PostQuestionPage from './PostQuestionPage';
-import Signup from './Auth/Signup';
-import Logout from './Auth/Logout';
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
+import App from './App'
+import About from './About'
+import Home from './Home'
+import Dashboard from './Dashboard'
+import DashboardPublic from './DashboardPublic'
+import Collaborate from './Collaborate'
+import Graph from './Graph'
+import PostQuestionPage from './PostQuestionPage'
+import Signup from './Auth/Signup'
+import Logout from './Auth/Logout'
 
 
 module.exports = (
