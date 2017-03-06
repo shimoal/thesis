@@ -26,10 +26,14 @@ export default React.createClass({
   //   }
   // }
 
-  componentWillMount() {
+  componentDidMount() {
+    var userId = this.props.userData.user.userId;
+    console.log('userId:', this.props.userData);
+
     var data = {
-      github_id: this.props.userData.github_id
-    }
+      userId: userId
+    };
+
     this.props.getUserQuestions(data);
     this.props.getUserClaimedQuestions(data);
   },

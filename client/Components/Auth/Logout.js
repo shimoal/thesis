@@ -6,9 +6,10 @@ export default React.createClass({
 
   handleLogout() {
     var context = this;
+
     axios.post('/logout')
     .then(function (response) {
-      context.setState({user: {}});
+      context.props.removeUser();
       browserHistory.push('/');
     })
     .catch(function(err) {
