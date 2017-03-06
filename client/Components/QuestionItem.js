@@ -42,10 +42,10 @@ var QuestionItem = React.createClass({
   // },
 
   isAuthenticated: function() {
-    if (!!this.props.userData &&
+    if (!!this.props.userCurrent &&
         this.props.details.helperId !== undefined && 
         this.props.userCurrent.id !== undefined) {
-      if (!!this.props.userData && this.props.details.helperId !== this.props.userCurrent.id) {
+      if (!!this.props.userCurrent && this.props.details.helperId !== this.props.userCurrent.id) {
         console.log('===== condition met');
         return (
           <ClaimQuestionButton 
