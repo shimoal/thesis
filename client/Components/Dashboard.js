@@ -55,7 +55,7 @@ export default React.createClass({
               dashboard={this.state.dashboard}
               // authenticated={this.props.userData.authenticated} //need to pass this to enable claim button
               userCurrent={this.props.userData.userPublicProfile}
-              questions={this.props.userData.currentUserQuestions}
+              questions={this.props.userData.userPublicQuestions}
               authenticated={this.props.userData.authenticated}
               />
           </div>

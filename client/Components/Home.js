@@ -5,6 +5,11 @@ import HomepageSearchBar from './HomepageSearchBar';
 import HelperProfiles from './HelperProfiles';
 
 export default class Home extends React.Component {
+
+  componentWillMount() {
+
+  }
+  
 //   constructor() {
 //     super(); 
 

@@ -18,6 +18,7 @@ export default class App extends React.Component {
       user_skills: {},
       ratings: {},
       questions: {},
+      userPublicQuestions: {},
       questionsClaimed: {},
       currentUserQuestions: {},
       allUsers: {},
@@ -149,7 +150,7 @@ export default class App extends React.Component {
     .then(function(response) {
       console.log('========== Success getting User\'s Public Profile Questions for', userId);
       console.log(response.data);
-      context.setState({currentUserQuestions: response.data});
+      context.setState({userPublicQuestions: response.data});
     })
     .catch(function(err) {
       console.log('Error getting User\'s Public Profile Questions for', userId);
