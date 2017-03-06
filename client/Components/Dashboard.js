@@ -10,7 +10,7 @@ export default React.createClass({
 
   getInitialState: function() {
     return {
-      dashboard: 1,
+      dashboard: 1, //used by OpenQuestions component to render "My Open Questions" heading
     };
   },
 
@@ -22,7 +22,7 @@ export default React.createClass({
       this.props.getUserPublicQuestions(this.props.params.userId);
     }
 
-    var userId = this.props.userData.user.userId;
+    var userId = this.props.userData.user.id;
     console.log('userId:', this.props.userData);
 
     var data = {
@@ -52,7 +52,7 @@ export default React.createClass({
           <div className="row">
             <LeftColumn userCurrent={this.props.userData.userPublicProfile} />            
             <RightColumnPublic 
-              dashboard={this.state.dashboard}
+              // dashboard={this.state.dashboard}
               // authenticated={this.props.userData.authenticated} //need to pass this to enable claim button
               userCurrent={this.props.userData.userPublicProfile}
               questions={this.props.userData.userPublicQuestions}
