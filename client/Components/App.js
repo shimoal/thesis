@@ -126,11 +126,6 @@ export default class App extends React.Component {
   addQuestion(questionData) {
     var timeStamp = (new Date()).getTime();
     this.state.questions['id' + timeStamp] = questionData;
-
-    //write to database
-    //this is where ORM shines, make sure the object that I send here matches
-    //the schema in questionsModel.js
-    //check what this.state.questions contains, then map it to the schema
     
     axios.post('/question', questionData)
     .then(function(res) {

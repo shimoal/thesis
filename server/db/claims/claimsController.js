@@ -49,7 +49,6 @@ const controller = {
         include: [User]
       }]
     })
-    
     .then(function(claims) {
       console.log('========== Success getting claimed questions');
       // console.log('XXX CLAIM RAW results', claims);
