@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 import Helpers from './Helpers';
 import ClaimQuestionButton from './ClaimQuestionButton';
 import style from '../sass/QuestionItem.scss';
@@ -14,25 +14,48 @@ var QuestionItem = React.createClass({
   isClaimed: function() {
     if (this.props.details.name) {
       return (<span>Asked by {this.props.details.name} </span>);
-    }
-    
-    // console.log('helperId', this.props.details.helperId);
-    // console.log('current user id', this.props.userCurrent.id);
-    // if (this.props.details.helperId === this.props.userCurrent.id) {
-    //   return (<span><Link to="/">You claimed this question</Link></span>);
-    // }
+    }   
   },
 
+  isClaimedBySelf: function() {
+    if (this.props.details.helperId && this.props.userCurrent.id) {
+      console.log('helperId', this.props.details.helperId);
+      console.log('current user id', this.props.userCurrent.id);
+      
+      if (this.props.details.helperId === this.props.userCurrent.id) {
+        return (<span><Link to="/">You claimed this question</Link></span>);
+      }
+    }
+  },
+
+  // isAuthenticated: function() {
+  //   if (this.props.authenticated === 1) {
+  //     return (
+  //       <ClaimQuestionButton 
+  //         details={this.props.details}
+  //         userCurrent={this.props.userCurrent}
+  //         claimQuestion={this.props.claimQuestion}/>
+  //     );
+  //   } else {
+  //     return (<div/>);
+  //   }
+  // },
+
   isAuthenticated: function() {
-    if (this.props.authenticated === 1) {
-      return (
-        <ClaimQuestionButton 
-          details={this.props.details}
-          userCurrent={this.props.userCurrent}
-          claimQuestion={this.props.claimQuestion}/>
-      );
-    } else {
-      return (<div/>);
+    if (this.props.authenticated !== undefined &&
+        this.props.details.helperId !== undefined && 
+        this.props.userCurrent.id !== undefined) {
+      if (this.props.authenticated === 1 && this.props.details.helperId !== this.props.userCurrent.id) {
+        console.log('===== condition met');
+        return (
+          <ClaimQuestionButton 
+            details={this.props.details}
+            userCurrent={this.props.userCurrent}
+            claimQuestion={this.props.claimQuestion}/>
+        );
+      } else {
+        return (<div><Link>You claimed this question</Link></div>);
+      }
     }
   },
 
