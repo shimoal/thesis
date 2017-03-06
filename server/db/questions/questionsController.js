@@ -14,10 +14,10 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      return res.status(200).send('========== Success saving Question');
+      res.status(200).send('Question successfully saved.');
     })
     .catch(function(err) {
-      return return res.status(500).send("Having trouble saving question.");
+      res.status(500).send("Having trouble saving question.");
     });
   },
   

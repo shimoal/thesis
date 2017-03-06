@@ -14,8 +14,39 @@ const Collaborate = db.define('collaborate', {
 Collaborate.belongsTo(User, {foreignKey: 'id_learner', as: 'Learner'});
 Collaborate.belongsTo(User, {foreignKey: 'id_helper', as: 'Helper'});
 Collaborate.belongsTo(Question, {foreignKey: 'id_question', as: 'Question'});
-Collaborate.belongsTo(Review, {foreignKey: 'id_review'});
+Collaborate.belongsTo(Review, {foreignKey: 'id_review', as: 'Review'});
+// Review.belongsTo(Collaborate, {foreignKey: 'id_collaborate', as: 'Collaborate'});
 
-db.sync();
+db.sync()
+// .then(function() {
+//   return Collaborate.create({
+//       id_learner: 1,
+//       id_helper: 2,
+//       id_question: 3,
+//       room_number: 1234,
+//     })  
+// })
+// .then(function() {
+//   Collaborate.findAll({
+//     include: [{model: User, as: 'Learner', attributes: ['name']}, {model: User, as: 'Helper', attributes: ['name']}, {model: Question, as: 'Question', attributes: ['title','question']}]
+//   })
+//     .then(function(collaborates) {
+//       collaborates.forEach(function(collaborate) {
+//         console.log(collaborate.get());
+
+//       })
+//       console.log("************ create collaborate successfully *************")
+//     });
+//     // res.status(200).send('Session successfully saved');
+// })
+// .catch(function(err) {
+//   console.log('Error saving collaborate', err.message);
+//   // res.sendStatus(500);
+// });
 
 module.exports = Collaborate;
+
+
+
+
+

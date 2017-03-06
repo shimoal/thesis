@@ -1,5 +1,5 @@
 const db = require('../database.js');
-const Review = require('../reviewModel.js');
+const Review = require('./reviewsModel.js');
 const User = require('../users/usersModel.js');
 const Collaborate = require('../collaborate/collaborateModel.js');
 

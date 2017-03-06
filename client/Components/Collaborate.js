@@ -8,11 +8,11 @@ import axios from 'axios'
 
 let socket = io('https://hackeroo.xyz');
 let pc;
-    let configuration = {
-      'iceServers': [{
-        'url': 'stun:stun.l.google.com:19302'
-      }]
-    };
+let configuration = {
+  'iceServers': [{
+  'url': 'stun:stun.l.google.com:19302'
+  }]
+};
 
 let localStream;
 
@@ -26,7 +26,8 @@ export default class Collaborate extends React.Component {
       info: '',
       exit_room: '',
       applyingChanges: false,
-      username: ''
+      username: '',
+      id
     }
     this.handleCreateRoom = this.handleCreateRoom.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -69,18 +70,16 @@ export default class Collaborate extends React.Component {
     socket.on('room-exists', function(msg) {
       alert(msg);
     });
+    socket.on('exit_room', this.handleExitRoom);
     // changes in editing board
     this.editor.on('change', this.handleEditorContentChange);
     socket.on('editor-content-changes', this.updateEditorContent);
     socket.on('setup-editor', this.setupEditor);
-    // clear editor content
     socket.on('clear-editor', this.ResetEditor);
     // 'run code'
     socket.on('submit-val', this.updateResult);
     // handle info
     socket.on('info', this.handleInfo);
-    // exit room
-    socket.on('exit_room', this.handleExitRoom);
     /**************************************/
 
 		/*********** video conference *********/
@@ -101,15 +100,31 @@ export default class Collaborate extends React.Component {
     e.target.value = '';
   }
   handleJoinRoom(e) {
+    var context = this;
+    axios.get('/collaborate/', {
+        params: {
+          room_name: context.state.room_name
+        }
+      })
+      .then(function(collaborate) {
+        console.log(collaborate);
+        context.setState({learnerId: collaborate.id_learner,
+                          helperId: collaborate.id_helper,
+                          questionId: collaborate.id_question,
+                          reviewId: collaborate.id_review,
+                          learner: collaborate.Learner,
+                          helper: collaborate.helper,
+                          question: collaborate.Question});
+        socket.emit('join-room', this.state.username, this.state.room_name);
+      })
+      .catch(function(err) {
+        console.log(err.message);
+      });
     e.preventDefault();
-    socket.emit('join-room', this.state.username, this.state.room_name);
     /*** get the learnerId, helperId, questionId, questionContent from db ***/
-
-    /*************************************/    
   }
   handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
-      console.log('content change', JSON.stringify(e));
       socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
     }
     return false;
@@ -125,7 +140,6 @@ export default class Collaborate extends React.Component {
   }
   setupEditor(val) {
     this.setState({applyingChanges: true});
-    console.log('setup editor', val);
     var context = this;
     val.forEach(function(element) {
       element = JSON.parse(element);
@@ -138,29 +152,19 @@ export default class Collaborate extends React.Component {
   }
   handleRunCode() {
     var val = this.editor.getValue();
-    console.log('run code', val);
-    /****************************************/
-    // var context = this;
-    // axios.post('/compile', val).then(function(response) {
-    //   socket.emit('submit-val', context.state.room_name, response);
-    // });
-    /****************************************/
     socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
   updateResult(results) {
-    console.log('update result area: ', results);
     var resultsArr = [];
     for (var i = 0; i < results.length; i++) {
       resultsArr.push(<p key={i}>{results[i]}</p>);
     } 
-    console.log(resultsArr);
     this.setState({applyingChanges: true});
     this.setState({results: resultsArr});
     this.setState({applyingChanges: false});
   }
   handleInfo(msg) {
-    console.log('handle info', msg);
     this.setState({info: msg});
   }
   exitRoom() {

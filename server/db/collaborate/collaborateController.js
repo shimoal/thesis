@@ -22,14 +22,15 @@ const controller = {
       return res.status(200);
     })
     .catch(function(err) {
-      console.log('Error saving collaborate session');
+      console.log('Error saving collaborate session', err.message);
       return res.sendStatus(500);
     });
   },
 
   retrieve: function(req, res, next) {
+    var room_number = req.params.room_number;
     Collaborate.findOne({
-      where: { room_number: req.body.room_number },
+      where: { room_number: room_number },
       include: [ {all: true} ]
     })
     .then(function(collaborate) {

@@ -17,7 +17,21 @@ const Review = db.define('review', {
 	}
 });
 
-// Review.belongsTo(Collaborate);
+// Review.belongsTo(Collaborate, {foreignKey: 'id_collaborate', as: 'Collaborate'});
 
-db.sync();
+// Collaborate.belongsTo(Review, {foreignKey: 'id_review', as: 'Review'});
+
+db.sync()
+// .then(function() {
+// 	return Review.create({
+// 		knowledge: 5,
+// 		helpfulness: 5,
+// 		overall: 5,
+// 		content: 'good helper',
+// 		id_collaborate: 6,
+// 	})
+// })
+.catch(function(err) {
+	console.log("err in review model", err.message);
+});
 module.exports = Review;

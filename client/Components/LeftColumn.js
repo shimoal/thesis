@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactStars from 'react-stars'
 
 export default React.createClass({
   render() {
@@ -16,7 +17,10 @@ export default React.createClass({
             <tbody>
               <tr>
                 <td>Overall</td>
-                <td>Stars</td>
+                <td><ReactStars
+                    count={5}
+                    edit={false} />
+                </td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
