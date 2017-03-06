@@ -51,7 +51,7 @@ const controller = {
     });
   },
 
-  sendMail: function(userId1, userId2){
+  sendMail: function(userId1, userId2, roomNum){
     //need to test this once we have multiple users
     User.findAll({
       where: {
@@ -62,7 +62,7 @@ const controller = {
       var emails = users.map(function(user) {
         return user.email;
       });
-      mailer(emails);
+      mailer(emails, roomNum);
     }).
     catch(function(err) {
       console.log(err, ' X X X X Error retriving user emails');
