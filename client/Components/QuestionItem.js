@@ -12,7 +12,7 @@ var QuestionItem = React.createClass({
   
   isClaimed: function() {
     if (this.props.details.name) {
-      return (<span>Asked by {this.props.details.name} </span>) 
+      return (<span>Asked by {this.props.details.name} </span>);
     }
   },
 
@@ -23,9 +23,9 @@ var QuestionItem = React.createClass({
           details={this.props.details}
           userCurrent={this.props.userCurrent}
           claimQuestion={this.props.claimQuestion}/>
-      )
+      );
     } else {
-      return (<div/>)
+      return (<div/>);
     }
   },
 
@@ -56,8 +56,8 @@ var QuestionItem = React.createClass({
                  acceptHelper={this.props.acceptHelper} />
 
       </div>
-    )
+    );
   }
-})
+});
 
-export default QuestionItem
+export default QuestionItem;

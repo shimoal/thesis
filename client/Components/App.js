@@ -13,20 +13,20 @@ export default class App extends React.Component {
   constructor(props) {
     super(props); 
 
-      this.state = {
+    this.state = {
 
-        user_skills:{},
-        ratings:{},
-        questions:{},
-        questionsClaimed:{},
-        currentUserQuestions:{},
-        allUsers:{},
-        userPublicProfile:{},
-        user: {}
-      }
+      user_skills: {},
+      ratings: {},
+      questions: {},
+      questionsClaimed: {},
+      currentUserQuestions: {},
+      allUsers: {},
+      userPublicProfile: {},
+      user: {}
+    };
 
-      this.getUserQuestions = this.getUserQuestions.bind(this);
-      this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
+    this.getUserQuestions = this.getUserQuestions.bind(this);
+    this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
   }
 
   componentWillMount() {
@@ -40,12 +40,12 @@ export default class App extends React.Component {
       .then(function(response) {
 
         //check to make sure response is a user (has a name propterty)
-        if (response.data.name){
+        if (response.data.name) {
           context.setState({user: response.data});
 
           var data = {
             userId: response.data.id
-          }
+          };
           //get users questions and claims
           context.getUserQuestions(data);
           context.getUserClaimedQuestions(data);
@@ -144,6 +144,22 @@ export default class App extends React.Component {
     });  
   }
 
+  getQuestionsOneUser(userId) {
+    var context = this;
+    //get user's questions
+    var data = {
+      userId: userId,
+    };
+    axios.get('/question-for-one-user', { params: data })
+    .then(function(response) {
+      console.log('========== Success getting Current User\'s Questions data from DB');
+      context.setState({currentUserQuestions: response.data});
+    })
+    .catch(function(err) {
+      console.log('Error getting Current User\'s Questions data from DB');
+    });
+  }
+
   claimQuestion(currentUserId, learnerId, questionId) {
     axios.post('/claim', {id_helper: currentUserId, id_learner: learnerId, id_question: questionId})
     .then(function(res) {
@@ -212,14 +228,14 @@ export default class App extends React.Component {
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, {
-        userData: this.state,
-        getUserQuestions: this.getUserQuestions.bind(this),
-        getUserClaimedQuestions: this.getUserClaimedQuestions.bind(this),
-        addQuestion: this.addQuestion.bind(this),
-        claimQuestion: this.claimQuestion.bind(this),
-        acceptHelper: this.acceptHelper.bind(this),
-        removeUser: this.removeUser.bind(this)
+      (child) => React.cloneElement(child, { //
+        userData: this.state, //
+        getUserQuestions: this.getUserQuestions.bind(this), //new
+        getUserClaimedQuestions: this.getUserClaimedQuestions.bind(this), //new
+        addQuestion: this.addQuestion.bind(this), //
+        claimQuestion: this.claimQuestion.bind(this), //
+        acceptHelper: this.acceptHelper.bind(this), //
+        removeUser: this.removeUser.bind(this) //new
       })
     );
 

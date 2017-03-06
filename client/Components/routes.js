@@ -6,7 +6,6 @@ import Repos from './Repos';
 import Repo from './Repo';
 import Home from './Home';
 import Dashboard from './Dashboard';
-import DashboardPublic from './DashboardPublic';
 import Collaborate from './Collaborate';
 import Graph from './Graph';
 import PostQuestionPage from './PostQuestionPage';
@@ -21,7 +20,6 @@ module.exports = (
     <Route path="/dashboard" component={Dashboard}/>
     <Route path="/profile/:userId" component={Dashboard}/>
     <Route path="/post-question" component={PostQuestionPage}/>
-
     <Route path="/about" component={About}/>
     <Route path="/collaborate" component={Collaborate}/>
     <Route path="/graphs" component={Graph}/>

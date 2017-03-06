@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import LeftColumn from './LeftColumn';
 import RightColumn from './RightColumn';
+import RightColumnPublic from './RightColumnPublic';
 import Signup from './Auth/Signup';
 import { browserHistory } from 'react-router';
 
@@ -14,10 +15,9 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    //invoke a method in App that will fetch the current userId to populate this form
-    
-    if (this.props.params.userId !== undefined) { // if public (using React Route params)
-      this.props.getUserPublicProfile(this.props.params.userId);  
+    if (this.props.params.userId !== undefined) { // if public (check React Route params)
+      this.props.getUserPublicProfile(this.props.params.userId);
+      this.props.getQuestionsOneUser(this.props.params.userId);
     }
   },
 
@@ -34,27 +34,30 @@ export default React.createClass({
   },
 
   publicOrPrivate: function() {
-    if (this.props.params.userId !== undefined) { // if public (using React Route params)
+    if (this.props.params.userId !== undefined) { // if public (check React Route params)
       return (
         <div className="container-fluid">
           <div className="row">
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <h1>Profile page</h1>
-            <p>{this.props.userData.userPublicProfile.name}</p>
+            <LeftColumn userCurrent={this.props.userData.userPublicProfile} />            
+            <RightColumnPublic 
+              dashboard={this.state.dashboard}
+              // authenticated={this.props.userData.authenticated} //need to pass this to enable claim button
+              userCurrent={this.props.userData.userPublicProfile}
+              questions={this.props.userData.currentUserQuestions}
+              authenticated={this.props.userData.authenticated}
+              />
           </div>
         </div>
       );
     } else { //private
-      if (this.props.userData.authenticated === 1) { //need to check localStorage instead
+      if (this.props.userData.authenticated === 1) {
         return (
           <div className="container-fluid">
             <div className="row">
               <LeftColumn userCurrent={this.props.userData.user} />
               <RightColumn 
                 dashboard={this.state.dashboard}
-                userCurrent={this.props.userData.user} 
+                userCurrent={this.props.userData.user}
                 authenticated={this.props.userData.authenticated}
                 questions={this.props.userData.currentUserQuestions}
                 questionsClaimed={this.props.userData.questionsClaimed} 
