@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 var HelperAcceptButton = React.createClass({
 
@@ -25,11 +25,19 @@ var HelperAcceptButton = React.createClass({
     return (
       <div>
         <form>
-          <button onClick={() => this.props.acceptHelper(this.props.details.learnerId, this.props.details.helperId, this.props.details.id)} className="btn btn-default" role="button">Accept</button>
+          <button 
+            onClick={() => 
+              this.props.acceptHelper(
+                this.props.details.learnerId, 
+                this.props.details.helperId, 
+                this.props.details.id
+              )
+            } className="btn btn-default" role="button">Accept
+            </button>
         </form>
       </div>
-    )
+    );
   }
 });
 
-export default HelperAcceptButton
+export default HelperAcceptButton;

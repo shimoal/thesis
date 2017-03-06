@@ -174,16 +174,21 @@ export default class App extends React.Component {
 
   //user click on accept button
   acceptHelper(learnerId, helperId, questionId) {
+    
     //create session table
-    axios.post('/accept', {id_learner: learnerId, id_helper: helperId, id_question: questionId})
+    axios.post('/accept', {
+      id_learner: learnerId, 
+      id_helper: helperId, 
+      id_question: questionId,
+    })
     .then(function(res) {
-      console.log('========== Success writing accept question session to database');
-      // setState to include learnerId, helperId, questionId, roomNumber
-      // redirect to collaborate
+      console.log('========== Success saving collaborate session');
+      // setState to include learnerId, helperId, questionId, roomNumber?
+      // redirect to collaborate?
     })
     .catch(function(err) {
       if (err) {
-        console.log('Error writing accept question session to database');
+        console.log('Error saving collaborate session');
       }
     });
   }

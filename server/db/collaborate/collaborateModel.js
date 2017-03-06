@@ -12,6 +12,10 @@ const Collaborate = db.define('collaborate', {
   id_question: {
     type: Sequelize.INTEGER
   }, 
+  room_number: {
+    type: Sequelize.STRING
+  }, 
+  
 });
 
 // User.hasMany(Question);
