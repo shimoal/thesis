@@ -27,7 +27,7 @@ export default React.createClass({
   // }
 
   componentDidMount() {
-    var userId = this.props.userData.user.userId;
+    var userId = this.props.userData.user.id;
     console.log('userId:', this.props.userData);
 
     var data = {

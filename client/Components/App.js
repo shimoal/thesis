@@ -85,7 +85,7 @@ export default class App extends React.Component {
     //get User's questions and claims if they already exist
     if (this.state.user.name) {
       var data = {
-        github_id: this.state.user.github_id
+        userId: this.state.user.id
       }
 
       this.getUserQuestions(data);
@@ -206,6 +206,8 @@ export default class App extends React.Component {
   //   });
 
   removeUser() {
+    this.setState({questionsClaimed: {}});
+    this.setState({currentUserQuestions: {}});
     this.setState({user: {}});
   }
 

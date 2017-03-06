@@ -17,9 +17,17 @@ app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/
 app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use(express.static(__dirname + '/../server/twitter'));
 
+var connectionString = '';
+
+if ( app.get('env') === 'development' ) {
+  connectionString = 'postgres://:@localhost:5432/hackeroo'
+} else {
+  connectionString = 'postgres://wvdptjfsnehola:cdbdbe12e3f23f31f718f75283f2db41eecbb9c2f3dcbb61ac60c247a1451f46@ec2-54-243-55-1.compute-1.amazonaws.com:5432/d7oj410eip9o96'
+}
+
 app.use(session({
   store: new pgSession({                            
-    conString: "postgres://:@localhost:5432/hackeroo",
+    conString: connectionString,
     tableName: 'auth_sessions'
   }),
   secret: "customSecret",
