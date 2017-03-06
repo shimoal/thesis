@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router'
 import Helpers from './Helpers';
 import ClaimQuestionButton from './ClaimQuestionButton';
 import style from '../sass/QuestionItem.scss';
@@ -14,6 +15,12 @@ var QuestionItem = React.createClass({
     if (this.props.details.name) {
       return (<span>Asked by {this.props.details.name} </span>);
     }
+    
+    // console.log('helperId', this.props.details.helperId);
+    // console.log('current user id', this.props.userCurrent.id);
+    // if (this.props.details.helperId === this.props.userCurrent.id) {
+    //   return (<span><Link to="/">You claimed this question</Link></span>);
+    // }
   },
 
   isAuthenticated: function() {
