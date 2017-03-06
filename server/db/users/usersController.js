@@ -38,7 +38,6 @@ const controller = {
   },
   
   retrievePublic: function(req, res, next) {
-    console.log('req.query.userId', req.query.userId);
     User.findOne({
       where: {
         id: req.query.userId,

@@ -19,7 +19,7 @@ module.exports = (
     <IndexRoute component={Home}/>
     
     <Route path="/dashboard" component={Dashboard}/>
-    <Route path="/profile/:userId" component={DashboardPublic}/>
+    <Route path="/profile/:userId" component={Dashboard}/>
     <Route path="/post-question" component={PostQuestionPage}/>
 
     <Route path="/about" component={About}/>
