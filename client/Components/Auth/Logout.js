@@ -3,18 +3,17 @@ import axios from 'axios'
 import { browserHistory } from 'react-router'
 
 export default React.createClass({
-  componentWillMount() {
-    console.log('inside handleLogout this.props ',this.props);
-  },
 
   handleLogout() {
     var context = this;
-    axios.get('/loggingout')
-    .then( function (response){
-        browserHistory.push('/');
-        // console.log('inside handleLogout: success?');
-        // context.props.checkUserAuth();
-      });
+    axios.post('/logout')
+    .then(function (response) {
+      context.setState({user: {}});
+      browserHistory.push('/');
+    })
+    .catch(function(err) {
+      console.log('There was an error logging out: ', err);
+    });
   },
 
   render() {
