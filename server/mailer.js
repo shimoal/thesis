@@ -4,18 +4,11 @@ const nodemailer = require('nodemailer');
 
 var mailer = function(emails, roomNum) {
   console.log('inside mailer')
+  console.log('emails: ', emails);
+  console.log('roomNum:', roomNum);
   var receivers = emails.join(', ');
 
-  var hmtl = '<h1>Hello from hackeroo!</h1>
-      <p> You are receiving this message because you are about to connect with another hacker. <br>
-      Your room number is: <b>' + roomNum + '</b>. <br>
-      Please visit https://hackeroos.herokuapp.com/collaborate and enter this roomNum to enter and immediately be connected. <br>
-      <br>
-      <br>
-      Happy Hacking!
-      <br>
-      -The team at Hackeroo
-      </p>'
+  var html = '<h1>Hello from hackeroo!</h1><p> You are receiving this message because you are about to connect with another hacker. <br>Your room number is: <b>' + roomNum + '</b>.<br>Please visit https://hackeroos.herokuapp.com/collaborate and enter this roomNum to enter and immediately be connected. <br><br><br>Happy Hacking!<br>-The team at Hackeroo</p>';
 
   var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -27,9 +20,9 @@ var mailer = function(emails, roomNum) {
 
   // setup email data with unicode symbols
   var mailOptions = {
-      from: '"Hackeroo team" <hackerooxyz@gmail.com>', // sender address
+      from: '"Hackeroo" <hackerooxyz@gmail.com>', // sender address
       to: receivers, // list of receivers
-      subject: 'hello from node', // Subject line
+      subject: 'Room created', // Subject line
       text: 'Hello world', // plain text body
       html: html // html body
   };
@@ -43,3 +36,4 @@ var mailer = function(emails, roomNum) {
 }
 
 module.exports = mailer;
+

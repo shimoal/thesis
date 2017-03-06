@@ -53,6 +53,7 @@ const controller = {
 
   sendMail: function(userId1, userId2, roomNum){
     //need to test this once we have multiple users
+    console.log('inside send Mail: ', userId1, userId2, roomNum);
     User.findAll({
       where: {
         $or: [{id: userId1}, {id: userId2}]
