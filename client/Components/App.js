@@ -80,13 +80,13 @@ export default class App extends React.Component {
     .catch(function(err) {
       console.log('Error getting All Users from DB');
       console.log(err);
-    }) // -------- End of get all users
+    }); // -------- End of get all users
 
     //get User's questions and claims if they already exist
     if (this.state.user.name) {
       var data = {
         github_id: this.state.user.github_id
-      }
+      };
 
       this.getUserQuestions(data);
       this.getUserClaimedQuestions(data);
@@ -139,7 +139,7 @@ export default class App extends React.Component {
     });  
   }
 
-  getQuestionsOneUser(userId) {
+  getUserPublicQuestions(userId) {
     var context = this;
     //get user's questions
     var data = {
@@ -147,11 +147,12 @@ export default class App extends React.Component {
     };
     axios.get('/question-for-one-user', { params: data })
     .then(function(response) {
-      console.log('========== Success getting Current User\'s Questions data from DB');
+      console.log('========== Success getting User\'s Public Profile Questions for', userId);
+      console.log(response.data);
       context.setState({currentUserQuestions: response.data});
     })
     .catch(function(err) {
-      console.log('Error getting Current User\'s Questions data from DB');
+      console.log('Error getting User\'s Public Profile Questions for', userId);
     });
   }
 
@@ -205,21 +206,22 @@ export default class App extends React.Component {
   //   });
   // }
 
-  // getUserPublicProfile(githubId) {
-  //   var context = this;
-  //   var data = {
-  //         github_id: githubId
-  //       }
-  //   axios.get('/user-current', { params: data })
-  //   .then(function(response) {
-  //     console.log('========== Success getting User Profile data from DB');
-  //     context.setState({userPublicProfile: response.data});
-  //   })
-  //   .catch(function(err) {
-  //     if (err) {
-  //       console.log('Error getting User Profile data from DB');
-  //     }
-  //   });
+  getUserPublicProfile(userId) {
+    var context = this;
+    var data = {
+      userId: userId,
+    };
+    axios.get('/public-profile', { params: data })
+    .then(function(response) {
+      console.log('========== Success getting User Public Profile data from DB');
+      context.setState({userPublicProfile: response.data});
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log('Error getting User Public Profile data from DB');
+      }
+    });
+  }
 
   removeUser() {
     this.setState({user: {}});
@@ -228,14 +230,16 @@ export default class App extends React.Component {
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
-      (child) => React.cloneElement(child, { //
-        userData: this.state, //
-        getUserQuestions: this.getUserQuestions.bind(this), //new
-        getUserClaimedQuestions: this.getUserClaimedQuestions.bind(this), //new
-        addQuestion: this.addQuestion.bind(this), //
-        claimQuestion: this.claimQuestion.bind(this), //
-        acceptHelper: this.acceptHelper.bind(this), //
-        removeUser: this.removeUser.bind(this) //new
+      (child) => React.cloneElement(child, {
+        userData: this.state,
+        getUserQuestions: this.getUserQuestions.bind(this),
+        getUserClaimedQuestions: this.getUserClaimedQuestions.bind(this),
+        addQuestion: this.addQuestion.bind(this),
+        claimQuestion: this.claimQuestion.bind(this),
+        acceptHelper: this.acceptHelper.bind(this),
+        getUserPublicProfile: this.getUserPublicProfile.bind(this),
+        getUserPublicQuestions: this.getUserPublicQuestions.bind(this),
+        removeUser: this.removeUser.bind(this)
       })
     );
 

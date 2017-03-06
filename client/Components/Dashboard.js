@@ -15,13 +15,13 @@ export default React.createClass({
   },
 
   componentWillMount() {
+    console.log('Dashboard will mount');
     if (this.props.params.userId !== undefined) { // if public (check React Route params)
+      console.log('Current public profile id', this.props.params.userId);
       this.props.getUserPublicProfile(this.props.params.userId);
-      this.props.getQuestionsOneUser(this.props.params.userId);
+      this.props.getUserPublicQuestions(this.props.params.userId);
     }
-  },
 
-  componentDidMount() {
     var userId = this.props.userData.user.userId;
     console.log('userId:', this.props.userData);
 
@@ -29,9 +29,21 @@ export default React.createClass({
       userId: userId
     };
 
-    this.props.getUserQuestions(data);
+    this.props.getUserQuestions(data); //calling it here for some reason doesn't rerender
     this.props.getUserClaimedQuestions(data);
   },
+
+  // componentDidMount() {
+  //   var userId = this.props.userData.user.userId;
+  //   console.log('userId:', this.props.userData);
+
+  //   var data = {
+  //     userId: userId
+  //   };
+
+  //   this.props.getUserQuestions(data);
+  //   this.props.getUserClaimedQuestions(data);
+  // },
 
   publicOrPrivate: function() {
     if (this.props.params.userId !== undefined) { // if public (check React Route params)
@@ -50,7 +62,7 @@ export default React.createClass({
         </div>
       );
     } else { //private
-      if (this.props.userData.authenticated === 1) {
+      if (this.props.userData) {
         return (
           <div className="container-fluid">
             <div className="row">
@@ -68,7 +80,9 @@ export default React.createClass({
         );
       } else {
         return (
-          <Signup/>
+          <div>
+            <Signup/>
+          </div>
         );
       }
     }

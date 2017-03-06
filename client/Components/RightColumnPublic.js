@@ -15,6 +15,10 @@ export default class RightColumn extends React.Component {
     };
   }
 
+  componentWillMount() {
+    console.log('RightColumnPublic component will mount');
+  }
+
   render() {
     var showQuestionForm = function() {
       this.setState({
