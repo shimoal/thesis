@@ -4,7 +4,7 @@ var chaiHTTP = require('chai-http');
 chai.use(chaiHTTP);
 var server = require('./../server/app.js');
 
-describe('basic routes', function() {
+xdescribe('basic routes', function() {
   it ('should make a get request', function (done) {
     chai.request(server)
       .get('/user')
