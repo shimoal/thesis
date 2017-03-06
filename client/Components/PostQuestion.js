@@ -1,5 +1,6 @@
 import React from 'react'
 import style from '../sass/PostQuestion.scss';
+import axios from 'axios'
 
 var PostQuestion = React.createClass({
 
@@ -17,7 +18,18 @@ var PostQuestion = React.createClass({
      }
 
      //2. add question back to App
-     this.props.addQuestion(questionData);
+     // this.props.addQuestion(questionData);
+
+    axios.post('/question', questionData)
+    .then(function(res) {
+      console.log('========== Success writing question to database');
+
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log('Error writing question to database')
+      }
+    }); 
 
      //3. reset the form
      this.refs.questionForm.reset();

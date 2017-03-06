@@ -5,11 +5,16 @@ import QuestionItem from './QuestionItem'
 var ClaimedQuestions = React.createClass({
 
   renderQuestion: function(key) {
-    console.log('Inside ClaimedQuestions renderQuestion', this.props.questionsClaimed);
-    return ( <QuestionItem key={key} index={key} details={this.props.questionsClaimed[key]}/> )
+    // console.log('Inside ClaimedQuestions renderQuestion', this.props.questionsClaimed);
+    return ( <QuestionItem 
+                key={key} 
+                index={key} 
+                acceptHelper={this.props.acceptHelper} 
+                details={this.props.questionsClaimed[key]}/> )
   },
-  componentDidMount: function() {
-    console.log('Inside ClaimedQuestions', this.props.questions);
+  componentWillMount: function() {
+    // console.log('Inside ClaimedQuestions this.props', this.props);
+
   },
   render: function() {
     return (

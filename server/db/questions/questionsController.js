@@ -12,10 +12,10 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      return res.status(200).send('Question successfully saved.');
+      return res.status(200).send('========== Success saving Question');
     })
     .catch(function(err) {
-      console.log(' X X X X Error saving question');
+      console.log('Error saving question');
       return res.sendStatus(500);
     });
   },
@@ -24,10 +24,10 @@ const controller = {
     
     // console.log('XXX calling questionsController retrieve');
     var currentUserId = req.query.userId;
-    console.log('Current User Id to Retrieve just that users question', currentUserId);
+    // console.log('Current User Id to Retrieve just that users question', currentUserId);
 
     //retrieve all questions
-    db.query('SELECT name, questions.id, title, question, status, deadline, questions."createdAt" \
+    db.query('SELECT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt" \
               from users INNER JOIN questions ON questions."userId" = users.id \
               ORDER BY id DESC', { model: Question })
     .then(function(questions) {
@@ -40,6 +40,7 @@ const controller = {
           'question':question.question,
           'status':question.status,
           'deadline': '',
+          'userId':question.userId,
           'name': question.name,
           'createdAt': question.createdAt,
         }
@@ -49,7 +50,7 @@ const controller = {
       })
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving question');
+      console.log('Error getting question');
       return res.sendStatus(500);
     });
   },
@@ -57,13 +58,14 @@ const controller = {
   retrieveForOneUser: function(req, res, next) {
     
     var currentUserId = req.query.userId;
-    console.log('Current User Id to Retrieve just that users question', currentUserId);
-    
+    // console.log('Current User Id to Retrieve just that users question', currentUserId);
+    console.log('inside restrieve for one user:', req.query);
     QuestionOneUser.findAll({
-      where: { userId: 2 },
+      where: { userId: currentUserId },
       order: [['id', 'DESC']],
     })
     .then(function(questions) {
+      console.log('========== Success getting Questions for current user');
       var promises = questions.map(function(question){
         // console.log('===========', question.dataValues, ' >>>> in promise all');
         return {
@@ -81,7 +83,7 @@ const controller = {
       })
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving one user questions');
+      console.log('Error getting one user questions');
       return res.sendStatus(500);
     });
   },

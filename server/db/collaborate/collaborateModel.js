@@ -2,11 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../database.js');
 // const User = require('../users/usersModel.js');
 
-const Claim = db.define('claim', {
-  id_helper: {
+const Collaborate = db.define('collaborate', {
+  id_learner: {
     type: Sequelize.INTEGER
   },
-  id_learner: {
+  id_helper: {
     type: Sequelize.INTEGER
   },
   id_question: {
@@ -18,4 +18,4 @@ const Claim = db.define('claim', {
 
 db.sync();
 
-module.exports = Claim;
+module.exports = Collaborate;

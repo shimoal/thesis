@@ -1,37 +1,55 @@
 import React from 'react'
 import { Link } from 'react-router'
-import axios from 'axios'
-import NavLink from './NavLink'
 import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
 import Signup from './Auth/Signup'
 import { browserHistory } from 'react-router'
+import axios from 'axios'
 
 export default React.createClass({
 
-  getInitialState: function() {
-    return {
-      dashboard: 1,
-    }
-  },
+  // // getInitialState: function() {
+  // //   return {
+  // //     dashboard: 1,
+  // //   }
+  // // },
 
-  componentWillMount() {
-    
+  // componentWillMount() {
+
+
+  // },
+
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+
+  //   }
+  // }
+
+  componentDidMount() {
+    var userId = this.props.userData.user.userId;
+    console.log('userId:', this.props.userData);
+
+    var data = {
+      userId: userId
+    };
+
+    this.props.getUserQuestions(data);
+    this.props.getUserClaimedQuestions(data);
   },
 
   render() {
-    console.log('Dashboard component is rendering', this.props.userData.authenticated)
-    if (this.props.userData.authenticated === 1) {
+    // console.log('Dashboard component is rendering', this.props.userData.authenticated)
+    if (this.props.userData) { //need to check localStorage instead
       return (
         <div className="container-fluid">
           <div className="row">
             <LeftColumn userCurrent={this.props.userData.user} />
-            <RightColumn 
-              dashboard={this.state.dashboard}
+            <RightColumn
               userCurrent={this.props.userData.user} 
-              authenticated={this.props.userData.authenticated}
               questions={this.props.userData.currentUserQuestions}
               questionsClaimed={this.props.userData.questionsClaimed} 
+              acceptHelper={this.props.acceptHelper}
               addQuestion={this.props.addQuestion} />
           </div>
         </div>
