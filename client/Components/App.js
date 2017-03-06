@@ -23,6 +23,9 @@ export default class App extends React.Component {
         userPublicProfile:{},
         user: {}
       }
+
+      this.getUserQuestions = this.getUserQuestions.bind(this);
+      this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
   }
 
   componentWillMount() {
@@ -34,13 +37,22 @@ export default class App extends React.Component {
       //Check Authentication Session
       axios.get('/session')
       .then(function(response) {
-        console.log('response from session:', response);
+
         //check to make sure response is a user (has a name propterty)
         if (response.data.name){
           context.setState({user: response.data});
+
+          var data = {
+            userId: response.data.id
+          }
+
+          //get users questions and claims
+          context.getUserQuestions(data);
+          context.getUserClaimedQuestions(data);
         } else {
           console.log('user is not authenticated');
         }
+
       }).catch(function(err) {
         console.log('Error checking User\'s Authentication Session');
         console.log(err);
@@ -69,10 +81,22 @@ export default class App extends React.Component {
       console.log('Error getting All Users from DB');
       console.log(err);
     }) // -------- End of get all users
+
+    //get User's questions and claims if they already exist
+    if (this.state.user.name) {
+      var data = {
+        github_id: this.state.user.github_id
+      }
+
+      this.getUserQuestions(data);
+      this.getUserClaimedQuestions(data);
+    }
+
   }
 
   getUserQuestions(data) {
     var context = this;
+
     //do ajax call to get current user questions
     axios.get('/question-for-one-user', { params: data })
     .then(function(response) {
@@ -181,6 +205,10 @@ export default class App extends React.Component {
   //     }
   //   });
 
+  removeUser() {
+    this.setState({user: {}});
+  }
+
   render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
@@ -190,7 +218,8 @@ export default class App extends React.Component {
         getUserClaimedQuestions: this.getUserClaimedQuestions.bind(this),
         addQuestion: this.addQuestion.bind(this),
         claimQuestion: this.claimQuestion.bind(this),
-        acceptHelper: this.acceptHelper.bind(this)
+        acceptHelper: this.acceptHelper.bind(this),
+        removeUser: this.removeUser.bind(this)
      })
     );
 
