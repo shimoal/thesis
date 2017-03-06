@@ -21,14 +21,14 @@ const controller = {
   },
 
   retrieve: function(req, res, next) {
-    // console.log('Calling usersController retrieve', req.query);
+    console.log('inside user retrieve', req.session);
     User.findOne({
       where: {
-        github_id: req.query.github_id, //pass github id here
+        github_id: req.session.passport.user,
       }
     })
     .then(function(user) {
-      console.log('User is successfully retrieved');
+      console.log('User is successfully retrieved', user);
       res.json(user);
     })
     .catch(function(err) {
@@ -40,11 +40,12 @@ const controller = {
   retrieveAll: function(req, res, next) {
     User.findAll()
     .then(function(users) {
-      console.log('User is successfully retrieved');
+      console.log('Users are successfully retrieved');
+      console.log('users:', users);
       res.json(users);
     })
     .catch(function(err) {
-      console.log(' X X X X error retrieving current user');
+      console.log(' X X X X error retrieving all users');
       return res.sendStatus(500);
     });
   }

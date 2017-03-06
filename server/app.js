@@ -3,13 +3,55 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var app = module.exports = express();
 
+//For sessions and authentication
 var passport = require('passport');
 var session = require('express-session');
-var cookieParser = require('cookie-parser');
 var githubAuth = require('./auth/githubAuth');
+var pgSession = require('connect-pg-simple')(session);
+
 var sandBox = require('./sandbox/DockerSandbox');
 
-app.use(cookieParser());
+//routes for static files (must be before all middleware)
+app.use(express.static(__dirname + '/../public'));
+app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+app.use(express.static(__dirname + '/../server/twitter'));
+
+app.use(session({
+  store: new pgSession({                            
+    conString: "postgres://:@localhost:5432/hackeroo",
+    tableName: 'auth_sessions'
+  }),
+  secret: "customSecret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    maxAge: 1000 * 60 * 60 * 5 
+  } //cookie expires in 5 hours
+}));
+
+//authentication
+app.use(passport.initialize());
+app.use(passport.session());
+
+//called when user signup/login using github
+app.get('/auth/github', passport.authenticate('github'));
+
+// GitHub will call this URL
+app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
+
+app.post('/logout', function(req, res){
+  console.log('logging out');
+  req.session.destroy(function(err) {
+    if (err) {
+      console.log('Error logging user out:', err);
+    }
+  })
+  res.json('session logged out');
+});
+
+//for accessing session to get user data to the client
+app.get('/session',  githubAuth.authenticate);
 
 //Parse incoming body
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,7 +64,6 @@ var claimsCtrl = require('./db/claims/claimsController.js');
 var collaborateCtrl = require('./db/collaborate/collaborateController.js');
 
 //executing DB controller's methods
-
 app.post('/question', questionsCtrl.save);
 app.get('/question', questionsCtrl.retrieve);
 
@@ -30,7 +71,7 @@ app.get('/question-for-one-user', questionsCtrl.retrieveForOneUser);
 
 
 app.get('/users', usersCtrl.retrieveAll);
-// app.post('/users', usersCtrl.save);
+app.post('/users', usersCtrl.save);
 
 app.get('/user-current', usersCtrl.retrieve);
 
@@ -39,65 +80,12 @@ app.get('/claim', claimsCtrl.retrieve);
 
 app.post('/accept', collaborateCtrl.save);
 
-//routes
-app.use(express.static(__dirname + '/../public'));
-app.use('/bootstrap/js', express.static(__dirname + '/../node_modules/bootstrap/dist/js')); // redirect bootstrap JS
-app.use('/bootstrap/css', express.static(__dirname + '/../node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
-app.use(express.static(__dirname + '/../server/twitter'));
-
-//need to use the express-session middleware before app.use(passport.session()) to actually store the session in memory/database
-// http://stackoverflow.com/questions/36486397/passport-login-and-persisting-session
-app.use(session({
-  secret: "customSecret",
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}));
-
-//authentication
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-//called when user signup/login using github
-app.get('/auth/github', passport.authenticate('github', function(err, user, info) {
-  console.log('inside auth');
-  console.log(user);
-}));
-
-// GitHub will call this URL
-app.get('/auth/github/callback', githubAuth.failureRedirect, githubAuth.successCallback);
-
-
-
-app.get('/loggingout', function(req, res){
-  console.log('logging out');
-  req.logout();
-  res.redirect('/');
-  // req.session.destroy(function(err) {
-  //   if (err) {
-  //     console.log('error:', err);
-  //   }
-  //   // res.clearCookie('connect.sid');
-    
-  // });
-});
-
-//for accessing session to get user data to the client
-app.get('/session',  githubAuth.authenticate);
-
-
 
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
-
 app.get('/graph2/', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
-});
-
-app.get('/*', githubAuth.checkUser, function(req, res) {
-  res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
 
 /************** sandbox routes ***************/
@@ -124,6 +112,7 @@ app.post('/compile', function(req, res) {
 });
 
 
-
-
+app.get('/*', function(req, res) {
+  res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+});
 
