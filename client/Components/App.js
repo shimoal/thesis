@@ -1,7 +1,7 @@
-import React from 'react'
-import { IndexLink } from 'react-router'
-import axios from 'axios'
-import NavLink from './NavLink'
+import React from 'react';
+import { IndexLink } from 'react-router';
+import axios from 'axios';
+import NavLink from './NavLink';
 import style from '../sass/App.scss';
 
 //redux experiment
@@ -13,19 +13,21 @@ export default class App extends React.Component {
   constructor(props) {
     super(props); 
 
-      this.state = {
-        user_skills:{},
-        ratings:{},
-        questions:{},
-        questionsClaimed:{},
-        currentUserQuestions:{},
-        allUsers:{},
-        userPublicProfile:{},
-        user: {}
-      }
+    this.state = {
 
-      this.getUserQuestions = this.getUserQuestions.bind(this);
-      this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
+      user_skills: {},
+      ratings: {},
+      questions: {},
+      userPublicQuestions: {},
+      questionsClaimed: {},
+      currentUserQuestions: {},
+      allUsers: {},
+      userPublicProfile: {},
+      user: {}
+    };
+
+    this.getUserQuestions = this.getUserQuestions.bind(this);
+    this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
   }
 
   componentWillMount() {
@@ -39,13 +41,12 @@ export default class App extends React.Component {
       .then(function(response) {
 
         //check to make sure response is a user (has a name propterty)
-        if (response.data.name){
+        if (response.data.name) {
           context.setState({user: response.data});
 
           var data = {
             userId: response.data.id
-          }
-
+          };
           //get users questions and claims
           context.getUserQuestions(data);
           context.getUserClaimedQuestions(data);
@@ -68,7 +69,7 @@ export default class App extends React.Component {
     })
     .catch(function(err) {
       console.log('Error getting All Questions from DB');
-    }) // -------- End of get all questions
+    }); // -------- End of get all questions
 
     //Get all users
     axios.get('/users')
@@ -80,13 +81,13 @@ export default class App extends React.Component {
     .catch(function(err) {
       console.log('Error getting All Users from DB');
       console.log(err);
-    }) // -------- End of get all users
+    }); // -------- End of get all users
 
     //get User's questions and claims if they already exist
     if (this.state.user.name) {
       var data = {
-        github_id: this.state.user.github_id
-      }
+        userId: this.state.user.id
+      };
 
       this.getUserQuestions(data);
       this.getUserClaimedQuestions(data);
@@ -126,11 +127,6 @@ export default class App extends React.Component {
   addQuestion(questionData) {
     var timeStamp = (new Date()).getTime();
     this.state.questions['id' + timeStamp] = questionData;
-
-    //write to database
-    //this is where ORM shines, make sure the object that I send here matches
-    //the schema in questionsModel.js
-    //check what this.state.questions contains, then map it to the schema
     
     axios.post('/question', questionData)
     .then(function(res) {
@@ -139,9 +135,26 @@ export default class App extends React.Component {
     })
     .catch(function(err) {
       if (err) {
-        console.log('Error writing question to database')
+        console.log('Error writing question to database');
       }
     });  
+  }
+
+  getUserPublicQuestions(userId) {
+    var context = this;
+    //get user's questions
+    var data = {
+      userId: userId,
+    };
+    axios.get('/question-for-one-user', { params: data })
+    .then(function(response) {
+      console.log('========== Success getting User\'s Public Profile Questions for', userId);
+      console.log(response.data);
+      context.setState({userPublicQuestions: response.data});
+    })
+    .catch(function(err) {
+      console.log('Error getting User\'s Public Profile Questions for', userId);
+    });
   }
 
   claimQuestion(currentUserId, learnerId, questionId) {
@@ -158,16 +171,21 @@ export default class App extends React.Component {
 
   //user click on accept button
   acceptHelper(learnerId, helperId, questionId) {
+    
     //create session table
-    axios.post('/accept', {id_learner: learnerId, id_helper: helperId, id_question: questionId})
+    axios.post('/accept', {
+      id_learner: learnerId, 
+      id_helper: helperId, 
+      id_question: questionId,
+    })
     .then(function(res) {
-      console.log('========== Success writing accept question session to database');
-      // setState to include learnerId, helperId, questionId, roomNumber
-      // redirect to collaborate
+      console.log('========== Success saving collaborate session');
+      // setState to include learnerId, helperId, questionId, roomNumber?
+      // redirect to collaborate?
     })
     .catch(function(err) {
       if (err) {
-        console.log('Error writing accept question session to database');
+        console.log('Error saving collaborate session');
       }
     });
   }
@@ -189,21 +207,22 @@ export default class App extends React.Component {
   //   });
   // }
 
-  // getUserPublicProfile(githubId) {
-  //   var context = this;
-  //   var data = {
-  //         github_id: githubId
-  //       }
-  //   axios.get('/user-current', { params: data })
-  //   .then(function(response) {
-  //     console.log('========== Success getting User Profile data from DB');
-  //     context.setState({userPublicProfile: response.data});
-  //   })
-  //   .catch(function(err) {
-  //     if (err) {
-  //       console.log('Error getting User Profile data from DB');
-  //     }
-  //   });
+  getUserPublicProfile(userId) {
+    var context = this;
+    var data = {
+      userId: userId,
+    };
+    axios.get('/public-profile', { params: data })
+    .then(function(response) {
+      console.log('========== Success getting User Public Profile data from DB');
+      context.setState({userPublicProfile: response.data});
+    })
+    .catch(function(err) {
+      if (err) {
+        console.log('Error getting User Public Profile data from DB');
+      }
+    });
+  }
 
   removeUser() {
     this.setState({user: {}});
@@ -219,8 +238,10 @@ export default class App extends React.Component {
         addQuestion: this.addQuestion.bind(this),
         claimQuestion: this.claimQuestion.bind(this),
         acceptHelper: this.acceptHelper.bind(this),
+        getUserPublicProfile: this.getUserPublicProfile.bind(this),
+        getUserPublicQuestions: this.getUserPublicQuestions.bind(this),
         removeUser: this.removeUser.bind(this)
-     })
+      })
     );
 
     return (
@@ -239,6 +260,6 @@ export default class App extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

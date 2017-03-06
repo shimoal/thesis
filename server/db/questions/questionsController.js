@@ -1,14 +1,16 @@
 const db = require('../database.js'); //for raw sql query
 const Question = require('./questionsModel.js');
+const User = require('../users/usersModel.js');
+const Claim = require('../claims/claimsModel.js');
 const QuestionOneUser = require('./questionsUserSpecificModel.js');
 
 const controller = {
   save: function(req, res, next) {
     Question.create({
-        userId: req.body.userId,
-        title: req.body.title,
-        question: req.body.question,
-        status: 'open',
+      userId: req.body.userId,
+      title: req.body.title,
+      question: req.body.question,
+      status: 'open',
     })
     .then(function(task) {
       task.save();
@@ -21,42 +23,42 @@ const controller = {
   },
   
   retrieve: function(req, res, next) {
-    
-    // console.log('XXX calling questionsController retrieve');
     var currentUserId = req.query.userId;
-    // console.log('Current User Id to Retrieve just that users question', currentUserId);
-
+    
     //retrieve all questions
-    db.query('SELECT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt" \
-              from users INNER JOIN questions ON questions."userId" = users.id \
+
+    db.query('SELECT DISTINCT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt", claims.id_helper\
+              FROM users\
+              INNER JOIN questions ON questions."userId" = users.id\
+              INNER JOIN claims ON claims.id_helper = users.id\
               ORDER BY id DESC', { model: Question })
+    
     .then(function(questions) {
-      // console.log('XXX RAW results',questions);
+      console.log('questionController query result', questions);
       var promises = questions.map(function(question) {
-        // console.log('XXX each question', question);
         return {
           'id': question.id,
-          'title':question.title,
-          'question':question.question,
-          'status':question.status,
+          'title': question.title,
+          'question': question.question,
+          'status': question.status,
           'deadline': '',
-          'userId':question.userId,
+          'userId': question.userId,
           'name': question.name,
+          'helperId': question.id_helper,
           'createdAt': question.createdAt,
-        }
+        };
       });
       Promise.all(promises).then(function() {
         res.send(promises);
-      })
+      });
     })
     .catch(function(err) {
-      console.log('Error getting question');
+      console.log('@_@ Error getting questions');
       return res.sendStatus(500);
     });
   },
 
   retrieveForOneUser: function(req, res, next) {
-    
     var currentUserId = req.query.userId;
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
     console.log('inside restrieve for one user:', req.query);
@@ -66,21 +68,20 @@ const controller = {
     })
     .then(function(questions) {
       console.log('========== Success getting Questions for current user');
-      var promises = questions.map(function(question){
-        // console.log('===========', question.dataValues, ' >>>> in promise all');
+      var promises = questions.map(function(question) {
         return {
           'id': question.dataValues.id,
-          'title':question.dataValues.title,
-          'question':question.dataValues.question,
-          'status':question.dataValues.status,
+          'title': question.dataValues.title,
+          'question': question.dataValues.question,
+          'status': question.dataValues.status,
           'deadline': '',
           'createdAt': question.createdAt,
           'userId': question.userId,
-        }
+        };
       });
       Promise.all(promises).then(function() {
         res.send(promises);
-      })
+      });
     })
     .catch(function(err) {
       console.log('Error getting one user questions');

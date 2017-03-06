@@ -1,5 +1,5 @@
-import React from 'react'
-import QuestionItem from './QuestionItem'
+import React from 'react';
+import QuestionItem from './QuestionItem';
 
 var OpenQuestions = React.createClass({
 
@@ -10,14 +10,15 @@ var OpenQuestions = React.createClass({
   renderQuestion: function(key) {
     // console.log('OpenQuestions', this.props.questions);
     // console.log('OpenQuestions', this.props.userCurrent.name);
-    return ( <QuestionItem 
-                key={key} 
-                index={key} 
-                authenticated={this.props.authenticated}
-                userCurrent={this.props.userCurrent}
-                details={this.props.questions[key]} 
-                claimQuestion={this.props.claimQuestion}/> 
-            )
+    return ( 
+      <QuestionItem 
+          key={key} 
+          index={key} 
+          authenticated={this.props.authenticated}
+          userCurrent={this.props.userCurrent}
+          details={this.props.questions[key]} 
+          claimQuestion={this.props.claimQuestion}/> 
+    );
   },
   componentDidMount: function() {
     // console.log('PROPS in OpenQuestions',this.props);
@@ -27,9 +28,9 @@ var OpenQuestions = React.createClass({
 
   checkIfInDashboard: function() {
     if (this.props.dashboard) {
-      return(<h3>My Open Questions</h3>)
+      return (<h3>My Open Questions</h3>);
     } else {
-      return(<h3>Open Questions</h3>)  
+      return (<h3>Open Questions</h3>);
     }
   },
 
@@ -46,10 +47,10 @@ var OpenQuestions = React.createClass({
 
 
       </div>
-    )
+    );
   }
 
-})
+});
 
-export default OpenQuestions
+export default OpenQuestions;
 

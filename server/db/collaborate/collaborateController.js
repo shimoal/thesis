@@ -1,20 +1,25 @@
 const db = require('../database.js'); //for raw sql query
-const Session = require('./collaborateModel.js');
+const Collaborate = require('./collaborateModel.js');
 
 const controller = {
   save: function(req, res, next) {
-    console.log('inside collaborateController.js req.body', req.body);
-    Session.create({
+    //create room name from question id and current time in millisecond
+    var d = new Date();
+    var roomNumber = req.body.id_question + d.getTime().toString();
+    
+    Collaborate.create({
       id_learner: req.body.id_learner,
       id_helper: req.body.id_helper,
       id_question: req.body.id_question,
+      room_number: roomNumber,
     })
     .then(function(task) {
       task.save();
-      return res.status(200).send('========== Success saving collaborate session');
+      console.log('========== Success saving collaborate session, room_number:', roomNumber);
+      return res.status(200);
     })
     .catch(function(err) {
-      console.log(err, ' X X X X Error saving session');
+      console.log('Error saving collaborate session');
       return res.sendStatus(500);
     });
   },
@@ -55,6 +60,6 @@ const controller = {
     });*/
   },
 
-}
+};
 
 module.exports = controller;

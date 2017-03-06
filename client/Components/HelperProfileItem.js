@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 export default React.createClass({
 
   constructProfileLink() {
-    return "profile/" + this.props.details.github_id;
+    // return 'profile/' + this.props.details.github_id;
+    return 'profile/' + this.props.details.id;
   },
 
   render() {
@@ -19,6 +20,6 @@ export default React.createClass({
         <p>CSS (5)</p>
         
       </div>
-    )
+    );
   }
-})
+});

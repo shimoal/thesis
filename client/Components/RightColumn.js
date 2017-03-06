@@ -1,12 +1,12 @@
-import React from 'react'
-import {Link, browserHistory} from 'react-router'
-import UserProfile from './UserProfile'
-import Skills from './Skills'
-import PostQuestionButton from './PostQuestionButton'
-import PostQuestion from './PostQuestion'
-import ClaimedQuestions from './ClaimedQuestions'
-import OpenQuestions from './OpenQuestions'
-import ClosedQuestions from './ClosedQuestions'
+import React from 'react';
+import {Link, browserHistory} from 'react-router';
+import UserProfile from './UserProfile';
+import Skills from './Skills';
+import PostQuestionButton from './PostQuestionButton';
+import PostQuestion from './PostQuestion';
+import ClaimedQuestions from './ClaimedQuestions';
+import OpenQuestions from './OpenQuestions';
+import ClosedQuestions from './ClosedQuestions';
 
 export default class RightColumn extends React.Component {
   
@@ -16,7 +16,7 @@ export default class RightColumn extends React.Component {
       showForm: false,
       showButton: true,
       userOnlyQuestions: {},
-    }
+    };
   }
 
   componentWillMount() {
@@ -24,6 +24,7 @@ export default class RightColumn extends React.Component {
     // console.log('in RIghtCOlumn, Authenticated?', this.props.authenticated);  
     //do ajax call to get Helpers (those who claim current user's questions)
     //right now do it in App because the dummy data state is there
+    console.log('RightColumn component will mount');
   }
 
   componentDidMount() {
@@ -39,14 +40,14 @@ export default class RightColumn extends React.Component {
         showForm: true,
         showButton: false
       });
-    }
+    };
 
     var hideQuestionForm = function() {
       this.setState({
         showForm: false,
         showButton: true
       });
-    }
+    };
 
     //currently we are not passing authenticated={this.props.authenticated} to OpenQuestions to hide the claim button from user dashboard
     return (
@@ -70,6 +71,6 @@ export default class RightColumn extends React.Component {
           questions={this.props.questions} />
         <ClosedQuestions />
       </div>
-    )
+    );
   }
 }
