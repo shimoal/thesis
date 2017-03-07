@@ -63,7 +63,7 @@ const controller = {
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
     console.log('inside restrieve for one user:', req.query);
     QuestionOneUser.findAll({
-      where: { userId: currentUserId },
+      where: { userId: currentUserId, status: 'open', },
       order: [['id', 'DESC']],
     })
     .then(function(questions) {

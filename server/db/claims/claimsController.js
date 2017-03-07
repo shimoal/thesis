@@ -68,7 +68,7 @@ const controller = {
       console.log('========== Success getting claimed questions');
       // console.log('XXX CLAIM RAW results', questions);
       var promises = questions.map(function(question) {
-        console.log('XXX each question.dataValues.claims[0]', question.dataValues.claims[0]);
+        console.log('XXX each question.dataValues.claims', question.dataValues.claims);
         console.log('XXX each claim helper', question.dataValues.claims[0].dataValues.user.dataValues.name);
         // console.log('XXX each claim claim.question.user', claim.question.user);
         return {
