@@ -3,11 +3,9 @@ var passport = require('passport');
 var GithubStrategy = require('passport-github2').Strategy;
 var usersCtrl = require('./../db/users/usersController.js');
 var User = require('./../db/users/usersModel.js');
-var sess;
 
 var app = require('./../app.js');
 var githubCB;
-
 
 
   githubCB = "http://hackeroo.xyz/auth/github/callback"
@@ -19,64 +17,73 @@ passport.use(new GithubStrategy({
     callbackURL: githubCB
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log('insdie Strategy cb', profile);
-    var user = {name: profile.displayName, email: profile.emails[0].value, profile_img: profile._json.avatar_url, github_id: profile.id}
-    console.log('user:', user);
-    return done(null, user);
+    var user = {
+      name: profile.displayName, 
+      email: profile.emails[0].value, 
+      profile_img: profile._json.avatar_url, 
+      github_id: profile.id
+    };
+    
+    User.findOne({
+      where: {
+        github_id: user.github_id
+      }
+    }).then( function(userFound) {
+      if (!userFound) {
+        console.log('user does not exist');
+        usersCtrl.save(user);
+      } else {
+        console.log('user exists');
+      }
+      return done(null, user);
+    }).catch(function(err) {
+      console.log('there was an error retrieving the user:', err);
+    });
   }
 ));
-
 
 passport.serializeUser(function(user, done) {
   // null is for errors
   console.log('inside serializeUser', user);
-  done(null, user);
+  done(null, user.github_id);
 });
 
-passport.deserializeUser(function(name, done) {
+passport.deserializeUser(function(github_id, done) {
   // placeholder for custom user deserialization.
   // maybe you are going to get the user from mongo by id?
   // null is for errors
-  // console.log('deserializeUser', user);
-  console.log('inside deserializeUser', user);
-  done(null, user);
+  console.log('inside deserialization', github_id);
 
-
+  User.findOne({
+    where: {
+      github_id: github_id
+    }
+  }).then(function(userFound) {
+    if (userFound) {
+      done(null, userFound);
+    }
+  }).catch(function(err) {
+    console.log('there was an error: ', err);
+    done(err);
+  });
 });
 
-
 var githubAuth = {
-  checkUser: function(req, res, next) {
-    if(!sess) {
-      console.log('GITHUB USER inside !sess');
-      sess = req.session;
-    }
-      console.log('GITHUB USER outside !sess');
-      next();
-  },
-
   authenticate: function(req, res, next) {
-    if (sess && sess.github_id) {
-      console.log('GITHUB USER authenticated');
-      res.send(sess);
+    if (req.session.passport) {
+      console.log('there is a session, retrieving user:');
+      usersCtrl.retrieve(req, res, next);
     } else {
-      console.log('GITHUB USER not authenticated');
-      res.redirect('/signup');
+      res.send('User is not authenticated');
     }
   },
 
   failureRedirect: passport.authenticate('github', { failureRedirect: '/' }),
 
   successCallback: function(req, res, next) {
-    console.log('inside successCallback', req.user);
-    req.logIn(req.user, function(err) {
-      if (err) {
-        next(err);
-      } else {
-        return res.redirect('/');
-      }
-    });
+    res.redirect('/dashboard');
   }
 };
 
 module.exports = githubAuth;
+

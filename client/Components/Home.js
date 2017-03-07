@@ -1,11 +1,42 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React from 'react';
+import { Link } from 'react-router';
+import OpenQuestions from './OpenQuestions';
+import HomepageSearchBar from './HomepageSearchBar';
+import HelperProfiles from './HelperProfiles';
 
 export default class Home extends React.Component {
-  constructor() {
-    super(); 
+
+  componentWillMount() {
 
   }
+  
+//   constructor() {
+//     super(); 
+
+
+
+//   }
+
+//   // //Before component is rendered
+//   // componentWillMount() {
+//   //   console.log('Home component is mounting');
+//   //   //check to make sure user is authenticated and set state to 1 or 0
+//   //   this.props.checkUserAuth();
+//   // }
+
+//   //Happens after component has rendered
+//   componentDidMount() {
+//     console.log('Home component has rendered');
+
+// // every component needs to do GET /session to check if the user has been authenticated!!!!
+// // need to pass down the following function as props to all components
+
+//   }
+  
+//   //Happens when component has rendered and about to unmount
+//   componentWillUnmount() {
+//     // this.props.showSearch('no');
+//   }
 
   //Happen whenever home component's state changes
   render() {
@@ -15,57 +46,21 @@ export default class Home extends React.Component {
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10 main">
+          { /* OpenQuestions.js */}
+          <OpenQuestions 
+            userCurrent={this.props.userData.user}
+            questions={this.props.userData.questions}
+            claimQuestion={this.props.claimQuestion} />
 
           { /* FindHelpers Compoent */}
-          <div>
-            <h3>Find Helpers</h3>
-            <div className="panel panel-default">
-              <div className="panel-body">
+          <HelperProfiles allUsers={this.props.userData.allUsers}/>
 
-            
-                <div className="row placeholders">
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <h3>Ai Shi</h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-                    
-                  </div>
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <h3>Alison Reed</h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
 
-                  </div>
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <h3>Max Quinn</h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-
-                  </div>
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <h3>Hanyen Widjaja</h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-
-                  </div>
-                </div>
-              </div>
-            </div>  
-          </div>
         </div>
       </div>
-    )
+
+
+      
+    );
   }
 }

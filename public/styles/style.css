@@ -22,3 +22,7 @@ video {
 	height: 200px;
 	border: #000 1px solid;
 }
+
+.jumbotron {
+  background-color: #ccc;
+}
