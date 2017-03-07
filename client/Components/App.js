@@ -89,7 +89,6 @@ export default class App extends React.Component {
       var data = {
         userId: this.state.user.id
       };
-
       this.getUserQuestions(data);
       this.getUserClaimedQuestions(data);
     }

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-import QuestionItem from './QuestionItem'
+import React from 'react';
+import { Link } from 'react-router';
+import QuestionItem from './QuestionItem';
 
 var ClaimedQuestions = React.createClass({
 
@@ -10,7 +10,7 @@ var ClaimedQuestions = React.createClass({
                 key={key} 
                 index={key} 
                 acceptHelper={this.props.acceptHelper} 
-                details={this.props.questionsClaimed[key]}/> )
+                details={this.props.questionsClaimed[key]}/> );
   },
   componentWillMount: function() {
     // console.log('Inside ClaimedQuestions this.props', this.props);
@@ -26,8 +26,8 @@ var ClaimedQuestions = React.createClass({
           </div>
         </div>
       </div>
-    )
+    );
   }
-})
+});
 
-export default ClaimedQuestions
+export default ClaimedQuestions;

@@ -1,7 +1,7 @@
 const db = require('./../database.js'); //for raw sql query
 const Question = require('./questionsModel.js');
 const User = require('../users/usersModel.js');
-const Claim = require('../claims/claimsModel.js');
+// const Claim = require('../claims/claimsModel.js');
 const QuestionOneUser = require('./questionsUserSpecificModel.js');
 
 const controller = {
@@ -17,7 +17,7 @@ const controller = {
       return res.status(200).send('========== Success saving Question');
     })
     .catch(function(err) {
-      console.log('Error saving question');
+      console.log('Error saving question', err);
       return res.sendStatus(500);
     });
   },
@@ -39,21 +39,21 @@ const controller = {
         // console.log('XXX each question', question);
         return {
           'id': question.id,
-          'title':question.title,
-          'question':question.question,
-          'status':question.status,
+          'title': question.title,
+          'question': question.question,
+          'status': question.status,
           'deadline': '',
-          'userId':question.userId,
+          'userId': question.userId,
           'name': question.name,
           'createdAt': question.createdAt,
-        }
+        };
       });
       Promise.all(promises).then(function() {
         res.send(promises);
-      })
+      });
     })
     .catch(function(err) {
-      console.log('Error getting question');
+      console.log('Error getting questions', err);
       return res.sendStatus(500);
     });
   },
@@ -63,7 +63,7 @@ const controller = {
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
     console.log('inside restrieve for one user:', req.query);
     QuestionOneUser.findAll({
-      where: { userId: currentUserId },
+      where: { userId: currentUserId, status: 'open', },
       order: [['id', 'DESC']],
     })
     .then(function(questions) {
@@ -84,7 +84,7 @@ const controller = {
       });
     })
     .catch(function(err) {
-      console.log('Error getting one user questions');
+      console.log('Error getting one user questions', err);
       return res.sendStatus(500);
     });
   },

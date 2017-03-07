@@ -46,7 +46,6 @@ passport.use(new GithubStrategy({
 
 passport.serializeUser(function(user, done) {
   // null is for errors
-  console.log('inside serializeUser', user);
   done(null, user.github_id);
 });
 
@@ -54,8 +53,6 @@ passport.deserializeUser(function(github_id, done) {
   // placeholder for custom user deserialization.
   // maybe you are going to get the user from mongo by id?
   // null is for errors
-  console.log('inside deserialization', github_id);
-
   User.findOne({
     where: {
       github_id: github_id
