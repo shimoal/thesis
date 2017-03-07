@@ -6,6 +6,7 @@ import Home from './Home'
 import Dashboard from './Dashboard'
 // import DashboardPublic from './DashboardPublic'
 import Collaborate from './Collaborate'
+import ReviewPage from './ReviewPage'
 import Graph from './Graph'
 import PostQuestionPage from './PostQuestionPage'
 import Signup from './Auth/Signup'
@@ -21,6 +22,7 @@ module.exports = (
     <Route path="/post-question" component={PostQuestionPage}/>
     <Route path="/about" component={About}/>
     <Route path="/collaborate" component={Collaborate}/>
+    <Route path="/review/:collaborateId" component={ReviewPage}/>
     <Route path="/graphs" component={Graph}/>
     <Route path="/signup" component={Signup}/>
     <Route path="/logout" component={Logout}/>
