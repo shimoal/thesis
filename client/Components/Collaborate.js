@@ -26,8 +26,7 @@ export default class Collaborate extends React.Component {
       info: '',
       exit_room: '',
       applyingChanges: false,
-      username: '',
-      id
+      username: ''      
     }
     this.handleCreateRoom = this.handleCreateRoom.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -101,21 +100,27 @@ export default class Collaborate extends React.Component {
   }
   handleJoinRoom(e) {
     var context = this;
+    console.log('room_name: ', context.state.room_name);
     axios.get('/collaborate', {
         params: {
-          room_name: context.state.room_name
+          room_number: context.state.room_name
         }
       })
       .then(function(collaborate) {
-        console.log(collaborate);
-        context.setState({learnerId: collaborate.id_learner,
-                          helperId: collaborate.id_helper,
-                          questionId: collaborate.id_question,
-                          reviewId: collaborate.id_review,
-                          learner: collaborate.Learner,
-                          helper: collaborate.helper,
-                          question: collaborate.Question});
-        socket.emit('join-room', this.state.username, this.state.room_name);
+        console.log('collaborate.data ---> ', collaborate.data);
+        console.log('collaborate obj in Collaborate.data: ', collaborate.data);
+        context.setState({
+          id: collaborate.data.id,
+          learnerId: collaborate.data.id_learner,
+          helperId: collaborate.data.id_helper,
+          questionId: collaborate.data.id_question,
+          learner: collaborate.data.Learner,
+          helper: collaborate.data.Helper,
+          question: collaborate.data.Question,
+          room_name: collaborate.data.room_number
+        });
+        console.log('context state ---> ', context.state);
+        socket.emit('join-room', context.state.username, context.state.room_name);
       })
       .catch(function(err) {
         console.log(err.message);
