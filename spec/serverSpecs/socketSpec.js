@@ -168,7 +168,6 @@ describe('socket', function() {
         client1.emit('submit-val', 'roomE', 'console.log("some value to submit")');
 
         client2.on('submit-val', function(val) {
-          console.log('inside on submit: ', val);
           expect(val).to.deep.equal(['some value to submit']);
           done();
         });
