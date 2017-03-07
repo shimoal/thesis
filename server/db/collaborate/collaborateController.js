@@ -2,6 +2,7 @@ const db = require('../database.js'); //for raw sql query
 const Collaborate = require('./collaborateModel.js');
 const UserController = require('./../users/usersController.js');
 const Question = require('../questions/questionsModel.js');
+const User = require('./../users/usersModel.js');
 
 const controller = {
   save: function(req, res, next) {
@@ -28,14 +29,16 @@ const controller = {
   },
 
   retrieve: function(req, res, next) {
-    var room_number = req.params.room_number;
+    console.log('req.query.room_number --------->', req.query.room_number);
+    var room_number = req.query.room_number;
+    console.log('room_number in controller: ', room_number);
     Collaborate.findOne({
       where: { room_number: room_number },
       include: [ {all: true} ]
     })
     .then(function(collaborate) {
-      console.log('eager loading in retrieving collaborate', collaborate);
-      res.json(collaborate);
+      console.log('eager loading in retrieving collaborate', collaborate.get());
+      res.json(collaborate.get());
     })
     .catch(function(err) {
       console.log('err in retrieving collaborate: ', err.message);
