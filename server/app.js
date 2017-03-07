@@ -89,6 +89,9 @@ app.get('/claim', claimsCtrl.retrieve);
 
 app.post('/accept', collaborateCtrl.save);
 
+app.get('/collaborate', collaborateCtrl.retrieve);
+
+
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
