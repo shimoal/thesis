@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/../server/twitter'));
 
 var connectionString = '';
 
-connectionString = 'postgres://:@localhost:5432/hackeroo'
+ connectionString = 'postgres://:@localhost:5432/hackeroo'
 
 app.use(session({
   store: new pgSession({                            

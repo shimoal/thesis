@@ -28,7 +28,6 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.23.0",
-    "body-parser": "^1.16.1",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "chai-spies": "^0.7.1",
@@ -48,13 +47,13 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.2",
     "sass-loader": "^6.0.1",
-    "socket.io-client": "^1.7.3",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "body-parser": "^1.16.1",
     "bootstrap": "^3.3.7",
     "brace": "^0.10.0",
     "connect-pg-simple": "^3.1.2",
@@ -67,6 +66,7 @@
     "pg": "^6.1.2",
     "sequelize": "^3.30.2",
     "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
     "vm2": "^3.2.0"
   }
 }
