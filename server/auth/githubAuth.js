@@ -8,7 +8,7 @@ var app = require('./../app.js');
 var githubCB;
 
 
-  githubCB = "http://hackeroo.xyz/auth/github/callback"
+  githubCB = "https://hackeroo.xyz/auth/github/callback"
 
 
 passport.use(new GithubStrategy({
