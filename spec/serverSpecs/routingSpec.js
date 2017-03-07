@@ -2,7 +2,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var chaiHTTP = require('chai-http');
 chai.use(chaiHTTP);
-var server = require('./../server/app.js');
+var server = require('./../../server/app.js');
 
 xdescribe('basic routes', function() {
   it ('should make a get request', function (done) {

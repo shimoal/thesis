@@ -10,7 +10,7 @@ var options ={
     };
 
 
-xdescribe('socket', function() {
+describe('socket', function() {
 
   beforeEach(function (done) {
     client1 = io("http://localhost:8080", options);
@@ -165,10 +165,11 @@ xdescribe('socket', function() {
       client2.on('connect', function() {
         client2.emit('join-room', 'client2', 'roomE');
 
-        client1.emit('submit-val', 'roomE', 'some value to submit');
+        client1.emit('submit-val', 'roomE', 'console.log("some value to submit")');
 
         client2.on('submit-val', function(val) {
-          expect(val).to.equal('some value to submit');
+          console.log('inside on submit: ', val);
+          expect(val).to.deep.equal(['some value to submit']);
           done();
         });
       });

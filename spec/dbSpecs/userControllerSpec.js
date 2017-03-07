@@ -1,6 +1,6 @@
 // var chai = require('chai');
 // var expect = chai.expect;
-var usersController = require('./../server/db/users/usersController.js');
+// var usersController = require('./../../server/db/users/usersController.js');
 
 // describe('users controller', function() {
 //   it('should have a send mail function', function() {
@@ -10,4 +10,4 @@ var usersController = require('./../server/db/users/usersController.js');
 
 // });
 
-usersController.sendMail(1, 1, '123456');
+// usersController.sendMail(1, 1, '123456');

@@ -2,9 +2,9 @@ var chai = require('chai');
 var spies = require('chai-spies');
 chai.use(spies);
 var expect = chai.expect;
-var mailer = require('./../server/mailer.js');
+var mailer = require('./../../server/mailer.js');
 
-describe('Node mailer', function(){
+xdescribe('Node mailer', function(){
 // //   var spy = chai.spy(mailer);
 
   it('should be a function', function() {
