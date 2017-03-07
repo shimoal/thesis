@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-import HelperAcceptButton from './HelperAcceptButton'
+import React from 'react';
+import { Link } from 'react-router';
+import HelperAcceptButton from './HelperAcceptButton';
 
 var Helpers = React.createClass({
   
@@ -25,19 +25,19 @@ var Helpers = React.createClass({
         </div>
       </div>
 
-    )
+    );
   },
   //pass down all helpers here and map it
   checkHelpers: function() {
     //check helper object
     if (this.props.details.helpers) {
-      return(
+      return (
         <div>
           { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
         </div>
-      )
+      );
     } else {
-      return(<div/>)
+      return(<div/>);
     }
   },
 
@@ -46,8 +46,8 @@ var Helpers = React.createClass({
       <div className="bg-success">
         { this.checkHelpers() } 
       </div>
-    )
+    );
   }
-})
+});
 
-export default Helpers
+export default Helpers;

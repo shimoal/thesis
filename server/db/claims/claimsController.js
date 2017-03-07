@@ -81,6 +81,7 @@ const controller = {
           'helperId': question.dataValues.id_helper,
           'helpers': {
             name: question.dataValues.claims[0].dataValues.user.dataValues.name,
+            helperId: question.dataValues.claims[0].dataValues.user.dataValues.id,
           }
         };
       });

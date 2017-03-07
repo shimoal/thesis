@@ -31,7 +31,7 @@ export default React.createClass({
       userId: userId
     };
 
-    this.props.getUserQuestions(data); //calling it here for some reason doesn't rerender
+    this.props.getUserQuestions(data);
     this.props.getUserClaimedQuestions(data);
   },
 
