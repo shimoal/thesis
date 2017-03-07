@@ -1,6 +1,16 @@
 import React from 'react'
 
 export default React.createClass({
+
+  clickHandler(){
+    console.log(document.getElementsByName("textbox1")[0].value);
+    axios.get('/search?term=' + document.getElementsByName("textbox1")[0].value) //+ document.getElementsByName("textbox1")[0].value)
+      .then(function(response){
+      console.log("searchResp: ", response);
+     // comp.setState({questions: response.data[0].title});
+    })
+  },
+
   render() {
     return (
       <div className="jumbotron">
