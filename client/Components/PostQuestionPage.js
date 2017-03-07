@@ -5,7 +5,7 @@ var PostQuestion = React.createClass({
 
   processQuestion: function() {
      // event.preventDefault();
-     console.log('form submit');
+     // console.log('form submit');
      // console.log(event);
      // console.log('inside processQuestion function',this.refs);
      //1. take data from form
@@ -21,7 +21,7 @@ var PostQuestion = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('inside DidMount', this.refs);
+    // console.log('inside DidMount', this.refs);
   },
 
   render: function() {

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../database.js');
 const User = require('../users/usersModel.js');
 
-const Question = db.define('question', {
+const Question = db.define('questions', {
   userId: {
     type: Sequelize.INTEGER
   },
@@ -10,7 +10,7 @@ const Question = db.define('question', {
     type: Sequelize.STRING
   },
   question: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   status: {
     type: Sequelize.STRING
@@ -18,10 +18,12 @@ const Question = db.define('question', {
   deadline: {
     type: Sequelize.DATE
   },
-  name: {
+  name: { // to display the asker's name in the homepage
     type: Sequelize.STRING
-  }
-  
+  },
+  id_helper: { // to prevent helper to claim the same Q twice
+    type: Sequelize.STRING
+  },
 });
 
 User.hasMany(Question);

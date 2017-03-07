@@ -1,35 +1,36 @@
-import React from 'react'
-import QuestionItem from './QuestionItem'
+import React from 'react';
+import QuestionItem from './QuestionItem';
 
 var OpenQuestions = React.createClass({
 
   componentWillMount: function(key) {
-    console.log('in OpenQuestions, Authenticated?', this.props.authenticated);  
+    // console.log('in OpenQuestions, Authenticated?', this.props.authenticated);  
   },
 
   renderQuestion: function(key) {
-    console.log('OpenQuestions', this.props.questions);
-    console.log('OpenQuestions', this.props.userCurrent.name);
-    return ( <QuestionItem 
-                key={key} 
-                index={key} 
-                authenticated={this.props.authenticated}
-                userCurrent={this.props.userCurrent}
-                details={this.props.questions[key]} 
-                claimQuestion={this.props.claimQuestion}/> 
-            )
+    // console.log('OpenQuestions', this.props.questions);
+    // console.log('OpenQuestions', this.props.userCurrent.name);
+    return ( 
+      <QuestionItem 
+          key={key} 
+          index={key} 
+          authenticated={this.props.authenticated}
+          userCurrent={this.props.userCurrent}
+          details={this.props.questions[key]} 
+          claimQuestion={this.props.claimQuestion}/> 
+    );
   },
   componentDidMount: function() {
-    console.log('PROPS in OpenQuestions',this.props);
-    console.log('Inside OpenQuestions', this.props.questions);
-    console.log('CURRENT USER in OpenQuestions: ', this.props.userCurrent);
+    // console.log('PROPS in OpenQuestions',this.props);
+    // console.log('Inside OpenQuestions', this.props.questions);
+    // console.log('CURRENT USER in OpenQuestions: ', this.props.userCurrent);
   },
 
   checkIfInDashboard: function() {
     if (this.props.dashboard) {
-      return(<h3>My Open Questions</h3>)
+      return (<h3>My Open Questions</h3>);
     } else {
-      return(<h3>Open Questions</h3>)  
+      return (<h3>Open Questions</h3>);
     }
   },
 
@@ -46,10 +47,10 @@ var OpenQuestions = React.createClass({
 
 
       </div>
-    )
+    );
   }
 
-})
+});
 
-export default OpenQuestions
+export default OpenQuestions;
 

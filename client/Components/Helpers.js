@@ -1,21 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router'
+import HelperAcceptButton from './HelperAcceptButton'
 
 var Helpers = React.createClass({
   
-  componentWillMount: function(key) {
-    console.log('In Helpers.s willMount this.props.details', this.props.details);
+  componentDidMount: function() {
+    // console.log('In Helpers.s DidMount this.props', this.props);
+    // console.log('In Helpers.s DidMount this.props.details', this.props.details);
   },
 
   renderHelpers: function(key) {
     return ( 
       
-      <div className="row">
+      <div className="row" key={key}>
         <div className="col-sm-9 col-md-9">
           {this.props.details.helpers[key]}
         </div>
         <div className="col-sm-8 col-md-3">
-          <Link to="/collaborate">Accept</Link>
+          <HelperAcceptButton 
+              key={key} 
+              index={key} 
+              details={this.props.details} 
+              acceptHelper={this.props.acceptHelper} />
         </div>
       </div>
 
@@ -26,11 +32,9 @@ var Helpers = React.createClass({
     //check helper object
     if (this.props.details.helpers) {
       return(
-        <table className="table">
-          <tbody>
-            { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
-          </tbody>
-        </table>
+        <div>
+          { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
+        </div>
       )
     } else {
       return(<div/>)

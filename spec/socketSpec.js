@@ -24,7 +24,6 @@ xdescribe('socket', function() {
   });
 
   it ('1. should give error message if room is already taken', function (done) {
-
     client1.on('connect', function() {
       client1.emit('addroom', 'client1', 'roomA');
       client2 = io("http://localhost:8080", options);
@@ -69,6 +68,7 @@ xdescribe('socket', function() {
     });
   });
 
+
   it ('4. should notify others in the room when a user joins', function () {
     client1.on('connect', function() {
       client1.emit('addroom', 'client1', 'roomC');
@@ -77,14 +77,11 @@ xdescribe('socket', function() {
 
       client2.on('connect', function() {
         client2.emit('join-room', 'client2', 'roomC').then(function() {
-        client1.on('info', function(msg) {
-          expect(msg).to.equal('a new user has joined the room');
-          // done();
-        })
-          
+          client1.on('info', function(msg) {
+            expect(msg).to.equal('a new user has joined the room');
+          });
         });
-
-      })
+      });
     });
   });
 
@@ -100,7 +97,6 @@ xdescribe('socket', function() {
 
         client2.on('info', function(msg) {
           expect(msg).to.equal('You are already in the room');
-          // done();
         })
       })
     });
@@ -119,7 +115,6 @@ xdescribe('socket', function() {
 
         client1.on('info', function(msg) {
           expect(msg).to.equal('You left the room');
-          // done();
         })
       })
     });
@@ -138,7 +133,6 @@ xdescribe('socket', function() {
 
         client1.on('info', function(msg) {
           expect(msg).to.equal('the other user exit the room');
-          // done();
         })
       })
     });
