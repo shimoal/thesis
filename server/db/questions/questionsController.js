@@ -1,4 +1,4 @@
-const db = require('../database.js'); //for raw sql query
+const db = require('./../database.js'); //for raw sql query
 const Question = require('./questionsModel.js');
 const User = require('../users/usersModel.js');
 const Claim = require('../claims/claimsModel.js');
@@ -22,38 +22,38 @@ const controller = {
     });
   },
   
-  retrieve: function(req, res, next) {
-    var currentUserId = req.query.userId;
-    
-    //retrieve all questions
 
-    db.query('SELECT DISTINCT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt", claims.id_helper\
-              FROM users\
-              INNER JOIN questions ON questions."userId" = users.id\
-              INNER JOIN claims ON claims.id_helper = users.id\
-              ORDER BY id DESC', { model: Question })
+  retrieve: function(req, res, next) {
     
+    // console.log('XXX calling questionsController retrieve');
+    var currentUserId = req.query.userId;
+    // console.log('Current User Id to Retrieve just that users question', currentUserId);
+
+    //retrieve all questions
+    db.query('SELECT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt" \
+              from users INNER JOIN questions ON questions."userId" = users.id \
+              ORDER BY id DESC', { model: Question })
     .then(function(questions) {
-      console.log('questionController query result', questions);
+      // console.log('XXX RAW results',questions);
       var promises = questions.map(function(question) {
+        // console.log('XXX each question', question);
         return {
           'id': question.id,
-          'title': question.title,
-          'question': question.question,
-          'status': question.status,
+          'title':question.title,
+          'question':question.question,
+          'status':question.status,
           'deadline': '',
-          'userId': question.userId,
+          'userId':question.userId,
           'name': question.name,
-          'helperId': question.id_helper,
           'createdAt': question.createdAt,
-        };
+        }
       });
       Promise.all(promises).then(function() {
         res.send(promises);
-      });
+      })
     })
     .catch(function(err) {
-      console.log('@_@ Error getting questions');
+      console.log('Error getting question');
       return res.sendStatus(500);
     });
   },

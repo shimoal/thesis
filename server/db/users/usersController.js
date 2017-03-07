@@ -1,4 +1,5 @@
 const User = require('./usersModel.js');
+const mailer = require('./../../mailer.js');
 
 const controller = {
 
@@ -63,6 +64,25 @@ const controller = {
     .catch(function(err) {
       console.log('Error retrieving All User');
       return res.sendStatus(500);
+    });
+  },
+
+  sendMail: function(userId1, userId2, roomNum){
+    //need to test this once we have multiple users
+    console.log('inside send Mail: ', userId1, userId2, roomNum);
+    User.findAll({
+      where: {
+        $or: [{id: userId1}, {id: userId2}]
+      }
+    }).then(function(users) {
+      console.log('users from users sendMail:', users );
+      var emails = users.map(function(user) {
+        return user.email;
+      });
+      mailer(emails, roomNum);
+    }).
+    catch(function(err) {
+      console.log(err, ' X X X X Error retriving user emails');
     });
   }
 

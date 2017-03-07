@@ -1,9 +1,5 @@
 node_modules/
 
-public/bundle.js
-
-
-
 *.log
 
 .DS_store

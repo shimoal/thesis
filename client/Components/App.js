@@ -65,6 +65,7 @@ export default class App extends React.Component {
     .then(function(response) {
       console.log('========== Success getting All Questions from DB');
       //response.data object is in an array, so need to get element 0
+      console.log('questions:', response);
       context.setState({questions: response.data});
     })
     .catch(function(err) {
@@ -225,6 +226,8 @@ export default class App extends React.Component {
   }
 
   removeUser() {
+    this.setState({questionsClaimed: {}});
+    this.setState({currentUserQuestions: {}});
     this.setState({user: {}});
   }
 
