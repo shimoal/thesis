@@ -79,10 +79,12 @@ const controller = {
           'createdAt': question.dataValues.createdAt,
           'learnerId': question.dataValues.id_learner,
           'helperId': question.dataValues.id_helper,
-          'helpers': {
-            name: question.dataValues.claims[0].dataValues.user.dataValues.name,
+          
+          //make helpers an array of helpers objects
+          'helpers': [{
+            helperName: question.dataValues.claims[0].dataValues.user.dataValues.name,
             helperId: question.dataValues.claims[0].dataValues.user.dataValues.id,
-          }
+          }]
         };
       });
       Promise.all(promises).then(function() {
