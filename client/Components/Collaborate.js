@@ -5,6 +5,8 @@ import 'brace/theme/github'
 import Signup from './Auth/Signup'
 import io from 'socket.io-client'
 import axios from 'axios'
+import { Link } from 'react-router'
+
 
 let socket = io('https://hackeroo.xyz');
 let pc;
@@ -246,7 +248,8 @@ export default class Collaborate extends React.Component {
 		pc.addIceCandidate(new RTCIceCandidate(candidate));
 
 	}
-	/************************************/	
+	/************************************/	  
+
   render() {
   // if (this.props.userData.authenticated === 1) {
     return (
@@ -287,6 +290,9 @@ export default class Collaborate extends React.Component {
                   </form>    
 
                   <button onClick={this.exitRoom}>Stop Connection</button>
+                  {this.state.id ? (<Link to='/review' params={{collaborateId: this.state.id }}
+                  >Write Review</Link>) : null}
+                  
               </div> 
             </div>
 
