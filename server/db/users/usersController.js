@@ -29,7 +29,7 @@ const controller = {
       }
     })
     .then(function(user) {
-      console.log('========== Successful retrieving Current User', user);
+      console.log('========== Successful retrieving Current User');
       res.json(user);
     })
     .catch(function(err) {
@@ -58,7 +58,7 @@ const controller = {
     User.findAll()
     .then(function(users) {
       console.log('========== Successful retrieving All User');
-      console.log('users:', users);
+      // console.log('users:', users);
       res.json(users);
     })
     .catch(function(err) {
