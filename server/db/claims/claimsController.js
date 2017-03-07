@@ -38,7 +38,7 @@ const controller = {
   },
   retrieve: function(req, res, next) {
     
-    // console.log('XXX calling questionsController retrieve');
+    console.log('XXX calling claimController retrieve with userId:', req.query.userId);
     var currentUserId = req.query.userId;
 
     // Question.belongsTo(User, {foreignKey: 'userId'});

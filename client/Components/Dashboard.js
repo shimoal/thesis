@@ -24,15 +24,17 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    var userId = this.props.userData.user.id;
-    console.log('userId:', this.props.userData);
+    if (this.props.userData.user.id !== undefined) {
+      var userId = this.props.userData.user.id;
+      console.log('userId:', this.props.userData);
 
-    var data = {
-      userId: userId
-    };
+      var data = {
+        userId: userId
+      };
 
-    this.props.getUserQuestions(data);
-    this.props.getUserClaimedQuestions(data);
+      this.props.getUserQuestions(data);
+      this.props.getUserClaimedQuestions(data);
+    }
   },
 
   // componentDidMount() {
