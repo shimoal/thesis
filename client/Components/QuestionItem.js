@@ -55,7 +55,8 @@ var QuestionItem = React.createClass({
             claimQuestion={this.props.claimQuestion}/>
         );
       } else {
-        return (<div><Link>You claimed this question</Link></div>);
+        // return (<div><Link>You claimed this question</Link></div>);
+        return (<div></div>);
       }
     }
   },
