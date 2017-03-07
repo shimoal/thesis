@@ -68,6 +68,7 @@ const controller = {
       console.log('========== Success getting claimed questions');
       // console.log('XXX CLAIM RAW results', questions);
       var promises = questions.map(function(question) {
+        console.log('XXX each question.dataValues.claims[0]', question.dataValues.claims[0]);
         console.log('XXX each claim helper', question.dataValues.claims[0].dataValues.user.dataValues.name);
         // console.log('XXX each claim claim.question.user', claim.question.user);
         return {
@@ -77,8 +78,8 @@ const controller = {
           'status': question.dataValues.status,
           'deadline': '',
           'createdAt': question.dataValues.createdAt,
-          'learnerId': question.dataValues.id_learner,
-          'helperId': question.dataValues.id_helper,
+          'learnerId': question.dataValues.claims[0].id_learner,
+          'helperId': question.dataValues.claims[0].id_helper,
           
           //make helpers an array of helpers objects
           'helpers': [{
