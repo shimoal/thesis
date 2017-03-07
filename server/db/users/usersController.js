@@ -22,7 +22,6 @@ const controller = {
   },
 
   retrieve: function(req, res, next) {
-    console.log('inside user retrieve', req.session);
     User.findOne({
       where: {
         github_id: req.session.passport.user,
@@ -33,7 +32,7 @@ const controller = {
       res.json(user);
     })
     .catch(function(err) {
-      console.log('Error retrieving Current user');
+      console.log('Error retrieving Current user', err);
       return res.sendStatus(500);
     });
   },
@@ -49,7 +48,7 @@ const controller = {
       res.json(user);
     })
     .catch(function(err) {
-      console.log('Error retrieving User Public Profile');
+      console.log('Error retrieving User Public Profile', err);
       return res.sendStatus(500);
     });
   },
@@ -62,14 +61,13 @@ const controller = {
       res.json(users);
     })
     .catch(function(err) {
-      console.log('Error retrieving All User');
+      console.log('Error retrieving All Users', err);
       return res.sendStatus(500);
     });
   },
 
   sendMail: function(userId1, userId2, roomNum){
     //need to test this once we have multiple users
-    console.log('inside send Mail: ', userId1, userId2, roomNum);
     User.findAll({
       where: {
         $or: [{id: userId1}, {id: userId2}]
@@ -82,7 +80,7 @@ const controller = {
       mailer(emails, roomNum);
     }).
     catch(function(err) {
-      console.log(err, ' X X X X Error retriving user emails');
+      console.log(err, ' X X X X Error retriving user emails', err);
     });
   }
 

@@ -48,7 +48,9 @@ const controller = {
     Claim.belongsTo(User, {foreignKey: 'id_helper'});
     // User.hasMany(Claim, {foreignKey: 'id_helper'});
 
-    Question.findAll({ where: {userId: currentUserId}, status: 'claimed', 
+    Question.findAll({ where: {
+      $and: [{userId: currentUserId}, {status: 'claimed'}]
+      }, 
       // include: [{model: User, where: {id: 'id_helper'}, 
       //   include: [{model: Question}]
       // }]
@@ -94,7 +96,7 @@ const controller = {
 
     })
     .catch(function(err) {
-      console.log('@_@ Error retrieving claimed questions');
+      console.log('@_@ Error retrieving claimed questions', err);
       return res.sendStatus(500);
     });
   },
