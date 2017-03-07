@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-import React from 'react'
-import NavLink from './NavLink'
-=======
 import React from 'react';
 import { IndexLink } from 'react-router';
 import axios from 'axios';
 import NavLink from './NavLink';
 import style from '../sass/App.scss';
->>>>>>> deploy
 
 //redux experiment
 import ContainerOne from '../containers/ContainerOne';
@@ -174,8 +169,7 @@ export default class App extends React.Component {
       }
     });
   }
-addQuestion() {
-  //user click on accept button
+
   acceptHelper(learnerId, helperId, questionId) {
     
     //create session table
@@ -196,22 +190,6 @@ addQuestion() {
     });
   }
 
-  // checkUserAuth() {
-  //   var context = this;
-  //   axios.get('/session')
-  //   .then( function(response) {
-  //     console.log('checkUserAuth: response', response);
-  //     if (response.data.github_id) {
-  //       //if session is valid, set authenticated to 1
-  //       console.log('========== checkUserAuth: YES, USER IS AUTHENTICATED.')
-  //       context.setState({'authenticated': 1});
-  //     } else {
-  //       //else, set authenticated to 0
-  //       console.log('========== checkUserAuth: OH NO, USER IS NOT AUTHENTICATED.')
-  //       context.setState({'authenticated': 0});
-  //     }
-  //   });
-  // }
 
   getUserPublicProfile(userId) {
     var context = this;
@@ -236,10 +214,6 @@ addQuestion() {
     this.setState({user: {}});
   }
 
-}
-checkUserAuth() {
-  
-}
 render() {
 
     const childrenWithProps = React.Children.map(this.props.children,
