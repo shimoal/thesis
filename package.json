@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "webpack -d --watch",
-    "test": "mocha spec/**/*Spec.js spec/.setup.js spec/**/*-react-test.js",
+    "test": "mocha spec/**/*Spec.js",
     "dev": "nodemon server/server.js"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "body-parser": "^1.16.1",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "chai-spies": "^0.7.1",
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.1",
     "express": "^4.14.1",
@@ -65,6 +66,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
+    "nodemailer": "^3.1.4",
     "passport": "^0.3.2",
     "passport-github2": "^0.1.10",
     "pg": "^6.1.2",

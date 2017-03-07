@@ -1,4 +1,4 @@
-const db = require('../database.js'); //for raw sql query
+const db = require('./../database.js'); //for raw sql query
 const Question = require('./questionsModel.js');
 const User = require('../users/usersModel.js');
 const Claim = require('../claims/claimsModel.js');

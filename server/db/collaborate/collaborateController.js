@@ -1,11 +1,13 @@
 const db = require('../database.js'); //for raw sql query
 const Collaborate = require('./collaborateModel.js');
+const UserController = require('./../users/usersController.js');
 
 const controller = {
   save: function(req, res, next) {
     //create room name from question id and current time in millisecond
     var d = new Date();
     var roomNumber = req.body.id_question + d.getTime().toString();
+    UserController.sendMail(req.body.id_learner, req.body.id_helper, roomNumber);
     
     Collaborate.create({
       id_learner: req.body.id_learner,
