@@ -1,11 +1,6 @@
 const nodemailer = require('nodemailer');
 
-
-
 var mailer = function(emails, roomNum) {
-  console.log('inside mailer')
-  console.log('emails: ', emails);
-  console.log('roomNum:', roomNum);
   var receivers = emails.join(', ');
 
   var html = '<h1>Hello from hackeroo!</h1><p> You are receiving this message because you are about to connect with another hacker. <br>Your room number is: <b>' + roomNum + '</b>.<br>Please visit https://hackeroos.herokuapp.com/collaborate and enter this roomNum to enter and immediately be connected. <br><br><br>Happy Hacking!<br>-The team at Hackeroo</p>';
@@ -23,13 +18,13 @@ var mailer = function(emails, roomNum) {
       from: '"Hackeroo" <hackerooxyz@gmail.com>', // sender address
       to: receivers, // list of receivers
       subject: 'Room created', // Subject line
-      text: 'Hello world', // plain text body
+      text: '', // plain text body
       html: html // html body
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-          return console.log(error);
+          return console.log('There was an error sending mail: ', error);
       }
       console.log('Message %s sent: %s', info.messageId, info.response);
   });
