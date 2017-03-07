@@ -28,19 +28,6 @@ var QuestionItem = React.createClass({
     }
   },
 
-  // isAuthenticated: function() {
-  //   if (this.props.authenticated === 1) {
-  //     return (
-  //       <ClaimQuestionButton 
-  //         details={this.props.details}
-  //         userCurrent={this.props.userCurrent}
-  //         claimQuestion={this.props.claimQuestion}/>
-  //     );
-  //   } else {
-  //     return (<div/>);
-  //   }
-  // },
-
   isAuthenticated: function() {
     // if (!!this.props.userCurrent &&
     //     this.props.details.helperId !== undefined && 

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-import HelperAcceptButton from './HelperAcceptButton'
+import React from 'react';
+import { Link } from 'react-router';
+import HelperAcceptButton from './HelperAcceptButton';
 
 var Helpers = React.createClass({
   
@@ -9,35 +9,41 @@ var Helpers = React.createClass({
     // console.log('In Helpers.s DidMount this.props.details', this.props.details);
   },
 
-  renderHelpers: function(key) {
+  renderHelpers: function(helperObject) {
+    //for each object in the array
+    //so checkHelpers needs to call this for every element in the array
+    // console.log('helperObject', helperObject);
+    
+    var helperProfileLink = '/profile/' + helperObject.helperId;
+
     return ( 
-      
-      <div className="row" key={key}>
+      <div className="row">
         <div className="col-sm-9 col-md-9">
-          {this.props.details.helpers[key]}
+           <Link to={ helperProfileLink }>{ helperObject.helperName }</Link>
         </div>
         <div className="col-sm-8 col-md-3">
           <HelperAcceptButton 
-              key={key} 
-              index={key} 
               details={this.props.details} 
               acceptHelper={this.props.acceptHelper} />
         </div>
       </div>
 
-    )
+    );
   },
   //pass down all helpers here and map it
   checkHelpers: function() {
-    //check helper object
+    //check if helper array of objects exists
     if (this.props.details.helpers) {
-      return(
+      
+      var helpersArray = this.props.details.helpers;
+      // console.log('helpersArray', helpersArray);
+      return (
         <div>
-          { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
+          { helpersArray.map(this.renderHelpers) }
         </div>
-      )
+      );
     } else {
-      return(<div/>)
+      return (<div/>);
     }
   },
 
@@ -46,8 +52,8 @@ var Helpers = React.createClass({
       <div className="bg-success">
         { this.checkHelpers() } 
       </div>
-    )
+    );
   }
-})
+});
 
-export default Helpers
+export default Helpers;
