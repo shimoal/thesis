@@ -18,6 +18,7 @@ export default class ReviewPage extends React.Component {
 			helpfulness: 0,
 			experience: 0,
 			editStarBtn: 'Save',
+			alert: false
 		}
 		this.overallStar = this.overallStar.bind(this);
 		this.knowleageStar = this.knowleageStar.bind(this);
@@ -83,7 +84,8 @@ export default class ReviewPage extends React.Component {
 		console.log('data in submit: ', data);
 		axios.post('/review-save', data)
 		.then(function() {
-			console.log('review been posted successfully.')
+			context.setState({alert: true});
+			console.log('review been posted successfully.');
 		});
 	}
 
@@ -172,8 +174,13 @@ export default class ReviewPage extends React.Component {
 	              </div>
 	              <hr></hr>
 	              <div>
-	              <button onClick={this.handelSubmit} type="button" id="submit-review" className="btn btn-default pull-right">Submit</button>
+	              {this.state.alert ? null: 
+	              (<button onClick={this.handelSubmit} type="button" id="submit-review" className="btn btn-default pull-right">Submit</button>)} 
 	            	</div>
+		            {this.state.alert ? 
+		            (<div className="alert alert-success" role="alert">
+								  <strong>Thank you!</strong> You successfully submit the review.
+								</div>) : null}
 	            </div>
 	          </div>
 		      </div>
