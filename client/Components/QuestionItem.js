@@ -30,11 +30,10 @@ var QuestionItem = React.createClass({
 
   isAuthenticated: function() {
     // Show Claim button if user is authenticated. 
-    // But Hide Claim button if the question also belong to current user or user has claimed the question
     if (!!this.props.userCurrent) {
-      if (!!this.props.userCurrent && 
-            this.props.details.helperId !== this.props.userCurrent.id && 
-            this.props.details.userId !== this.props.userCurrent.id) {
+    // But Hide Claim button if the question also belong to current user or user has claimed the question
+      if (this.props.details.helperId !== this.props.userCurrent.id && 
+          this.props.details.userId !== this.props.userCurrent.id) {
         return (
           <ClaimQuestionButton 
             details={this.props.details}

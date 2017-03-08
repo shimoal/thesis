@@ -245,17 +245,19 @@ export default class App extends React.Component {
         removeUser: this.removeUser.bind(this)
       })
     );
-
+    
+    /*
+    <h3>App.js state</h3>
+    <pre>
+      {JSON.stringify(this.state, null, 2)}
+    </pre>
+    */
+    
     return (
       <div>
         
         <NavLink userData={this.state}/>
         {childrenWithProps}
-        <h3>App.js state</h3>
-        <pre>
-          {JSON.stringify(this.state, null, 2)}
-        </pre>
-        
         <div className="row">
           <div className="col-sm-9 col-md-9 main">
             &nbsp;

@@ -6,6 +6,13 @@ var ClaimedQuestions = React.createClass({
 
   renderQuestion: function(key) {
     // console.log('Inside ClaimedQuestions renderQuestion', this.props.questionsClaimed);
+    if (!this.props.questionsClaimed) {
+      return (
+        <div>
+          <p>No one has claimed your questions yet</p>
+        </div>
+      );
+    }
     return ( <QuestionItem 
                 key={key} 
                 index={key} 
