@@ -22,7 +22,7 @@ module.exports = (
     <Route path="/post-question" component={PostQuestionPage}/>
     <Route path="/about" component={About}/>
     <Route path="/collaborate" component={Collaborate}/>
-    <Route path="/review/:collaborateId" component={ReviewPage}/>
+    <Route path="/review/:questionId/:collaborateId" component={ReviewPage}/>
     <Route path="/graphs" component={Graph}/>
     <Route path="/signup" component={Signup}/>
     <Route path="/logout" component={Logout}/>
