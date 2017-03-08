@@ -7,6 +7,8 @@ redux/
 
 .gitignore
 
+/public/bundle.js
+
 *.log
 
 .DS_store
