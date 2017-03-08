@@ -30,7 +30,7 @@ export default class Collaborate extends React.Component {
       applyingChanges: false,
       username: ''      
     }
-    this.handleCreateRoom = this.handleCreateRoom.bind(this);
+    // this.handleCreateRoom = this.handleCreateRoom.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleJoinRoom = this.handleJoinRoom.bind(this);
     this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
@@ -60,6 +60,7 @@ export default class Collaborate extends React.Component {
   componentDidMount() {
     var context = this;   
     /*********** live coding *********/
+    console.log('ace', ace);
     this.editor = ace.edit(this.refs.root);
     this.editor.getSession().setMode("ace/mode/javascript");
     this.editor.setTheme("ace/theme/github");
@@ -95,11 +96,11 @@ export default class Collaborate extends React.Component {
 	handleFormChange(e) {
 		this.setState({room_name: e.target.value});
 	}
-	handleCreateRoom(e) {
-		e.preventDefault();
-    socket.emit('addroom', this.state.username, this.state.room_name);
-    e.target.value = '';
-  }
+	// handleCreateRoom(e) {
+	// 	e.preventDefault();
+ //    socket.emit('addroom', this.state.username, this.state.room_name);
+ //    e.target.value = '';
+ //  }
   handleJoinRoom(e) {
     var context = this;
     console.log('room_name: ', context.state.room_name);
@@ -110,7 +111,6 @@ export default class Collaborate extends React.Component {
       })
       .then(function(collaborate) {
         console.log('collaborate.data ---> ', collaborate.data);
-        console.log('collaborate obj in Collaborate.data: ', collaborate.data);
         context.setState({
           id: collaborate.data.id,
           learnerId: collaborate.data.id_learner,
@@ -125,7 +125,7 @@ export default class Collaborate extends React.Component {
         socket.emit('join-room', context.state.username, context.state.room_name);
       })
       .catch(function(err) {
-        console.log(err.message);
+        context.setState({info: 'Wrong room number. There is no such room.'});
       });
     e.preventDefault();
     /*** get the learnerId, helperId, questionId, questionContent from db ***/
@@ -290,8 +290,8 @@ export default class Collaborate extends React.Component {
                   </form>    
 
                   <button onClick={this.exitRoom}>Stop Connection</button>
-                  {this.state.id ? (<Link to={'/review/'+this.state.questionId+'/'+this.state.id }
-                  >Write Review</Link>) : null}
+                  {this.state.id ? (<button><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
+                  >Write Review</Link></button>) : null}
                   
               </div> 
             </div>

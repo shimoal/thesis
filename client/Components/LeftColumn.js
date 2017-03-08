@@ -17,8 +17,11 @@ export default React.createClass({
             <tbody>
               <tr>
                 <td>Overall</td>
-                <td><ReactStars
+                <td>
+                  <ReactStars
+                    value={this.state.overall}
                     count={5}
+                    half={false} 
                     edit={false} />
                 </td>
               </tr>
@@ -28,15 +31,33 @@ export default React.createClass({
               </tr>
               <tr>
                 <td>Knowledge</td>
-                <td>Stars</td>
+                <td>
+                  <ReactStars
+                    value={this.state.knowledge}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                  </td>
               </tr>
               <tr>
                 <td>Helpfulness</td>
-                <td>Stars</td>
+                <td>
+                  <ReactStars
+                    value={this.state.helpfulness}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
               </tr>
               <tr>
                 <td>Overall Experience</td>
-                <td>Stars</td>
+                <td>
+                  <ReactStars
+                    value={this.state.experience}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
               </tr>
             </tbody>
           </table>
