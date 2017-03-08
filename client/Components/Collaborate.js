@@ -51,10 +51,8 @@ export default class Collaborate extends React.Component {
   }
 
   componentWillMount() {
-    var username = prompt("what is your name?");
-    this.setState({username: username});
-    // console.log('COLLABORATE Username',this.props.userData.user.name);
-    // this.setState({username: this.props.userData.user.name});
+    console.log('COLLABORATE Username',this.props.userData.user.name);
+    this.setState({username: this.props.userData.user.name});
   }
 
   componentDidMount() {
@@ -96,11 +94,7 @@ export default class Collaborate extends React.Component {
 	handleFormChange(e) {
 		this.setState({room_name: e.target.value});
 	}
-	// handleCreateRoom(e) {
-	// 	e.preventDefault();
- //    socket.emit('addroom', this.state.username, this.state.room_name);
- //    e.target.value = '';
- //  }
+
   handleJoinRoom(e) {
     var context = this;
     console.log('room_name: ', context.state.room_name);
@@ -128,7 +122,6 @@ export default class Collaborate extends React.Component {
         context.setState({info: 'Wrong room number. There is no such room.'});
       });
     e.preventDefault();
-    /*** get the learnerId, helperId, questionId, questionContent from db ***/
   }
   handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
@@ -251,7 +244,7 @@ export default class Collaborate extends React.Component {
 	/************************************/	  
 
   render() {
-  // if (this.props.userData.authenticated === 1) {
+
     return (
 
       <div className="row">
@@ -278,11 +271,6 @@ export default class Collaborate extends React.Component {
                 Render the question here with QuestionItem component
 
                 <h4>{this.state.info}</h4>
-                
-                  <form className="col-5" id="roomForm" onSubmit={this.handleCreateRoom}>
-                    <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-                    <input type="submit" value="Submit" />
-                  </form>
 
                   <form className="col-5" id="joinRoomForm" onSubmit={this.handleJoinRoom}>
                     <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
@@ -290,7 +278,7 @@ export default class Collaborate extends React.Component {
                   </form>    
 
                   <button onClick={this.exitRoom}>Stop Connection</button>
-                  {this.state.id ? (<button><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
+                  {(this.state.id && this.state.learner.name === this.state.username)? (<button><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
                   >Write Review</Link></button>) : null}
                   
               </div> 
@@ -324,11 +312,5 @@ export default class Collaborate extends React.Component {
       </div>
 
     )
-  // } else {
-  //     return (
-  //       <Signup/>
-  //     )
-
-  // }
   }
 }

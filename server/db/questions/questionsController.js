@@ -119,6 +119,7 @@ const controller = {
 
   changeStatus: function(req, res, next) {
     var old = Question.findById(req.body.id_question);
+    console.log('old question -----> ', old);
     old.update({status: req.body.status})
       .then(function() {
         res.status(200);
