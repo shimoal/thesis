@@ -46,8 +46,8 @@ export default class Collaborate extends React.Component {
     this.start = this.start.bind(this);
     this.startCall = this.startCall.bind(this);
     this.stopCall = this.stopCall.bind(this);
-    this.handleDescription = this.handleDescription.bind(this);
-    this.handleCandidate = this.handleCandidate.bind(this);
+    this.handleEvent = this.handleEvent.bind(this);
+    // this.handleCandidate = this.handleCandidate.bind(this);
   }
 
   componentWillMount() {
@@ -83,9 +83,9 @@ export default class Collaborate extends React.Component {
     /**************************************/
 
 		/*********** video conference *********/
-		socket.on('description', this.handleDescription);
+		socket.on('description', this.handleEvent);
 		
-    socket.on('candidate', this.handleCandidate);
+    socket.on('candidate', this.handleEvent);
 
     socket.on('stopCall', this.stopCall);
   }
@@ -224,23 +224,32 @@ export default class Collaborate extends React.Component {
     localStream.getVideoTracks()[0].stop();
   }
 
-  handleDescription(evt) {
+  handleEvent(evt) {
     if (!pc) {
       this.start(false);      
     }
-    var description = (JSON.parse(evt)).sdp;
 
-		// console.log('setting remote description');
-	  pc.setRemoteDescription(new RTCSessionDescription(description));
-	}
-	handleCandidate(evt) {
-		if (!pc) {
-		  this.start(false);
-		}
-		var candidate = (JSON.parse(evt)).candidate;
-		pc.addIceCandidate(new RTCIceCandidate(candidate));
+    var event = JSON.parse(evt);
+
+    if (event.sdp) {
+      console.log('setting remote description');
+      var description = event.sdp;
+      pc.setRemoteDescription(new RTCSessionDescription(description));
+    } else {
+      var candidate = event.candidate;
+      pc.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+
+
 
 	}
+	// handleCandidate(evt) {
+	// 	if (!pc) {
+	// 	  this.start(false);
+	// 	}
+
+
+	// }
 	/************************************/	  
 
   render() {

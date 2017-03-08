@@ -1,7 +1,7 @@
 node_modules/
 
 client/
-spec/
+test/
 
 *.log
 
