@@ -88,9 +88,11 @@ app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
 
 app.post('/accept', collaborateCtrl.save);
-
 app.get('/collaborate', collaborateCtrl.retrieve);
 
+app.get('/collaborate-review', collaborateCtrl.retrieveById);
+app.post('/review-save', reviewCtrl.save);
+// app.get('/review', reviewCtrl.retrieveAllByUserName);
 
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
