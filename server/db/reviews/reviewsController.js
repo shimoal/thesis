@@ -5,11 +5,13 @@ const Collaborate = require('../collaborate/collaborateModel.js');
 
 const controller = {
 	save: function(req, res, next) {
+		console.log('saving review ------------> ', req.body);
 		Review.create({
 			content: req.body.content,
 			knowledge: req.body.knowledge,
 			helpfulness: req.body.helpfulness,
 			overall: req.body.overall,
+			id_collaborate: req.body.id_collaborate
 		})
 		.then(function(task) {
 			task.save();
@@ -30,10 +32,10 @@ const controller = {
 				where: { id_helper: user.id },
 				attributes: { exclude: ['room_number', 'id_question', 'id_helper'] },
 				include: [{model: Reivew}, 
-									{model: User, 
-										as: 'Learner',
-										attributes: ['name']
-									}
+						{model: User, 
+							as: 'Learner',
+							attributes: ['name']
+						}
 				]
 			})
 			.then(function(collaborates) {
@@ -49,3 +51,5 @@ const controller = {
 
 	}
 }
+
+module.exports = controller;
