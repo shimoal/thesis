@@ -33,17 +33,18 @@ var QuestionItem = React.createClass({
     //     this.props.details.helperId !== undefined && 
     //     this.props.userCurrent.id !== undefined) {
     if (!!this.props.userCurrent) {
-      if (!!this.props.userCurrent && this.props.details.helperId !== this.props.userCurrent.id) {
-        console.log('===== condition met');
+      if (!!this.props.userCurrent && 
+        this.props.details.helperId !== this.props.userCurrent.id && 
+        this.props.details.userId !== this.props.userCurrent.id) {
         return (
           <ClaimQuestionButton 
             details={this.props.details}
             userCurrent={this.props.userCurrent}
             claimQuestion={this.props.claimQuestion}/>
         );
-      } else {
+      } else if (!!this.props.userCurrent && this.props.details.helperId === this.props.userCurrent.id) {
         // return (<div><Link>You claimed this question</Link></div>);
-        return (<div></div>);
+        return (<div><Link>You claimed this question</Link></div>);
       }
     }
   },
