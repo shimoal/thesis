@@ -8,7 +8,7 @@ var passport = require('passport');
 var session = require('express-session');
 var githubAuth = require('./auth/githubAuth');
 var pgSession = require('connect-pg-simple')(session);
-
+var questionsController = require('./db/questions/questionsController.js')
 var sandBox = require('./sandbox/DockerSandbox');
 
 //routes for static files (must be before all middleware)
@@ -97,6 +97,10 @@ app.get('/graph2/', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
 });
 
+app.get('/search', function(req, res) {
+  console.log(req.param('term'));
+  var result = questionsController.search(req, res, req.param('term'));
+});
 /************** sandbox routes ***************/
 app.post('/compile', function(req, res) {
   // var language = req.body.language;
