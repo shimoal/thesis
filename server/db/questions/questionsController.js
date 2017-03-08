@@ -58,6 +58,32 @@ const controller = {
     });
   },
 
+  search: function(req, res, term) {
+    db.query('SELECT * FROM questions WHERE question ~ ?', {replacements: [term], model: Question })
+    .then(function(questions) {
+      var promises = questions.map(function(question) {
+        console.log(question.title);
+        return {
+          'id': question.id,
+          'title':question.title,
+          'question':question.question,
+          'status':question.status,
+          'deadline': '',
+          'userId':question.userId,
+          'name': question.name,
+          'createdAt': question.createdAt,
+        }
+      });
+      Promise.all(promises).then(function() {
+        res.send(promises);
+      })
+    })
+    .catch(function(err) {
+      console.log('Error getting question');
+      return res.sendStatus(500);
+    });
+  },
+
   retrieveForOneUser: function(req, res, next) {
     var currentUserId = req.query.userId;
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
