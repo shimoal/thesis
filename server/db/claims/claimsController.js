@@ -64,12 +64,24 @@ const controller = {
 
     //   // include: [{model: Question}],
     //   // include: [{model: User}],
-    // })
-    db.query('SELECT id_helper, id_question, id_learner, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", helper.name FROM claims\
-      INNER JOIN questions ON questions.id = claims.id_question\
-      INNER JOIN users AS helper ON helper.id = id_helper\
-      WHERE questions.status = \'claimed\' AND claims.id_learner = ? ', { model: ClaimRawSql, replacements: [currentUserId], type: db.QueryTypes.SELECT })
-    .then(function(questions) {
+    Question.findAll({ where: {
+      $and: [{userId: currentUserId}, {status: 'claimed'}]
+      }, 
+      // include: [{model: User, where: {id: 'id_helper'}, 
+      //   include: [{model: Question}]
+      // }]
+      include: [
+        {
+          model: Claim, 
+          include: [
+            User
+          ]  
+        }
+      ]
+
+      // include: [{model: Question}],
+      // include: [{model: User}],
+    }) .then(function(questions) {
       console.log('========== Success getting claimed questions', questions[0].dataValues);
       var promises = questions.map(function(question) {
         console.log('XXX each question.dataValues.claims', question);
