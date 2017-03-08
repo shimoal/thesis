@@ -19,7 +19,7 @@ export default React.createClass({
                 <td>Overall</td>
                 <td>
                   <ReactStars
-                    value={this.state.overall}
+                    
                     count={5}
                     half={false} 
                     edit={false} />
@@ -33,7 +33,7 @@ export default React.createClass({
                 <td>Knowledge</td>
                 <td>
                   <ReactStars
-                    value={this.state.knowledge}
+                    
                     count={5}
                     half={false}
                     edit={false}/>
@@ -43,7 +43,7 @@ export default React.createClass({
                 <td>Helpfulness</td>
                 <td>
                   <ReactStars
-                    value={this.state.helpfulness}
+                    
                     count={5}
                     half={false}
                     edit={false}/>
@@ -53,7 +53,7 @@ export default React.createClass({
                 <td>Overall Experience</td>
                 <td>
                   <ReactStars
-                    value={this.state.experience}
+                    
                     count={5}
                     half={false}
                     edit={false}/>
