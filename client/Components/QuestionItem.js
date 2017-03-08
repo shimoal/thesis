@@ -13,7 +13,7 @@ var QuestionItem = React.createClass({
   
   isClaimed: function() {
     if (this.props.details.name) {
-      return (<span>Asked by {this.props.details.name} </span>);
+      return (<span>Asked by {this.props.details.name}</span>);
     }   
   },
 
