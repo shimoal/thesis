@@ -1,5 +1,6 @@
 const db = require('../database.js'); //for raw sql query
 const Claim = require('./claimsModel.js');
+const ClaimRawSql = require('./claimsModelRawSql.js');
 const Question = require('../questions/questionsUserSpecificModel.js');
 const User = require('../users/usersModel.js');
 
@@ -41,59 +42,52 @@ const controller = {
     console.log('XXX calling claimController retrieve with userId:', req.query.userId);
     var currentUserId = req.query.userId;
 
-    // Question.belongsTo(User, {foreignKey: 'userId'});
-    Question.hasMany(Claim, {foreignKey: 'id_question'});
+    // // Question.belongsTo(User, {foreignKey: 'userId'});
+    // Question.hasMany(Claim, {foreignKey: 'id_question'});
     
-    // Claim.belongsTo(Question, {foreignKey: 'id_question'});
-    Claim.belongsTo(User, {foreignKey: 'id_helper'});
-    // User.hasMany(Claim, {foreignKey: 'id_helper'});
+    // // Claim.belongsTo(Question, {foreignKey: 'id_question'});
+    // Claim.belongsTo(User, {foreignKey: 'id_helper'});
+    // // User.hasMany(Claim, {foreignKey: 'id_helper'});
 
-    Question.findAll({ where: {
-      $and: [{userId: currentUserId}, {status: 'claimed'}]
-      }, 
-      // include: [{model: User, where: {id: 'id_helper'}, 
-      //   include: [{model: Question}]
-      // }]
-      include: [
-        {
-          model: Claim, 
-          include: [
-            User
-          ]  
-        }
-      ]
+    // Question.findAll({ where: {userId: currentUserId}, status: 'claimed', 
+    //   // include: [{model: User, where: {id: 'id_helper'}, 
+    //   //   include: [{model: Question}]
+    //   // }]
+    //   include: [
+    //     {
+    //       model: Claim, 
+    //       include: [
+    //         User
+    //       ]  
+    //     }
+    //   ]
 
-      // include: [{model: Question}],
-      // include: [{model: User}],
-    })
+    //   // include: [{model: Question}],
+    //   // include: [{model: User}],
+    // })
+    db.query('SELECT id_helper, id_question, id_learner, questions.title, questions.question, questions.status, questions.deadline, questions."createdAt", helper.name FROM claims\
+      INNER JOIN questions ON questions.id = claims.id_question\
+      INNER JOIN users AS helper ON helper.id = id_helper\
+      WHERE questions.status = \'claimed\' AND claims.id_learner = ? ', { model: ClaimRawSql, replacements: [currentUserId], type: db.QueryTypes.SELECT })
     .then(function(questions) {
-      console.log('========== Success getting claimed questions');
-      // console.log('XXX CLAIM RAW results', questions);
+      console.log('========== Success getting claimed questions', questions[0].dataValues);
       var promises = questions.map(function(question) {
-        if (question) {
-          console.log('XXX each question.dataValues.claims', question.dataValues);
-          console.log('XXX each claim helper', question.dataValues.claims[0].dataValues.user.dataValues.name);
-          // console.log('XXX each claim claim.question.user', claim.question.user);
-          return {
-            'id': question.dataValues.id,
-            'title': question.dataValues.title,
-            'question': question.dataValues.question,
-            'status': question.dataValues.status,
-            'deadline': '',
-            'createdAt': question.dataValues.createdAt,
-            'learnerId': question.dataValues.claims[0].id_learner,
-            'helperId': question.dataValues.claims[0].id_helper,
-            
-            //make helpers an array of helpers objects
-            'helpers': [{
-              helperName: question.dataValues.claims[0].dataValues.user.dataValues.name,
-              helperId: question.dataValues.claims[0].dataValues.user.dataValues.id,
-            }]
-          };
-        } else {
-          return res.send('no');
-        }
-
+        console.log('XXX each question.dataValues.claims', question);
+        return {
+          'id': questions[0].dataValues.id_question,
+          'title': questions[0].dataValues.title,
+          'question': questions[0].dataValues.question,
+          'status': questions[0].dataValues.status,
+          'deadline': '',
+          'createdAt': questions[0].dataValues.createdAt,
+          'learnerId': questions[0].dataValues.id_learner,
+          
+          //make helpers an array of helpers objects
+          'helpers': [{
+            helperName: questions[0].dataValues.name,
+            helperId: questions[0].dataValues.id_helper,
+          }]
+        };
       });
       Promise.all(promises).then(function() {
         res.send(promises);
@@ -101,7 +95,7 @@ const controller = {
 
     })
     .catch(function(err) {
-      console.log('@_@ Error retrieving claimed questions', err);
+      console.log('@_@ Error retrieving claimed questions');
       return res.sendStatus(500);
     });
   },

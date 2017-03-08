@@ -10,6 +10,13 @@ var OpenQuestions = React.createClass({
   renderQuestion: function(key) {
     // console.log('OpenQuestions', this.props.questions);
     // console.log('OpenQuestions', this.props.userCurrent.name);
+    if (!this.props.questions) {
+      return (
+        <div>
+          <p>You have no questions. To ask a question, click the "Post a Question" button</p>
+        </div>
+      );
+    }
     return ( 
       <QuestionItem 
           key={key} 
