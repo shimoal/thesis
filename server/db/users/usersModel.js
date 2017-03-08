@@ -51,18 +51,18 @@ db.sync()
 //     description: "Max's description"
 //   }])
 // })
-.then(function() {
-  User.findAll()
-  .then(function(users) {
-    users.forEach(function(user) {
-      console.log(user.get());
-    });
-    console.log("************ create user successfully *************")
-  });
-})
-.catch(function(err) {
-  console.log('err in bulkCreate users');
-});
+// .then(function() {
+//   User.findAll()
+//   .then(function(users) {
+//     users.forEach(function(user) {
+//       console.log(user.get());
+//     });
+//     console.log("************ create user successfully *************")
+//   });
+// })
+// .catch(function(err) {
+//   console.log('err in bulkCreate users');
+// });
 
 module.exports = User;
 

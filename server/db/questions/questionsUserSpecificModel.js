@@ -18,6 +18,12 @@ const Question = db.define('question', {
   deadline: {
     type: Sequelize.DATE
   }
+  // name: { // to display the asker's name in the homepage
+  //   type: Sequelize.STRING
+  // },
+  // id_helper: { // to prevent helper to claim the same Q twice
+  //   type: Sequelize.STRING
+  // }
   
 });
 

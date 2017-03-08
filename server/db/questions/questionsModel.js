@@ -17,13 +17,13 @@ const Question = db.define('questions', {
   },
   deadline: {
     type: Sequelize.DATE
-  },
-  name: { // to display the asker's name in the homepage
-    type: Sequelize.STRING
-  },
-  id_helper: { // to prevent helper to claim the same Q twice
-    type: Sequelize.STRING
   }
+  // name: { // to display the asker's name in the homepage
+  //   type: Sequelize.STRING
+  // },
+  // id_helper: { // to prevent helper to claim the same Q twice
+  //   type: Sequelize.STRING
+  // }
   
 });
 
@@ -54,27 +54,27 @@ User.hasMany(Question);
 
 
 db.sync()
-.then(function() {
-  return Question.create({
-    userId: 1,
-    title: 'question test 1',
-    question: 'this is question content',
-    status: 'claimed',
-    // name: 'Ai'
-  })  
-})
-.then(function() {
-  Question.findAll()
-    .then(function(questions) {
-      questions.forEach(function(question) {
-        console.log(question.get())
-      })
-      console.log("************ create question successfully *************")
+// .then(function() {
+//   return Question.create({
+//     userId: 1,
+//     title: 'question test 1',
+//     question: 'this is question content',
+//     status: 'claimed',
+//     // name: 'Ai'
+//   })  
+// })
+// .then(function() {
+//   Question.findAll()
+//     .then(function(questions) {
+//       questions.forEach(function(question) {
+//         console.log(question.get())
+//       })
+//       console.log("************ create question successfully *************")
 
-    })
-})
-.catch(function(err) {
-  console.log('err in create question', err.message);
-});
+//     })
+// })
+// .catch(function(err) {
+//   console.log('err in create question', err.message);
+// });
 
 module.exports = Question;

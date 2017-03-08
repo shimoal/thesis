@@ -69,7 +69,7 @@ const controller = {
           'status':question.status,
           'deadline': '',
           'userId':question.userId,
-          'name': question.name,
+          // 'name': question.name,
           'createdAt': question.createdAt,
         }
       });

@@ -15,7 +15,7 @@ const controller = {
       id_learner: req.body.id_learner,
       id_helper: req.body.id_helper,
       id_question: req.body.id_question,
-      room_number: roomNumber,
+      room_number: roomNumber
     })
     .then(function(task) {
       task.save();
@@ -46,6 +46,22 @@ const controller = {
     });
   },
 
+  retrieveById: function(req, res, next) {
+    console.log('req.query.room_number --------->', req.query.collaborateId);
+    Collaborate.findOne({
+      where: {id: req.query.collaborateId},
+      include: [{all: true}]
+    })
+    .then(function(collaborate) {
+      res.json(collaborate.get());
+    })
+    .catch(function(err) {
+      console.log('err in retrieving collaborate by id: ', err.message);
+      res.sendStatus(404);
+    });
+  }
 };
 
 module.exports = controller;
+
+
