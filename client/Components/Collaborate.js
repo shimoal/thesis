@@ -6,7 +6,7 @@ import Signup from './Auth/Signup'
 import io from 'socket.io-client'
 import axios from 'axios'
 
-let socket = io.connect();
+let socket = io('https://hackeroo.xyz');
 let pc;
     let configuration = {
       'iceServers': [{
