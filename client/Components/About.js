@@ -1,18 +1,47 @@
 import React from 'react'
+import style from '../sass/About.scss'
 
 export default React.createClass({
   render() {
     return (<div>
-      <h1>How it works</h1>
-      <h2> What would you like to do? </h2>
-      <h3>Ask a question</h3>
-      <p>1. If you haven't already, create an account!</p>
-      <p>2. Post a question on any topic you'd like help with</p>
-      <p>3. Browse questions, or use the search bar to find a question you'd like to answer</p>
-      <p>4. If you find a quesiont, click "Claim" to offer to answer</p>
-      <p>5. Once someone has claimed your questions, you can choose to accept their help if you want </p>
-      <p>6. As soon as you accept, you will both be sent an email with your roomnumber </p>
-      <p>7. Go to the collaborate page, and enter the room to immediately connect and start coding! </p>
+      <h1> What would you like to do? </h1>
+      <table>  
+      <col width="50" />
+      <col width="300" />
+      <col width="50" />
+      <col width="300" />
+
+      <thead>
+        <tr>
+
+          <th colSpan="2" className="left">
+            Ask a question
+          </th>
+          <th colSpan="2">
+            Answer a question
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="number"> 1.</td>
+          <td className="left"> Post a question on any topic you'd like help with</td>
+          <td className="number"> 1. </td>
+          <td>Browse or search questions to find a question you'd like to answer </td>
+        </tr>
+        <tr>
+          <td className="number">2. </td>
+          <td className="left">Once someone has claimed your questions, you can choose to accept their help if you want </td>
+          <td className="number">2. </td>
+          <td>If you find a quesion you want to answer, click "Claim" </td>
+        </tr>
+
+          <td colSpan="4" className="last">
+            <span className="number ">3.</span>
+          Once a question has been accepted, you will receive an email with a room number to immediately start collaborating! </td>
+      </tbody>
+      </table>
+
     </div>)
   }
 })
