@@ -7,7 +7,7 @@ var port = process.env.PORT || 8080;
 /************** dynamic rooms ***************/
 var users = {};
 var userNum = 0;
-// rooms = {room_name: {users:[], code: ''}}
+// rooms = {room_name: {users:[], code: []}}
 var rooms = {};
 
 io.on('connection', function(socket) {
@@ -17,19 +17,19 @@ io.on('connection', function(socket) {
   });
 
   /** when client emits 'addroom' **/
-  socket.on('addroom', function(username, room_name) {
-    // if the room_name all ready exists
-    if (rooms[room_name]) {
-      io.to(socket.id).emit('room-exists', 'The room name is taken, please try other names');
-    } else {
-      rooms[room_name] = {users:[], code:[]};
-      rooms[room_name].users.push(username);
-      console.log('rooms', rooms);
-      socket.join(room_name);
-      io.to(socket.id).emit('info', 'You have created a room ' + room_name);
-      // io.to(socket.id).emit('setup-editor', rooms[room_name].code);
-    }
-  });
+  // socket.on('addroom', function(username, room_name) {
+  //   // if the room_name all ready exists
+  //   if (rooms[room_name]) {
+  //     io.to(socket.id).emit('room-exists', 'The room name is taken, please try other names');
+  //   } else {
+  //     rooms[room_name] = {users:[], code:[]};
+  //     rooms[room_name].users.push(username);
+  //     console.log('rooms', rooms);
+  //     socket.join(room_name);
+  //     io.to(socket.id).emit('info', 'You have created a room ' + room_name);
+  //     // io.to(socket.id).emit('setup-editor', rooms[room_name].code);
+  //   }
+  // });
   /** when client emits 'join-room' */
   socket.on('join-room', function(username, room_name) {
     if (rooms[room_name]) {
@@ -44,7 +44,11 @@ io.on('connection', function(socket) {
         io.to(socket.id).emit('info', 'You are already in the room');
       }
     } else {
-      socket.emit('info', 'There is no such room');
+      rooms[room_name] = {users:[], code:[]};
+      rooms[room_name].users.push(username);
+      console.log('rooms', rooms);
+      socket.join(room_name);
+      // socket.emit('info', 'There is no such room');
     }
   });
 
@@ -96,26 +100,6 @@ io.on('connection', function(socket) {
     console.log('vm: ', sandbox._output);
     /****************************************/
 
-    /************ Use node.js vm to sandbox untrusted code ************/
-    // var sandbox = {
-    //   _output: JSON.parse('[]'),
-    //   console: {
-    //     log: function(input) {
-    //       sandbox._output.push(input);
-    //     }
-    //   }
-    // };
-    //   const vm = require('vm');
-    //   var context = new vm.createContext(sandbox);
-    // try {
-    //   var script = new vm.Script(val);
-    //   script.runInContext(context);    
-    // } catch (error) {
-    //   console.log('error in vm\n', error.message);
-    //   sandbox._output.push(error.message);
-    // }
-    // console.log('vm: ', sandbox._output);
-    /****************************************/
     io.in(room_name).emit('submit-val', sandbox._output);
   });
 

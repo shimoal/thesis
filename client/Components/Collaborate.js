@@ -5,14 +5,16 @@ import 'brace/theme/github'
 import Signup from './Auth/Signup'
 import io from 'socket.io-client'
 import axios from 'axios'
+import { Link } from 'react-router'
+
 
 let socket = io('https://hackeroo.xyz');
 let pc;
-    let configuration = {
-      'iceServers': [{
-        'url': 'stun:stun.l.google.com:19302'
-      }]
-    };
+let configuration = {
+  'iceServers': [{
+  'url': 'stun:stun.l.google.com:19302'
+  }]
+};
 
 let localStream;
 
@@ -26,9 +28,9 @@ export default class Collaborate extends React.Component {
       info: '',
       exit_room: '',
       applyingChanges: false,
-      username: ''
+      username: ''      
     }
-    this.handleCreateRoom = this.handleCreateRoom.bind(this);
+    // this.handleCreateRoom = this.handleCreateRoom.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleJoinRoom = this.handleJoinRoom.bind(this);
     this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
@@ -58,6 +60,7 @@ export default class Collaborate extends React.Component {
   componentDidMount() {
     var context = this;   
     /*********** live coding *********/
+    console.log('ace', ace);
     this.editor = ace.edit(this.refs.root);
     this.editor.getSession().setMode("ace/mode/javascript");
     this.editor.setTheme("ace/theme/github");
@@ -69,18 +72,16 @@ export default class Collaborate extends React.Component {
     socket.on('room-exists', function(msg) {
       alert(msg);
     });
+    socket.on('exit_room', this.handleExitRoom);
     // changes in editing board
     this.editor.on('change', this.handleEditorContentChange);
     socket.on('editor-content-changes', this.updateEditorContent);
     socket.on('setup-editor', this.setupEditor);
-    // clear editor content
     socket.on('clear-editor', this.ResetEditor);
     // 'run code'
     socket.on('submit-val', this.updateResult);
     // handle info
     socket.on('info', this.handleInfo);
-    // exit room
-    socket.on('exit_room', this.handleExitRoom);
     /**************************************/
 
 		/*********** video conference *********/
@@ -95,18 +96,42 @@ export default class Collaborate extends React.Component {
 	handleFormChange(e) {
 		this.setState({room_name: e.target.value});
 	}
-	handleCreateRoom(e) {
-		e.preventDefault();
-    socket.emit('addroom', this.state.username, this.state.room_name);
-    e.target.value = '';
-  }
+	// handleCreateRoom(e) {
+	// 	e.preventDefault();
+ //    socket.emit('addroom', this.state.username, this.state.room_name);
+ //    e.target.value = '';
+ //  }
   handleJoinRoom(e) {
+    var context = this;
+    console.log('room_name: ', context.state.room_name);
+    axios.get('/collaborate', {
+        params: {
+          room_number: context.state.room_name
+        }
+      })
+      .then(function(collaborate) {
+        console.log('collaborate.data ---> ', collaborate.data);
+        context.setState({
+          id: collaborate.data.id,
+          learnerId: collaborate.data.id_learner,
+          helperId: collaborate.data.id_helper,
+          questionId: collaborate.data.id_question,
+          learner: collaborate.data.Learner,
+          helper: collaborate.data.Helper,
+          question: collaborate.data.Question,
+          room_name: collaborate.data.room_number
+        });
+        console.log('context state ---> ', context.state);
+        socket.emit('join-room', context.state.username, context.state.room_name);
+      })
+      .catch(function(err) {
+        context.setState({info: 'Wrong room number. There is no such room.'});
+      });
     e.preventDefault();
-    socket.emit('join-room', this.state.username, this.state.room_name);
+    /*** get the learnerId, helperId, questionId, questionContent from db ***/
   }
   handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
-      console.log('content change', JSON.stringify(e));
       socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
     }
     return false;
@@ -122,7 +147,6 @@ export default class Collaborate extends React.Component {
   }
   setupEditor(val) {
     this.setState({applyingChanges: true});
-    console.log('setup editor', val);
     var context = this;
     val.forEach(function(element) {
       element = JSON.parse(element);
@@ -135,30 +159,19 @@ export default class Collaborate extends React.Component {
   }
   handleRunCode() {
     var val = this.editor.getValue();
-    console.log('run code', val);
-    /****************************************/
-    // var context = this;
-    // axios.post('/compile', val).then(function(response) {
-    //   socket.emit('submit-val', context.state.room_name, response);
-    // });
-
-    /****************************************/
     socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
   updateResult(results) {
-    console.log('update result area: ', results);
     var resultsArr = [];
     for (var i = 0; i < results.length; i++) {
       resultsArr.push(<p key={i}>{results[i]}</p>);
     } 
-    console.log(resultsArr);
     this.setState({applyingChanges: true});
     this.setState({results: resultsArr});
     this.setState({applyingChanges: false});
   }
   handleInfo(msg) {
-    console.log('handle info', msg);
     this.setState({info: msg});
   }
   exitRoom() {
@@ -235,7 +248,8 @@ export default class Collaborate extends React.Component {
 		pc.addIceCandidate(new RTCIceCandidate(candidate));
 
 	}
-	/************************************/	
+	/************************************/	  
+
   render() {
   // if (this.props.userData.authenticated === 1) {
     return (
@@ -258,8 +272,11 @@ export default class Collaborate extends React.Component {
 
         <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
           <h2>Collaborate</h2>
+
             <div className="panel panel-default">
               <div className="panel-body">
+                Render the question here with QuestionItem component
+
                 <h4>{this.state.info}</h4>
                 
                   <form className="col-5" id="roomForm" onSubmit={this.handleCreateRoom}>
@@ -273,6 +290,9 @@ export default class Collaborate extends React.Component {
                   </form>    
 
                   <button onClick={this.exitRoom}>Stop Connection</button>
+                  {this.state.id ? (<button><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
+                  >Write Review</Link></button>) : null}
+                  
               </div> 
             </div>
 
