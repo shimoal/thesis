@@ -8,7 +8,7 @@ import axios from 'axios'
 import { Link } from 'react-router'
 
 
-let socket = io('https://hackeroo.xyz');
+let socket = io();
 let pc;
 let configuration = {
   'iceServers': [{
