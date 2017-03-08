@@ -290,7 +290,7 @@ export default class Collaborate extends React.Component {
                   </form>    
 
                   <button onClick={this.exitRoom}>Stop Connection</button>
-                  {this.state.id ? (<Link to='/review' params={{collaborateId: this.state.id }}
+                  {this.state.id ? (<Link to={'/review/'+this.state.questionId+'/'+this.state.id }
                   >Write Review</Link>) : null}
                   
               </div> 
