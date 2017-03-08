@@ -17,7 +17,7 @@ const controller = {
       return res.status(200).send('========== Success saving Question');
     })
     .catch(function(err) {
-      console.log('Error saving question');
+      console.log('Error saving question', err);
       return res.sendStatus(500);
     });
   },
@@ -53,7 +53,7 @@ const controller = {
       });
     })
     .catch(function(err) {
-      console.log('Error getting question');
+      console.log('Error getting questions', err);
       return res.sendStatus(500);
     });
   },
@@ -110,7 +110,7 @@ const controller = {
       });
     })
     .catch(function(err) {
-      console.log('Error getting one user questions');
+      console.log('Error getting one user questions', err);
       return res.sendStatus(500);
     });
   },
