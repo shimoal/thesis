@@ -29,11 +29,13 @@ const controller = {
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
 
     //retrieve all questions
-    db.query('SELECT questions."userId", name, questions.id, title, question, status, deadline, questions."createdAt" \
-              from users INNER JOIN questions ON questions."userId" = users.id \
-              ORDER BY id DESC', { model: Question })
+    db.query('SELECT questions.id, title, question, status, deadline, questions."createdAt"::DATE, "userId", learners.name, claims.id_helper\
+              FROM questions\
+              INNER JOIN users AS learners ON learners.id = questions."userId"\
+              LEFT OUTER JOIN claims ON claims.id_question = questions.id\
+              ORDER BY questions.id DESC', { model: Question })
     .then(function(questions) {
-      // console.log('XXX RAW results',questions);
+      // console.log('XXX question RAW results', questions);
       var promises = questions.map(function(question) {
         // console.log('XXX each question', question);
         return {
@@ -45,6 +47,7 @@ const controller = {
           'userId': question.userId,
           'name': question.name,
           'createdAt': question.createdAt,
+          'helperId': question.id_helper,
         };
       });
       Promise.all(promises).then(function() {
@@ -116,6 +119,7 @@ const controller = {
 
   changeStatus: function(req, res, next) {
     var old = Question.findById(req.body.id_question);
+    console.log('old question -----> ', old);
     old.update({status: req.body.status})
       .then(function() {
         res.status(200);

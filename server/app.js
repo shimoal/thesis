@@ -91,6 +91,7 @@ app.post('/accept', collaborateCtrl.save);
 app.get('/collaborate', collaborateCtrl.retrieve);
 
 app.get('/collaborate-review', collaborateCtrl.retrieveById);
+app.post('/close-question', questionsCtrl.changeStatus);
 app.post('/review-save', reviewCtrl.save);
 app.get('/review', reviewCtrl.retrieveAllByUserName);
 

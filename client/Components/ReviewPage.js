@@ -18,14 +18,16 @@ export default class ReviewPage extends React.Component {
 			helpfulness: 0,
 			experience: 0,
 			editStarBtn: 'Save',
-			alert: false
+			alert: false,
+			closeQuestion: false
 		}
 		this.overallStar = this.overallStar.bind(this);
 		this.knowleageStar = this.knowleageStar.bind(this);
 		this.helpfulnessStar = this.helpfulnessStar.bind(this);
 		this.overallExpStar = this.overallExpStar.bind(this);
 		this.textareaChange = this.textareaChange.bind(this);
-		this.handelSubmit = this.handelSubmit.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleCloseQuestion = this.handleCloseQuestion.bind(this);
 	}
 
 	componentWillMount() {
@@ -72,7 +74,7 @@ export default class ReviewPage extends React.Component {
     this.setState({content: event.target.value});
   }
 
-	handelSubmit() {
+	handleSubmit() {
 		var context = this;
 		var data = {
 			id_collaborate: context.state.collaborateId,
@@ -86,7 +88,27 @@ export default class ReviewPage extends React.Component {
 		.then(function() {
 			context.setState({alert: true});
 			console.log('review been posted successfully.');
+		})
+		.catch(function(err) {
+			console.log('error in saving review, ', err.message);
 		});
+	}
+
+	handleCloseQuestion() {
+		this.setState({closeQuestion: true});
+
+		// var context = this;
+		// axios.post('/close-question', 
+		// 	{
+		// 		status: 'closed',
+		// 		id_question: context.state.questionId
+		// 	})
+		// .then(function() {
+		// 	this.setState({closeQuestion: true});
+		// })
+		// .catch(function(err) {
+		// 	console.log('error in closing question.', err.message);
+		// });
 	}
 
 	render() {
@@ -162,6 +184,17 @@ export default class ReviewPage extends React.Component {
 	            </div>
 	            <div className="panel-body">
 	              <div id="review-question" >{this.state.question.question}</div>
+	              <hr></hr>
+	              {this.state.closeQuestion ? 
+	              	(<div className="alert alert-success" role="alert">
+								  Question is closed.
+									</div>) : 
+									(<div id="close-question">
+										<strong>If you do not need further help with this question. You can close the question.</strong>
+	              		<button onClick={this.handleCloseQuestion} type="button" className="btn btn-default pull-right">close the question</button>
+	              	</div>)
+	              }
+	              	              	
 	            </div>
 	          </div>
 						<div className="panel panel-default">
@@ -175,7 +208,7 @@ export default class ReviewPage extends React.Component {
 	              <hr></hr>
 	              <div>
 	              {this.state.alert ? null: 
-	              (<button onClick={this.handelSubmit} type="button" id="submit-review" className="btn btn-default pull-right">Submit</button>)} 
+	              (<button onClick={this.handleSubmit} type="button" id="submit-review" className="btn btn-default pull-right">Submit</button>)} 
 	            	</div>
 		            {this.state.alert ? 
 		            (<div className="alert alert-success" role="alert">
