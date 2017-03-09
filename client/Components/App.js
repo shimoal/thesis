@@ -5,8 +5,8 @@ import NavLink from './NavLink';
 import style from '../sass/App.scss';
 
 //redux experiment
-import ContainerOne from '../containers/ContainerOne';
-import ContainerTwo from '../containers/ContainerTwo';
+// import ContainerOne from '../containers/ContainerOne';
+// import ContainerTwo from '../containers/ContainerTwo';
 
 export default class App extends React.Component {
 
@@ -241,10 +241,7 @@ export default class App extends React.Component {
         
         <NavLink userData={this.state}/>
         {childrenWithProps}
-        <h3>App.js state</h3>
-        <pre>
-          {JSON.stringify(this.state, null, 2)}
-        </pre>
+
         <div className="row">
           <div className="col-sm-9 col-md-9 main">
             &nbsp;

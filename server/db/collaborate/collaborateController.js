@@ -19,7 +19,7 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      console.log('========== Success saving collaborate session, room_number:', roomNumber);
+      // console.log('========== Success saving collaborate session, room_number:', roomNumber);
       return res.status(200);
     })
     .catch(function(err) {
@@ -29,9 +29,9 @@ const controller = {
   },
 
   retrieve: function(req, res, next) {
-    console.log('req.query.room_number --------->', req.query.room_number);
+    // console.log('req.query.room_number --------->', req.query.room_number);
     var room_number = req.query.room_number;
-    console.log('room_number in controller: ', room_number);
+    // console.log('room_number in controller: ', room_number);
     Collaborate.findOne({
       where: { room_number: room_number },
       include: [ {all: true} ]
@@ -47,7 +47,7 @@ const controller = {
   },
 
   retrieveById: function(req, res, next) {
-    console.log('req.query.room_number --------->', req.query.collaborateId);
+    // console.log('req.query.room_number --------->', req.query.collaborateId);
     Collaborate.findOne({
       where: {id: req.query.collaborateId},
       include: [{all: true}]
