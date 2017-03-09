@@ -32,6 +32,7 @@ io.on('connection', function(socket) {
   // });
   /** when client emits 'join-room' */
   socket.on('join-room', function(username, room_name) {
+    console.log('a user has entered: ', username, room_name);
     if (rooms[room_name]) {
       if (!rooms[room_name].users.includes(username)) {
         rooms[room_name].users.push(username);
@@ -66,6 +67,8 @@ io.on('connection', function(socket) {
   });
 
   socket.on('editor-content-changes', function(room_name, val) {
+    console.log('inside editor-content-changes', room_name);
+    console.log('rooms:', rooms);
       rooms[room_name].code.push(val);
       socket.broadcast.to(room_name).emit('editor-content-changes', val);
   });
@@ -105,14 +108,17 @@ io.on('connection', function(socket) {
 
   /** for the video chat **/
   socket.on('sendDescription', function(room_name, data) {
+    console.log('sending DESCRIPTION to:' + room_name +": " + data);
     io.in(room_name).emit('description', data);
   });
 
   socket.on('sendCandidate', function(room_name, data){
+    console.log('sending CANDIDATE to:' + room_name +": " + data);
     io.in(room_name).emit('candidate', data);
   });
 
   socket.on('stopCall', function(room_name){
+
     socket.broadcast.to(room_name).emit('stopCall');
   })
 
