@@ -63,9 +63,9 @@ export default class App extends React.Component {
     //Get all questions
     axios.get('/question')
     .then(function(response) {
-      console.log('========== Success getting All Questions from DB');
+      // console.log('========== Success getting All Questions from DB');
       //response.data object is in an array, so need to get element 0
-      console.log('questions:', response);
+      // console.log('questions:', response);
       context.setState({questions: response.data});
     })
     .catch(function(err) {
@@ -75,7 +75,7 @@ export default class App extends React.Component {
     //Get all users
     axios.get('/users')
     .then(function(response) {
-      console.log('========== Success getting All Users from DB');
+      // console.log('========== Success getting All Users from DB');
       //response.data object is in an array, so need to get element 0
       context.setState({allUsers: response.data});
     })
@@ -89,7 +89,6 @@ export default class App extends React.Component {
       var data = {
         userId: this.state.user.id
       };
-
       this.getUserQuestions(data);
       this.getUserClaimedQuestions(data);
     }
@@ -102,7 +101,7 @@ export default class App extends React.Component {
     //do ajax call to get current user questions
     axios.get('/question-for-one-user', { params: data })
     .then(function(response) {
-      console.log('========== Success getting Current User\'s Questions data from DB');
+      // console.log('========== Success getting Current User\'s Questions data from DB');
       context.setState({currentUserQuestions: response.data});
     })
     .catch(function(err) {
@@ -116,7 +115,7 @@ export default class App extends React.Component {
         //do ajax call to get claimed questions
     axios.get('/claim', { params: data })
     .then(function(response) {
-      console.log('========== Success getting Current User\'s Claimed questions from DB');
+      // console.log('========== Success getting Current User\'s Claimed questions from DB', response);
       //response.data object is in an array, so need to get element 0
       context.setState({questionsClaimed: response.data});
     })
@@ -131,7 +130,7 @@ export default class App extends React.Component {
     
     axios.post('/question', questionData)
     .then(function(res) {
-      console.log('========== Success writing question to database');
+      // console.log('========== Success writing question to database');
 
     })
     .catch(function(err) {
@@ -149,8 +148,8 @@ export default class App extends React.Component {
     };
     axios.get('/question-for-one-user', { params: data })
     .then(function(response) {
-      console.log('========== Success getting User\'s Public Profile Questions for', userId);
-      console.log(response.data);
+      // console.log('========== Success getting User\'s Public Profile Questions for', userId);
+      // console.log(response.data);
       context.setState({userPublicQuestions: response.data});
     })
     .catch(function(err) {
@@ -161,7 +160,7 @@ export default class App extends React.Component {
   claimQuestion(currentUserId, learnerId, questionId) {
     axios.post('/claim', {id_helper: currentUserId, id_learner: learnerId, id_question: questionId})
     .then(function(res) {
-      console.log('========== Success writing claim to database');
+      // console.log('========== Success writing claim to database');
     })
     .catch(function(err) {
       if (err) {
@@ -180,7 +179,7 @@ export default class App extends React.Component {
       id_question: questionId,
     })
     .then(function(res) {
-      console.log('========== Success saving collaborate session');
+      // console.log('========== Success saving collaborate session');
       // setState to include learnerId, helperId, questionId, roomNumber?
       // redirect to collaborate?
     })
@@ -191,23 +190,6 @@ export default class App extends React.Component {
     });
   }
 
-  // checkUserAuth() {
-  //   var context = this;
-  //   axios.get('/session')
-  //   .then( function(response) {
-  //     console.log('checkUserAuth: response', response);
-  //     if (response.data.github_id) {
-  //       //if session is valid, set authenticated to 1
-  //       console.log('========== checkUserAuth: YES, USER IS AUTHENTICATED.')
-  //       context.setState({'authenticated': 1});
-  //     } else {
-  //       //else, set authenticated to 0
-  //       console.log('========== checkUserAuth: OH NO, USER IS NOT AUTHENTICATED.')
-  //       context.setState({'authenticated': 0});
-  //     }
-  //   });
-  // }
-
   getUserPublicProfile(userId) {
     var context = this;
     var data = {
@@ -215,7 +197,7 @@ export default class App extends React.Component {
     };
     axios.get('/public-profile', { params: data })
     .then(function(response) {
-      console.log('========== Success getting User Public Profile data from DB');
+      // console.log('========== Success getting User Public Profile data from DB');
       context.setState({userPublicProfile: response.data});
     })
     .catch(function(err) {
@@ -246,17 +228,20 @@ export default class App extends React.Component {
         removeUser: this.removeUser.bind(this)
       })
     );
-
+    
+    /*
+    <h3>App.js state</h3>
+    <pre>
+      {JSON.stringify(this.state, null, 2)}
+    </pre>
+    */
+    
     return (
       <div>
         
         <NavLink userData={this.state}/>
         {childrenWithProps}
-        <h3>App.js state</h3>
-        <pre>
-          {JSON.stringify(this.state, null, 2)}
-        </pre>
-        
+
         <div className="row">
           <div className="col-sm-9 col-md-9 main">
             &nbsp;

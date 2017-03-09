@@ -4,6 +4,7 @@ import OpenQuestions from './OpenQuestions';
 import HomepageSearchBar from './HomepageSearchBar';
 import HelperProfiles from './HelperProfiles';
 
+
 export default class Home extends React.Component {
 
   componentWillMount() {
@@ -46,7 +47,7 @@ export default class Home extends React.Component {
       <HomepageSearchBar/>
         <div className="col-sm-1 col-md-1"/>
         
-        <div className="col-sm-10 col-md-10 main">
+        <div className="col-sm-10 col-md-10">
           { /* OpenQuestions.js */}
           <OpenQuestions 
             userCurrent={this.props.userData.user}

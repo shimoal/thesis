@@ -1,5 +1,8 @@
 node_modules/
 
+client/
+test/
+
 *.log
 
 .DS_store

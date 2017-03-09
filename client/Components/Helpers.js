@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-import HelperAcceptButton from './HelperAcceptButton'
+import React from 'react';
+import { Link } from 'react-router';
+import HelperAcceptButton from './HelperAcceptButton';
 
 var Helpers = React.createClass({
   
@@ -9,45 +9,48 @@ var Helpers = React.createClass({
     // console.log('In Helpers.s DidMount this.props.details', this.props.details);
   },
 
-  renderHelpers: function(key) {
+  renderHelpers: function(helperObject) {
+    //for each object in the array
+    //so checkHelpers needs to call this for every element in the array
+    // console.log('helperObject', helperObject);
+    
+    var helperProfileLink = '/profile/' + helperObject.helperId;
+
     return ( 
-      
-      <div className="row" key={key}>
-        <div className="col-sm-9 col-md-9">
-          {this.props.details.helpers[key]}
-        </div>
-        <div className="col-sm-8 col-md-3">
+      <span>
+          <p><Link to={ helperProfileLink }>{ helperObject.helperName }</Link> wants to help you. &nbsp;
           <HelperAcceptButton 
-              key={key} 
-              index={key} 
               details={this.props.details} 
               acceptHelper={this.props.acceptHelper} />
-        </div>
-      </div>
+          </p>
+      </span>
 
-    )
+    );
   },
   //pass down all helpers here and map it
   checkHelpers: function() {
-    //check helper object
+    //check if helper array of objects exists
     if (this.props.details.helpers) {
-      return(
-        <div>
-          { Object.keys(this.props.details.helpers).map(this.renderHelpers) }
-        </div>
-      )
+      
+      var helpersArray = this.props.details.helpers;
+      // console.log('helpersArray', helpersArray);
+      return (
+        <span>
+          { helpersArray.map(this.renderHelpers) }
+        </span>
+      );
     } else {
-      return(<div/>)
+      return (<div/>);
     }
   },
 
   render: function() {
     return (
-      <div className="bg-success">
+      <span>
         { this.checkHelpers() } 
-      </div>
-    )
+      </span>
+    );
   }
-})
+});
 
-export default Helpers
+export default Helpers;

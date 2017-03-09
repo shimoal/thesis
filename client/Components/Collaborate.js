@@ -1,18 +1,20 @@
 import React from 'react'
-import ace from 'brace'
+import * as ace from 'brace';
 import 'brace/mode/javascript'
 import 'brace/theme/github'
 import Signup from './Auth/Signup'
 import io from 'socket.io-client'
 import axios from 'axios'
+import { Link } from 'react-router'
 
-let socket = io.connect();
+
+let socket = io();
 let pc;
-    let configuration = {
-      'iceServers': [{
-        'url': 'stun:stun.l.google.com:19302'
-      }]
-    };
+let configuration = {
+  'iceServers': [{
+  'url': 'stun:stun.l.google.com:19302'
+  }]
+};
 
 let localStream;
 
@@ -26,9 +28,9 @@ export default class Collaborate extends React.Component {
       info: '',
       exit_room: '',
       applyingChanges: false,
-      username: ''
+      username: '',
+      success: false  
     }
-    this.handleCreateRoom = this.handleCreateRoom.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleJoinRoom = this.handleJoinRoom.bind(this);
     this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
@@ -44,15 +46,12 @@ export default class Collaborate extends React.Component {
     this.start = this.start.bind(this);
     this.startCall = this.startCall.bind(this);
     this.stopCall = this.stopCall.bind(this);
-    this.handleDescription = this.handleDescription.bind(this);
-    this.handleCandidate = this.handleCandidate.bind(this);
+    this.handleEvent = this.handleEvent.bind(this);
   }
 
   componentWillMount() {
-    var username = prompt("what is your name?");
-    this.setState({username: username});
-    // console.log('COLLABORATE Username',this.props.userData.user.name);
-    // this.setState({username: this.props.userData.user.name});
+    console.log('COLLABORATE Username',this.props.userData.user.name);
+    this.setState({username: this.props.userData.user.name});
   }
 
   componentDidMount() {
@@ -69,44 +68,62 @@ export default class Collaborate extends React.Component {
     socket.on('room-exists', function(msg) {
       alert(msg);
     });
-    // changes in editing board
+    socket.on('exit_room', this.handleExitRoom);
+    // changes in editor
     this.editor.on('change', this.handleEditorContentChange);
     socket.on('editor-content-changes', this.updateEditorContent);
     socket.on('setup-editor', this.setupEditor);
-    // clear editor content
     socket.on('clear-editor', this.ResetEditor);
     // 'run code'
     socket.on('submit-val', this.updateResult);
     // handle info
     socket.on('info', this.handleInfo);
-    // exit room
-    socket.on('exit_room', this.handleExitRoom);
     /**************************************/
 
 		/*********** video conference *********/
-		socket.on('description', this.handleDescription);
+		socket.on('description', this.handleEvent);
 		
-    socket.on('candidate', this.handleCandidate);
+    socket.on('candidate', this.handleEvent);
 
     socket.on('stopCall', this.stopCall);
   }
 
-	/************ live coding *************/
-	handleFormChange(e) {
-		this.setState({room_name: e.target.value});
-	}
-	handleCreateRoom(e) {
-		e.preventDefault();
-    socket.emit('addroom', this.state.username, this.state.room_name);
-    e.target.value = '';
+  /************ live coding *************/
+  handleFormChange(e) {
+    this.setState({room_name: e.target.value});
   }
+
   handleJoinRoom(e) {
+    var context = this;
+    axios.get('/collaborate', {
+        params: {
+          room_number: context.state.room_name
+        }
+      })
+      .then(function(collaborate) {
+
+        console.log('collaborate.data ---> ', collaborate);
+        context.setState({
+          id: collaborate.data.id,
+          learnerId: collaborate.data.id_learner,
+          helperId: collaborate.data.id_helper,
+          questionId: collaborate.data.id_question,
+          learner: collaborate.data.Learner,
+          helper: collaborate.data.Helper,
+          question: collaborate.data.Question,
+          room_name: collaborate.data.room_number
+        });
+        context.setState({success: true});
+        socket.emit('join-room', context.state.username, context.state.room_name);
+        console.log('context state ---> ', context.state);
+      })
+      .catch(function(err) {
+        context.setState({info: 'Wrong room number. There is no such room.'});
+      });
     e.preventDefault();
-    socket.emit('join-room', this.state.username, this.state.room_name);
   }
   handleEditorContentChange(e) {
     if (!this.state.applyingChanges) {
-      console.log('content change', JSON.stringify(e));
       socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
     }
     return false;
@@ -122,7 +139,6 @@ export default class Collaborate extends React.Component {
   }
   setupEditor(val) {
     this.setState({applyingChanges: true});
-    console.log('setup editor', val);
     var context = this;
     val.forEach(function(element) {
       element = JSON.parse(element);
@@ -135,30 +151,19 @@ export default class Collaborate extends React.Component {
   }
   handleRunCode() {
     var val = this.editor.getValue();
-    console.log('run code', val);
-    /****************************************/
-    // var context = this;
-    // axios.post('/compile', val).then(function(response) {
-    //   socket.emit('submit-val', context.state.room_name, response);
-    // });
-
-    /****************************************/
     socket.emit('submit-val', this.state.room_name, val);
     return false;
   }
   updateResult(results) {
-    console.log('update result area: ', results);
     var resultsArr = [];
     for (var i = 0; i < results.length; i++) {
       resultsArr.push(<p key={i}>{results[i]}</p>);
     } 
-    console.log(resultsArr);
     this.setState({applyingChanges: true});
     this.setState({results: resultsArr});
     this.setState({applyingChanges: false});
   }
   handleInfo(msg) {
-    console.log('handle info', msg);
     this.setState({info: msg});
   }
   exitRoom() {
@@ -218,33 +223,40 @@ export default class Collaborate extends React.Component {
     localStream.getVideoTracks()[0].stop();
   }
 
-  handleDescription(evt) {
+  handleEvent(evt) {
     if (!pc) {
-      this.start(false);      
+      this.start(false);    
     }
-    var description = (JSON.parse(evt)).sdp;
 
-		// console.log('setting remote description');
-	  pc.setRemoteDescription(new RTCSessionDescription(description));
-	}
-	handleCandidate(evt) {
-		if (!pc) {
-		  this.start(false);
-		}
-		var candidate = (JSON.parse(evt)).candidate;
-		pc.addIceCandidate(new RTCIceCandidate(candidate));
+    var event = JSON.parse(evt);
+    if (event.sdp) {
+       var description = (JSON.parse(evt)).sdp;
+      if (!!description) {
+         pc.setRemoteDescription(new RTCSessionDescription(description));      
+      }
+  
+    } else if (event.candidate) {
+      var candidate = event.candidate;
+      if (!!candidate) {
+        pc.addIceCandidate(new RTCIceCandidate(candidate));       
+      }
+
+    }
 
 	}
-	/************************************/	
+
+	/************************************/	  
+
   render() {
-  // if (this.props.userData.authenticated === 1) {
+
     return (
 
       <div className="row">
 
         <div className="col-sm-4 col-md-3 sidebar">
           videos here
-          <div id="my-camera">
+          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
+            <div id="my-camera">
             <video autoPlay muted="muted"></video>
           </div>
 
@@ -256,27 +268,35 @@ export default class Collaborate extends React.Component {
           </div>          
         </div>
 
+        </div>
         <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
           <h2>Collaborate</h2>
+
             <div className="panel panel-default">
               <div className="panel-body">
+
+                {this.state.success ? 
+                (<div>
+                <h4>{this.state.question.title}</h4>
+                <p>{this.state.question.question}</p>
+                </div>) : null}
+
                 <h4>{this.state.info}</h4>
-                
-                  <form className="col-5" id="roomForm" onSubmit={this.handleCreateRoom}>
-                    <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-                    <input type="submit" value="Submit" />
-                  </form>
 
-                  <form className="col-5" id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+                  {this.state.success ? null :
+                  (<form className='col-5' id="joinRoomForm" onSubmit={this.handleJoinRoom}>
                     <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-                    <input type="submit" value="Join" />
-                  </form>    
+                    <input type="submit" value="Join" className="btn btn-default" />
+                  </form> )}   
 
-                  <button onClick={this.exitRoom}>Stop Connection</button>
+                  <button className={this.state.success ? "btn btn-default" : 'invisible'} onClick={this.exitRoom}>Stop Connection</button>
+                  {(this.state.id && this.state.learner.name === this.state.username)? (<button className="btn btn-default"><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
+                  >Write Review</Link></button>) : null}
+                  
               </div> 
             </div>
-
-          <div className="panel panel-default">
+         
+          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
             <div className="panel-heading">
               <h3 className="panel-title">Live Coding</h3>
             </div>
@@ -291,7 +311,7 @@ export default class Collaborate extends React.Component {
             </div>
           </div>
 
-          <div className="panel panel-default">
+          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
             <div className="panel-heading">
               <h3 className="panel-title">Result</h3>
             </div>
@@ -299,16 +319,10 @@ export default class Collaborate extends React.Component {
               <div id="result">{this.state.results}</div>
             </div>
           </div>
-          
+
         </div>
       </div>
 
     )
-  // } else {
-  //     return (
-  //       <Signup/>
-  //     )
-
-  // }
   }
 }

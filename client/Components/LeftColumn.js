@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactStars from 'react-stars'
 
 export default React.createClass({
   render() {
@@ -15,24 +16,48 @@ export default React.createClass({
           <table className="table">
             <tbody>
               <tr>
-                <td>Overall</td>
-                <td>Stars</td>
+                <td><p>Overall Rating</p></td>
+                <td>
+                  <ReactStars
+                    
+                    count={5}
+                    half={false} 
+                    edit={false} />
+                </td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td>Knowledge</td>
-                <td>Stars</td>
+                <td><p>Knowledge</p></td>
+                <td>
+                  <ReactStars
+                    
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                  </td>
               </tr>
               <tr>
-                <td>Helpfulness</td>
-                <td>Stars</td>
+                <td><p>Helpfulness</p></td>
+                <td>
+                  <ReactStars
+                    
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
               </tr>
               <tr>
-                <td>Overall Experience</td>
-                <td>Stars</td>
+                <td><p>Overall Experience</p></td>
+                <td>
+                  <ReactStars
+                    
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
               </tr>
             </tbody>
           </table>
