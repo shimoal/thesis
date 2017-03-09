@@ -46,8 +46,7 @@ export default class Collaborate extends React.Component {
     this.start = this.start.bind(this);
     this.startCall = this.startCall.bind(this);
     this.stopCall = this.stopCall.bind(this);
-    this.handleDescription = this.handleDescription.bind(this);
-    this.handleCandidate = this.handleCandidate.bind(this);
+    this.handleEvent = this.handleEvent.bind(this);
   }
 
   componentWillMount() {
@@ -58,7 +57,6 @@ export default class Collaborate extends React.Component {
   componentDidMount() {
     var context = this;   
     /*********** live coding *********/
-    console.log('ace', ace);
     this.editor = ace.edit(this.refs.root);
     this.editor.getSession().setMode("ace/mode/javascript");
     this.editor.setTheme("ace/theme/github");
@@ -82,10 +80,10 @@ export default class Collaborate extends React.Component {
     socket.on('info', this.handleInfo);
     /**************************************/
 
-    /*********** video conference *********/
-    socket.on('description', this.handleDescription);
-    
-    socket.on('candidate', this.handleCandidate);
+		/*********** video conference *********/
+		socket.on('description', this.handleEvent);
+		
+    socket.on('candidate', this.handleEvent);
 
     socket.on('stopCall', this.stopCall);
   }
@@ -97,14 +95,14 @@ export default class Collaborate extends React.Component {
 
   handleJoinRoom(e) {
     var context = this;
-    console.log('room_name: ', context.state.room_name);
     axios.get('/collaborate', {
         params: {
           room_number: context.state.room_name
         }
       })
       .then(function(collaborate) {
-        console.log('collaborate.data ---> ', collaborate.data);
+
+        console.log('collaborate.data ---> ', collaborate);
         context.setState({
           id: collaborate.data.id,
           learnerId: collaborate.data.id_learner,
@@ -225,24 +223,29 @@ export default class Collaborate extends React.Component {
     localStream.getVideoTracks()[0].stop();
   }
 
-  handleDescription(evt) {
+  handleEvent(evt) {
     if (!pc) {
-      this.start(false);      
+      this.start(false);    
     }
-    var description = (JSON.parse(evt)).sdp;
 
-    // console.log('setting remote description');
-    pc.setRemoteDescription(new RTCSessionDescription(description));
-  }
-  handleCandidate(evt) {
-    if (!pc) {
-      this.start(false);
+    var event = JSON.parse(evt);
+    if (event.sdp) {
+       var description = (JSON.parse(evt)).sdp;
+      if (!!description) {
+         pc.setRemoteDescription(new RTCSessionDescription(description));      
+      }
+  
+    } else if (event.candidate) {
+      var candidate = event.candidate;
+      if (!!candidate) {
+        pc.addIceCandidate(new RTCIceCandidate(candidate));       
+      }
+
     }
-    var candidate = (JSON.parse(evt)).candidate;
-    pc.addIceCandidate(new RTCIceCandidate(candidate));
 
-  }
-  /************************************/    
+	}
+
+	/************************************/	  
 
   render() {
 

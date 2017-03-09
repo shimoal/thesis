@@ -70,22 +70,22 @@ const controller = {
       INNER JOIN users AS helper ON helper.id = id_helper\
       WHERE questions.status = \'claimed\' AND claims.id_learner = ? ', { model: ClaimRawSql, replacements: [currentUserId], type: db.QueryTypes.SELECT })
     .then(function(questions) {
-      console.log('========== Success getting claimed questions', questions[0].dataValues);
+      // console.log('========== Success getting claimed questions', questions[0].dataValues);
       var promises = questions.map(function(question) {
-        console.log('XXX each question.dataValues.claims', question);
+        // console.log('XXX each question.dataValues.claims', question);
         return {
-          'id': questions[0].dataValues.id_question,
-          'title': questions[0].dataValues.title,
-          'question': questions[0].dataValues.question,
-          'status': questions[0].dataValues.status,
+          'id': question.dataValues.id_question,
+          'title': question.dataValues.title,
+          'question': question.dataValues.question,
+          'status': question.dataValues.status,
           'deadline': '',
-          'createdAt': questions[0].dataValues.createdAt,
-          'learnerId': questions[0].dataValues.id_learner,
-          'helperId': questions[0].dataValues.id_helper,
+          'createdAt': question.dataValues.createdAt,
+          'learnerId': question.dataValues.id_learner,
+          'helperId': question.dataValues.id_helper, //this may an array in later iterations
           //make helpers an array of helpers objects
           'helpers': [{
-            helperName: questions[0].dataValues.name,
-            helperId: questions[0].dataValues.id_helper,
+            helperName: question.dataValues.name,
+            helperId: question.dataValues.id_helper,
           }]
         };
       });

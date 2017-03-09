@@ -53,7 +53,7 @@ const controller = {
       include: [{all: true}]
     })
     .then(function(collaborate) {
-      res.json(collaborate.get());
+      res.json(collaborate);
     })
     .catch(function(err) {
       console.log('err in retrieving collaborate by id: ', err.message);
