@@ -3,6 +3,7 @@ node_modules/
 client/
 test/
 oldPublicFiles/
+redux/
 
 *.log
 
