@@ -1,7 +1,11 @@
 node_modules/
 
-/public/bundle.js
-/public/bundle.js.gz
+client/
+spec/
+oldPublicFiles/
+redux/
+
+.gitignore
 
 *.log
 
