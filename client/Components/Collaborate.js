@@ -283,8 +283,12 @@ export default class Collaborate extends React.Component {
           )
         } 
 
-        <div className={this.state.success ? 'col-sm-4 col-md-3 sidebar' : 'invisible'}>
-          <div className="panel panel-default">
+        <div className={this.state.success ? 'col-sm-2 col-md-2 sidebar' : 'invisible'}>
+          <div>
+            <h4>{this.state.info}</h4>
+            <button className={
+                      this.state.success ? 'btn btn-default' : 'invisible'} 
+                      onClick={this.exitRoom}>Stop Connection</button>
             <div id="my-camera">
               <video autoPlay muted="muted"></video>
             </div>
@@ -299,12 +303,8 @@ export default class Collaborate extends React.Component {
         </div>
         
 
-        <div className={this.state.success ? 'col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main' : 'invisible'}>
-          <h4>{this.state.info}</h4>
-          <button className={
-                    this.state.success ? 'btn btn-default' : 'invisible'} 
-                    onClick={this.exitRoom}>Stop Connection</button>
-
+        <div className={this.state.success ? 'col-sm-8 col-sm-offset-4 col-md-10 col-md-offset-2 main' : 'invisible'}>
+          
           <div className="panel panel-default">
             <div className="panel-body">
               
@@ -336,15 +336,15 @@ export default class Collaborate extends React.Component {
             </div> 
           </div>
          
-          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
-            <div className="panel-body">
+          <div className={this.state.success ? '' : 'invisible'}>
+            
             
 
               <div>
-                <div className="panel-heading">
-                  <h3 className="panel-title">Live Coding</h3>
-                </div>
-                <div className="panel-body">
+                
+                  <h3>Live Coding</h3>
+                
+                
                   
                     <div className="btn-group" role="group" aria-label="...">
                       <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
@@ -352,20 +352,20 @@ export default class Collaborate extends React.Component {
                     </div>
 
                     <div id="editor" ref="root" ></div>               
-                </div>
+                
               </div>
 
               <div>
-                <div className="panel-footer">
+                
                   <h3 className="panel-title">Result</h3>
-                </div>
-                <div className="panel-body">
+                
+                
                   <div id="result">{this.state.results}</div>
-                </div>
+                
               </div>
 
             </div>
-          </div>
+          
 
         </div>
 
