@@ -1,9 +1,7 @@
 node_modules/
 
-client/
-test/
-oldPublicFiles/
-redux/
+/public/bundle.js
+/public/bundle.js.gz
 
 *.log
 
