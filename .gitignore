@@ -2,6 +2,7 @@ node_modules/
 
 client/
 test/
+oldPublicFiles/
 
 *.log
 
