@@ -95,7 +95,8 @@ export default class Collaborate extends React.Component {
 
   handleJoinRoom(e) {
     var context = this;
-    axios.get('/collaborate', {
+    console.log('room_name: ', context.state.room_name);
+    axios.get('/collaborates', {
         params: {
           room_number: context.state.room_name
         }
