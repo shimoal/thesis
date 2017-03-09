@@ -71,7 +71,7 @@ export default class Collaborate extends React.Component {
       alert(msg);
     });
     socket.on('exit_room', this.handleExitRoom);
-    // changes in editing board
+    // changes in editor
     this.editor.on('change', this.handleEditorContentChange);
     socket.on('editor-content-changes', this.updateEditorContent);
     socket.on('setup-editor', this.setupEditor);
@@ -271,14 +271,20 @@ export default class Collaborate extends React.Component {
 
             <div className="panel panel-default">
               <div className="panel-body">
-                Render the question here with QuestionItem component
+
+                {this.state.success ? 
+                (<div>
+                <h4>{this.state.question.title}</h4>
+                <p>{this.state.question.question}</p>
+                </div>) : null}
 
                 <h4>{this.state.info}</h4>
 
-                  <form className={this.state.success ? 'invisible' : 'col-5'} id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+                  {this.state.success ? null :
+                  (<form className='col-5' id="joinRoomForm" onSubmit={this.handleJoinRoom}>
                     <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
                     <input type="submit" value="Join" className="btn btn-default" />
-                  </form>    
+                  </form> )}   
 
                   <button className={this.state.success ? "btn btn-default" : 'invisible'} onClick={this.exitRoom}>Stop Connection</button>
                   {(this.state.id && this.state.learner.name === this.state.username)? (<button className="btn btn-default"><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
