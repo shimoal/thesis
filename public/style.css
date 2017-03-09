@@ -1,0 +1,47 @@
+.active {
+  color: green;
+}
+
+.logo {
+  font-size: 52px;
+}
+
+#result {
+	min-height: 260px;
+}
+
+#editor {
+	width: 100%;
+	min-height: 400px;
+	height: 100%;
+}
+
+video {
+	width: 200px;
+	height: 200px;
+	border: #000 1px solid;
+}
+
+.jumbotron {
+  
+}
+
+.heroImage {
+  background-image: url('/images/hack.jpg');
+  background-size: cover;
+  display: block;
+  height: 400px;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+.heroText {
+  width: 70%;
+  position: absolute;
+  top: 100px;
+  left: 10%;
+}
+
+.addTopBottomPadding {
+  padding: 10px 0;
+}

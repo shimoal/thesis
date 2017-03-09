@@ -1,18 +1,18 @@
-import React from 'react'
+import React from 'react';
 import * as ace from 'brace';
-import 'brace/mode/javascript'
-import 'brace/theme/github'
-import Signup from './Auth/Signup'
-import io from 'socket.io-client'
-import axios from 'axios'
-import { Link } from 'react-router'
+import 'brace/mode/javascript';
+import 'brace/theme/monokai';
+import Signup from './Auth/Signup';
+import io from 'socket.io-client';
+import axios from 'axios';
+import { Link } from 'react-router';
 
 
 let socket = io();
 let pc;
 let configuration = {
   'iceServers': [{
-  'url': 'stun:stun.l.google.com:19302'
+    'url': 'stun:stun.l.google.com:19302'
   }]
 };
 
@@ -29,8 +29,8 @@ export default class Collaborate extends React.Component {
       exit_room: '',
       applyingChanges: false,
       username: '',
-      success: false  
-    }
+      success: false //check if user successfully join a room
+    };
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleJoinRoom = this.handleJoinRoom.bind(this);
     this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
@@ -50,7 +50,7 @@ export default class Collaborate extends React.Component {
   }
 
   componentWillMount() {
-    console.log('COLLABORATE Username',this.props.userData.user.name);
+    console.log('COLLABORATE Username', this.props.userData.user.name);
     this.setState({username: this.props.userData.user.name});
   }
 
@@ -59,9 +59,9 @@ export default class Collaborate extends React.Component {
     /*********** live coding *********/
     this.editor = ace.edit(this.refs.root);
     this.editor.getSession().setMode("ace/mode/javascript");
-    this.editor.setTheme("ace/theme/github");
+    this.editor.setTheme("ace/theme/monokai");
 
-    socket.on('connect', function(){
+    socket.on('connect', function() {
       console.log(context.state.username, ' connected');
     });
     socket.on('disconnect', this.exitRoom);
@@ -95,32 +95,30 @@ export default class Collaborate extends React.Component {
 
   handleJoinRoom(e) {
     var context = this;
-    console.log('room_name: ', context.state.room_name);
     axios.get('/collaborates', {
-        params: {
-          room_number: context.state.room_name
-        }
-      })
-      .then(function(collaborate) {
-
-        console.log('collaborate.data ---> ', collaborate);
-        context.setState({
-          id: collaborate.data.id,
-          learnerId: collaborate.data.id_learner,
-          helperId: collaborate.data.id_helper,
-          questionId: collaborate.data.id_question,
-          learner: collaborate.data.Learner,
-          helper: collaborate.data.Helper,
-          question: collaborate.data.Question,
-          room_name: collaborate.data.room_number
-        });
-        context.setState({success: true});
-        socket.emit('join-room', context.state.username, context.state.room_name);
-        console.log('context state ---> ', context.state);
-      })
-      .catch(function(err) {
-        context.setState({info: 'Wrong room number. There is no such room.'});
+      params: {
+        room_number: context.state.room_name
+      }
+    })
+    .then(function(collaborate) {
+      console.log('collaborate.data ---> ', collaborate.data);
+      context.setState({
+        id: collaborate.data.id,
+        learnerId: collaborate.data.id_learner,
+        helperId: collaborate.data.id_helper,
+        questionId: collaborate.data.id_question,
+        learner: collaborate.data.Learner,
+        helper: collaborate.data.Helper,
+        question: collaborate.data.Question,
+        room_name: collaborate.data.room_number
       });
+      context.setState({success: true});
+      socket.emit('join-room', context.state.username, context.state.room_name);
+      console.log('context state ---> ', context.state);
+    })
+    .catch(function(err) {
+      context.setState({info: 'Wrong room number. There is no such room.'});
+    });
     e.preventDefault();
   }
   handleEditorContentChange(e) {
@@ -144,11 +142,11 @@ export default class Collaborate extends React.Component {
     val.forEach(function(element) {
       element = JSON.parse(element);
       context.editor.getSession().getDocument().applyDeltas([element]);
-    })
+    });
     this.setState({applyingChanges: false});
   }
   ResetEditor() {
-    this.editor.getSession().setValue("");
+    this.editor.getSession().setValue('');
   }
   handleRunCode() {
     var val = this.editor.getValue();
@@ -158,7 +156,7 @@ export default class Collaborate extends React.Component {
   updateResult(results) {
     var resultsArr = [];
     for (var i = 0; i < results.length; i++) {
-      resultsArr.push(<p key={i}>{results[i]}</p>);
+      resultsArr.push(<div key={i}>{results[i]}</div>);
     } 
     this.setState({applyingChanges: true});
     this.setState({results: resultsArr});
@@ -173,7 +171,7 @@ export default class Collaborate extends React.Component {
     this.stopCall(true);
   }
   handleExitRoom() {
-    this.setState({info: 'You left the room: '+this.state.room_name});
+    this.setState({info: 'You left the room'});
     this.setState({room_name: ''});
   }
   /************************************/
@@ -188,17 +186,17 @@ export default class Collaborate extends React.Component {
 
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
-      socket.emit('sendCandidate', room_name, (JSON.stringify({ "candidate": evt.candidate })));
+      socket.emit('sendCandidate', room_name, (JSON.stringify({ 'candidate': evt.candidate })));
     };
 
     // once remote stream arrives, show it in the remote video element
     pc.onaddstream = function (evt) {      
-      $("#peer-camera video")[0].src = URL.createObjectURL(evt.stream);
+      $('#peer-camera video')[0].src = URL.createObjectURL(evt.stream);
     };
 
     // get the local stream, show it in the local video element and send it
-    navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
-      $("#my-camera video")[0].src = URL.createObjectURL(stream);
+    navigator.getUserMedia({ 'audio': true, 'video': true }, function (stream) {
+      $('#my-camera video')[0].src = URL.createObjectURL(stream);
       pc.addStream(stream);
       if (isCaller){
         pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
@@ -210,8 +208,8 @@ export default class Collaborate extends React.Component {
 
       function gotDescription(desc) {
         pc.setLocalDescription(desc);
-        socket.emit('sendDescription', room_name, JSON.stringify({ "sdp": desc }));
-      };
+        socket.emit('sendDescription', room_name, JSON.stringify({ 'sdp': desc }));
+      }
     });
   }
   startCall() {
@@ -256,76 +254,111 @@ export default class Collaborate extends React.Component {
 
       <div className="row">
 
-        <div className="col-sm-4 col-md-3 sidebar">
-          videos here
-          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
-            <div id="my-camera">
-            <video autoPlay muted="muted"></video>
-          </div>
-
-          <button onClick={this.startCall} >Start call</button>
-          <button  onClick={this.stopCall.bind(this, true)} >Stop call</button>
-
-          <div id="peer-camera">
-            <video width="400" height="400" autoPlay></video>
-          </div>          
-        </div>
-
-        </div>
-        <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
-          <h2>Collaborate</h2>
-
-            <div className="panel panel-default">
-              <div className="panel-body">
-
-                {this.state.success ? 
-                (<div>
-                <h4>{this.state.question.title}</h4>
-                <p>{this.state.question.question}</p>
-                </div>) : null}
-
-                <h4>{this.state.info}</h4>
-
-                  {this.state.success ? null :
-                  (<form className='col-5' id="joinRoomForm" onSubmit={this.handleJoinRoom}>
-                    <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-                    <input type="submit" value="Join" className="btn btn-default" />
-                  </form> )}   
-
-                  <button className={this.state.success ? "btn btn-default" : 'invisible'} onClick={this.exitRoom}>Stop Connection</button>
-                  {(this.state.id && this.state.learner.name === this.state.username)? (<button className="btn btn-default"><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
-                  >Write Review</Link></button>) : null}
-                  
-              </div> 
+        {
+          this.state.success ? null :
+          (
+            <div className="container">
+              <div className="col-sm-4 col-md-4 col-lg-4">
+              </div>
+              <div className="col-sm-4 col-md-4 col-lg-4 text-center">
+                <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <h3>Enter a room number</h3>
+                  <div className="row">
+                    <div className="col-sm-1 col-md-2 col-lg-2">
+                    &nbsp;
+                    </div>
+                    <div className="col-sm-9 col-md-7 col-lg-7">
+                      <input id="roomName" className="form-control" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room number" />
+                    </div>
+                    <div className="col-sm-2 col-md-3 col-lg-3">
+                      <input type="submit" value="Join" className="btn btn-default" />
+                    </div>
+                  </div>
+                </form> 
+              </div>
+              <div className="col-sm-4 col-md-4 col-lg-4">
+              </div>
             </div>
-         
-          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
-            <div className="panel-heading">
-              <h3 className="panel-title">Live Coding</h3>
-            </div>
+          )
+        } 
+
+
+        <div className={this.state.success ? 'col-sm-9 col-md-9 main' : 'invisible'}>
+          
+          <div className="panel panel-default">
             <div className="panel-body">
               
-                <div className="btn-group" role="group" aria-label="...">
-                  <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
-                  <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+
+              {this.state.success ? 
+                (
+                  
+                  <div>
+                    <h5>{this.state.question.title}</h5>
+                    <p>{this.state.question.question}</p>
+                  </div>
+
+                ) : null
+              }
+                
+            </div> 
+          </div>
+         
+          <div className={this.state.success ? '' : 'invisible'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">
+                  <h3 className="panel-title">Live Coding</h3>
                 </div>
-
-                <div id="editor" ref="root" ></div>               
+                <div className="panel-body">
+                  
+                  <div id="editor" ref="root"></div>
+                  
+                  <div className="btn-group addTopBottomPadding" role="group" aria-label="...">
+                    <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
+                    <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+                  </div>
+                  
+                  <div className="well result">{this.state.results}</div>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
-            <div className="panel-heading">
-              <h3 className="panel-title">Result</h3>
-            </div>
-            <div className="panel-body">
-              <div id="result">{this.state.results}</div>
-            </div>
-          </div>
-
         </div>
+
+        <div className={this.state.success ? 'col-sm-3 col-md-3' : 'invisible'}>
+          <div>
+            <p>{this.state.info}</p>
+            <div className={this.state.room_name ? '' : 'invisible'}>
+              <p>You are in room: {this.state.room_name}</p>
+            </div>
+            <button className={
+              this.state.success && this.state.room_name ? 'btn btn-danger btn-fill' : 'invisible'} 
+              onClick={this.exitRoom}>Stop Connection</button>
+            <p></p>
+            <button className="btn btn-default" onClick={this.startCall} >Start video call</button> &nbsp;&nbsp;
+            <button className="btn btn-default" onClick={this.stopCall.bind(this, true)} >Stop</button>
+            <p></p>
+            <div id="my-camera">
+              <video autoPlay muted="muted"></video>
+            </div>
+
+            <div id="peer-camera">
+              <video width="400" height="400" autoPlay></video>
+            </div>          
+            {
+              (this.state.id && this.state.learner.name === this.state.username) ? 
+                (
+                  <button className="btn btn-default">
+                    <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
+                  </button>
+
+                ) : null
+            }
+          </div>
+        </div>
+
       </div>
 
-    )
+    );
   }
 }

@@ -41,3 +41,7 @@ video {
   top: 100px;
   left: 10%;
 }
+
+.addTopBottomPadding {
+  padding: 10px 0;
+}
