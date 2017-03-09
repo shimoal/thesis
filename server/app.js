@@ -109,6 +109,12 @@ app.get('*.js', function (req, res, next) {
   next();
 });
 
+app.get('/search', function(req, res) {
+  console.log(req.param('term'));
+  var result = questionsController.search(req, res, req.param('term'));
+});
+
+
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
