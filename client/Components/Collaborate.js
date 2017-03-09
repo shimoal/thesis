@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ace from 'brace';
 import 'brace/mode/javascript';
-import 'brace/theme/github';
+import 'brace/theme/monokai';
 import Signup from './Auth/Signup';
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -59,7 +59,7 @@ export default class Collaborate extends React.Component {
     /*********** live coding *********/
     this.editor = ace.edit(this.refs.root);
     this.editor.getSession().setMode("ace/mode/javascript");
-    this.editor.setTheme("ace/theme/github");
+    this.editor.setTheme("ace/theme/monokai");
 
     socket.on('connect', function() {
       console.log(context.state.username, ' connected');
@@ -156,7 +156,7 @@ export default class Collaborate extends React.Component {
   updateResult(results) {
     var resultsArr = [];
     for (var i = 0; i < results.length; i++) {
-      resultsArr.push(<p key={i}>{results[i]}</p>);
+      resultsArr.push(<div class="codeResultFormat" key={i}>{results[i]}</div>);
     } 
     this.setState({applyingChanges: true});
     this.setState({results: resultsArr});
@@ -171,7 +171,7 @@ export default class Collaborate extends React.Component {
     this.stopCall(true);
   }
   handleExitRoom() {
-    this.setState({info: 'You left the room: ' + this.state.room_name});
+    this.setState({info: 'You left the room'});
     this.setState({room_name: ''});
   }
   /************************************/
@@ -257,53 +257,35 @@ export default class Collaborate extends React.Component {
         {
           this.state.success ? null :
           (
-            <div class="container">
-              <div className="col-md-4">
+            <div className="container">
+              <div className="col-sm-4 col-md-4 col-lg-4">
               </div>
-              <div className="col-md-4 text-center">
+              <div className="col-sm-4 col-md-4 col-lg-4 text-center">
                 <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
                   <p>&nbsp;</p>
                   <p>&nbsp;</p>
-                  <h2>Enter a room number</h2>
+                  <h3>Enter a room number</h3>
                   <div className="row">
-                    <div className="col-md-2">
+                    <div className="col-sm-1 col-md-2 col-lg-2">
+                    &nbsp;
                     </div>
-                    <div className="col-md-7">
+                    <div className="col-sm-9 col-md-7 col-lg-7">
                       <input id="roomName" className="form-control" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room number" />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-sm-2 col-md-3 col-lg-3">
                       <input type="submit" value="Join" className="btn btn-default" />
                     </div>
                   </div>
                 </form> 
               </div>
-              <div className="col-md-4">
+              <div className="col-sm-4 col-md-4 col-lg-4">
               </div>
             </div>
           )
         } 
 
-        <div className={this.state.success ? 'col-sm-2 col-md-2 sidebar' : 'invisible'}>
-          <div>
-            <h4>{this.state.info}</h4>
-            <button className={
-                      this.state.success ? 'btn btn-default' : 'invisible'} 
-                      onClick={this.exitRoom}>Stop Connection</button>
-            <div id="my-camera">
-              <video autoPlay muted="muted"></video>
-            </div>
 
-            <button onClick={this.startCall} >Start call</button>
-            <button onClick={this.stopCall.bind(this, true)} >Stop call</button>
-
-            <div id="peer-camera">
-              <video width="400" height="400" autoPlay></video>
-            </div>          
-          </div>
-        </div>
-        
-
-        <div className={this.state.success ? 'col-sm-8 col-sm-offset-4 col-md-10 col-md-offset-2 main' : 'invisible'}>
+        <div className={this.state.success ? 'col-sm-9 col-md-9 main' : 'invisible'}>
           
           <div className="panel panel-default">
             <div className="panel-body">
@@ -319,54 +301,60 @@ export default class Collaborate extends React.Component {
 
                 ) : null
               }
-
-              
-
-                
-                {
-                  (this.state.id && this.state.learner.name === this.state.username) ? 
-                    (
-                      <button className="btn btn-default">
-                      <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
-                      </button>
-
-                    ) : null
-                }
                 
             </div> 
           </div>
          
           <div className={this.state.success ? '' : 'invisible'}>
-            
-            
-
-              <div>
-                
-                  <h3>Live Coding</h3>
-                
-                
+              <div className="panel panel-default">
+                <div className="panel-heading">
+                  <h3 className="panel-title">Live Coding</h3>
+                </div>
+                <div className="panel-body">
                   
-                    <div className="btn-group" role="group" aria-label="...">
-                      <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
-                      <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
-                    </div>
-
-                    <div id="editor" ref="root" ></div>               
-                
+                  <div id="editor" ref="root"></div>
+                  
+                  <div className="btn-group addTopBottomPadding" role="group" aria-label="...">
+                    <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
+                    <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+                  </div>
+                  
+                  <div className="well result">{this.state.results}</div>
+                </div>
               </div>
-
-              <div>
-                
-                  <h3 className="panel-title">Result</h3>
-                
-                
-                  <div id="result">{this.state.results}</div>
-                
-              </div>
-
             </div>
-          
+        </div>
 
+        <div className={this.state.success ? 'col-sm-3 col-md-3' : 'invisible'}>
+          <div>
+            <p>{this.state.info}</p>
+            <div className={this.state.room_name ? '' : 'invisible'}>
+              <p>You are in room: {this.state.room_name}</p>
+            </div>
+            <button className={
+              this.state.success && this.state.room_name ? 'btn btn-danger btn-fill' : 'invisible'} 
+              onClick={this.exitRoom}>Stop Connection</button>
+            <p></p>
+            <button className="btn btn-default" onClick={this.startCall} >Start video call</button> &nbsp;&nbsp;
+            <button className="btn btn-default" onClick={this.stopCall.bind(this, true)} >Stop</button>
+            <p></p>
+            <div id="my-camera">
+              <video autoPlay muted="muted"></video>
+            </div>
+
+            <div id="peer-camera">
+              <video width="400" height="400" autoPlay></video>
+            </div>          
+            {
+              (this.state.id && this.state.learner.name === this.state.username) ? 
+                (
+                  <button className="btn btn-default">
+                    <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
+                  </button>
+
+                ) : null
+            }
+          </div>
         </div>
 
       </div>

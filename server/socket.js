@@ -24,11 +24,13 @@ io.on('connection', function(socket) {
         rooms[room_name].users.push(username);
         socket.join(room_name);
         io.in(room_name).emit('info', 'a new user has joined the room');// broadcast to everyone in the room
-        io.to(socket.id).emit('info', 'You joined the room');
+        // io.to(socket.id).emit('info', 'You joined the room');
+        io.to(socket.id).emit('info', '');
         io.to(socket.id).emit('setup-editor', rooms[room_name].code);
       } else {
         console.log('rooms', rooms);
-        io.to(socket.id).emit('info', 'You are already in the room');
+        // io.to(socket.id).emit('info', 'You are already in the room');
+        io.to(socket.id).emit('info', '');
       }
     } else {
       rooms[room_name] = {users:[], code:[]};
@@ -47,7 +49,7 @@ io.on('connection', function(socket) {
     }
     io.in(room_name).emit('info', 'the other user exit the room');
     socket.leave(room_name);
-    io.to(socket.id).emit('info', 'You left the room');
+    io.to(socket.id).emit('info', 'You left the room. Live coding is disabled');
     io.to(socket.id).emit('exit_room');
     console.log('exit_room', rooms);
   });
