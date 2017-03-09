@@ -254,6 +254,35 @@ export default class Collaborate extends React.Component {
 
       <div className="row">
 
+        {
+          this.state.success ? null :
+          (
+            <div class="container">
+              <div className="col-md-4">
+              </div>
+              <div className="col-md-4 text-center">
+                <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <h2>Enter a room number</h2>
+                  <div className="row">
+                    <div className="col-md-2">
+                    </div>
+                    <div className="col-md-7">
+                      <input id="roomName" className="form-control" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room number" />
+                    </div>
+                    <div className="col-md-3">
+                      <input type="submit" value="Join" className="btn btn-default" />
+                    </div>
+                  </div>
+                </form> 
+              </div>
+              <div className="col-md-4">
+              </div>
+            </div>
+          )
+        } 
+
         <div className={this.state.success ? 'col-sm-4 col-md-3 sidebar' : 'invisible'}>
           <div className="panel panel-default">
             <div id="my-camera">
@@ -266,81 +295,75 @@ export default class Collaborate extends React.Component {
             <div id="peer-camera">
               <video width="400" height="400" autoPlay></video>
             </div>          
-        </div>
-
+          </div>
         </div>
         
 
-        <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
-          
+        <div className={this.state.success ? 'col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main' : 'invisible'}>
+          <h4>{this.state.info}</h4>
+          <button className={
+                    this.state.success ? 'btn btn-default' : 'invisible'} 
+                    onClick={this.exitRoom}>Stop Connection</button>
 
-          <h2>Enter a room number</h2>
+          <div className="panel panel-default">
+            <div className="panel-body">
+              
 
-            <div className="panel panel-default">
-              <div className="panel-body">
-
-                {this.state.success ? 
+              {this.state.success ? 
                 (
                   
                   <div>
-                    <h4>{this.state.question.title}</h4>
+                    <h5>{this.state.question.title}</h5>
                     <p>{this.state.question.question}</p>
                   </div>
 
-                ) : null}
+                ) : null
+              }
 
-                <h4>{this.state.info}</h4>
+              
 
-                  {
-                    this.state.success ? null :
+                
+                {
+                  (this.state.id && this.state.learner.name === this.state.username) ? 
                     (
-                      <form className='col-5' id="joinRoomForm" onSubmit={this.handleJoinRoom}>
-                      
-                        <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room number" />
-                        <input type="submit" value="Join" className="btn btn-default" />
-                      </form> 
-                    )
-                  }   
+                      <button className="btn btn-default">
+                      <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
+                      </button>
 
-                  <button className={
-                    this.state.success ? 'btn btn-default' : 'invisible'} 
-                    onClick={this.exitRoom}>Stop Connection</button>
-                  
-                  {
-                    (this.state.id && this.state.learner.name === this.state.username) ? 
-                      (
-                      
-                        <button className="btn btn-default">
-                        <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
-                        </button>
-
-                      ) : null
-                  }
-                  
-              </div> 
-            </div>
+                    ) : null
+                }
+                
+            </div> 
+          </div>
          
           <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
-            <div className="panel-heading">
-              <h3 className="panel-title">Live Coding</h3>
-            </div>
             <div className="panel-body">
-              
-                <div className="btn-group" role="group" aria-label="...">
-                  <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
-                  <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+            
+
+              <div>
+                <div className="panel-heading">
+                  <h3 className="panel-title">Live Coding</h3>
                 </div>
+                <div className="panel-body">
+                  
+                    <div className="btn-group" role="group" aria-label="...">
+                      <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
+                      <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+                    </div>
 
-                <div id="editor" ref="root" ></div>               
-            </div>
-          </div>
+                    <div id="editor" ref="root" ></div>               
+                </div>
+              </div>
 
-          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
-            <div className="panel-heading">
-              <h3 className="panel-title">Result</h3>
-            </div>
-            <div className="panel-body">
-              <div id="result">{this.state.results}</div>
+              <div>
+                <div className="panel-footer">
+                  <h3 className="panel-title">Result</h3>
+                </div>
+                <div className="panel-body">
+                  <div id="result">{this.state.results}</div>
+                </div>
+              </div>
+
             </div>
           </div>
 
