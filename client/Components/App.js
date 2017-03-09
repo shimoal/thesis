@@ -179,13 +179,13 @@ export default class App extends React.Component {
       id_question: questionId,
     })
     .then(function(res) {
-      // console.log('========== Success saving collaborate session');
+      console.log('========== Success saving collaborate session');
       // setState to include learnerId, helperId, questionId, roomNumber?
       // redirect to collaborate?
     })
     .catch(function(err) {
       if (err) {
-        console.log('Error saving collaborate session');
+        console.log('Error saving collaborate session', err);
       }
     });
   }
