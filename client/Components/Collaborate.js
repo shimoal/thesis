@@ -28,9 +28,9 @@ export default class Collaborate extends React.Component {
       info: '',
       exit_room: '',
       applyingChanges: false,
-      username: ''      
+      username: '',
+      success: false  
     }
-    // this.handleCreateRoom = this.handleCreateRoom.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleJoinRoom = this.handleJoinRoom.bind(this);
     this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
@@ -115,8 +115,9 @@ export default class Collaborate extends React.Component {
           question: collaborate.data.Question,
           room_name: collaborate.data.room_number
         });
-        console.log('context state ---> ', context.state);
+        context.setState({success: true});
         socket.emit('join-room', context.state.username, context.state.room_name);
+        console.log('context state ---> ', context.state);
       })
       .catch(function(err) {
         context.setState({info: 'Wrong room number. There is no such room.'});
@@ -251,7 +252,8 @@ export default class Collaborate extends React.Component {
 
         <div className="col-sm-4 col-md-3 sidebar">
           videos here
-          <div id="my-camera">
+          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
+            <div id="my-camera">
             <video autoPlay muted="muted"></video>
           </div>
 
@@ -263,6 +265,7 @@ export default class Collaborate extends React.Component {
           </div>          
         </div>
 
+        </div>
         <div className="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
           <h2>Collaborate</h2>
 
@@ -272,19 +275,19 @@ export default class Collaborate extends React.Component {
 
                 <h4>{this.state.info}</h4>
 
-                  <form className="col-5" id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+                  <form className={this.state.success ? 'invisible' : 'col-5'} id="joinRoomForm" onSubmit={this.handleJoinRoom}>
                     <input id="roomName" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room name" />
-                    <input type="submit" value="Join" />
+                    <input type="submit" value="Join" className="btn btn-default" />
                   </form>    
 
-                  <button onClick={this.exitRoom}>Stop Connection</button>
-                  {(this.state.id && this.state.learner.name === this.state.username)? (<button><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
+                  <button className={this.state.success ? "btn btn-default" : 'invisible'} onClick={this.exitRoom}>Stop Connection</button>
+                  {(this.state.id && this.state.learner.name === this.state.username)? (<button className="btn btn-default"><Link to={'/review/'+this.state.questionId+'/'+this.state.id }
                   >Write Review</Link></button>) : null}
                   
               </div> 
             </div>
-
-          <div className="panel panel-default">
+         
+          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
             <div className="panel-heading">
               <h3 className="panel-title">Live Coding</h3>
             </div>
@@ -299,7 +302,7 @@ export default class Collaborate extends React.Component {
             </div>
           </div>
 
-          <div className="panel panel-default">
+          <div className={this.state.success ? 'panel panel-default' : 'invisible'}>
             <div className="panel-heading">
               <h3 className="panel-title">Result</h3>
             </div>
@@ -307,7 +310,7 @@ export default class Collaborate extends React.Component {
               <div id="result">{this.state.results}</div>
             </div>
           </div>
-          
+
         </div>
       </div>
 

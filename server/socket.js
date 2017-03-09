@@ -66,8 +66,8 @@ io.on('connection', function(socket) {
   });
 
   socket.on('editor-content-changes', function(room_name, val) {
-    rooms[room_name].code.push(val);
-    socket.broadcast.to(room_name).emit('editor-content-changes', val);
+      rooms[room_name].code.push(val);
+      socket.broadcast.to(room_name).emit('editor-content-changes', val);
   });
 
   socket.on('clear-editor', function(room_name) {
