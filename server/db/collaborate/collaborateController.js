@@ -1,7 +1,7 @@
 const db = require('../database.js'); //for raw sql query
 const Collaborate = require('./collaborateModel.js');
 const UserController = require('./../users/usersController.js');
-const Question = require('../questions/questionsModel.js');
+const Question = require('../questions/questionsUserSpecificModel.js');
 const User = require('./../users/usersModel.js');
 
 const controller = {
@@ -37,7 +37,7 @@ const controller = {
       include: [ {all: true} ]
     })
     .then(function(collaborate) {
-      console.log('eager loading in retrieving collaborate', collaborate.get());
+      // console.log('eager loading in retrieving collaborate', collaborate.get());
       res.json(collaborate.get());
     })
     .catch(function(err) {
@@ -53,7 +53,7 @@ const controller = {
       include: [{all: true}]
     })
     .then(function(collaborate) {
-      res.json(collaborate.get());
+      res.json(collaborate);
     })
     .catch(function(err) {
       console.log('err in retrieving collaborate by id: ', err.message);

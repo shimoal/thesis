@@ -82,22 +82,21 @@ const controller = {
       // include: [{model: Question}],
       // include: [{model: User}],
     }) .then(function(questions) {
-      console.log('========== Success getting claimed questions', questions[0].dataValues);
       var promises = questions.map(function(question) {
-        console.log('XXX each question.dataValues.claims', question);
+        // console.log('XXX each question.dataValues.claims', question);
         return {
-          'id': questions[0].dataValues.id_question,
-          'title': questions[0].dataValues.title,
-          'question': questions[0].dataValues.question,
-          'status': questions[0].dataValues.status,
+          'id': question.dataValues.id_question,
+          'title': question.dataValues.title,
+          'question': question.dataValues.question,
+          'status': question.dataValues.status,
           'deadline': '',
-          'createdAt': questions[0].dataValues.createdAt,
-          'learnerId': questions[0].dataValues.id_learner,
+          'createdAt': question.dataValues.createdAt,
+          'learnerId': question.dataValues.id_learner,
           
           //make helpers an array of helpers objects
           'helpers': [{
-            helperName: questions[0].dataValues.name,
-            helperId: questions[0].dataValues.id_helper,
+            helperName: question.dataValues.name,
+            helperId: question.dataValues.id_helper,
           }]
         };
       });

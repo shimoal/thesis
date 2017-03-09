@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../database.js');
 const User = require('../users/usersModel.js');
-const Question = require('../questions/questionsModel.js');
+const Question = require('../questions/questionsUserSpecificModel.js');
 const Claim = require('../claims/claimsModel.js');
 const Review = require('../reviews/reviewsModel.js');
 
