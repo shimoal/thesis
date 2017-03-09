@@ -79,9 +79,9 @@ const controller = {
           'question': question.dataValues.question,
           'status': question.dataValues.status,
           'deadline': '',
-          'createdAt': questions[0].dataValues.createdAt,
-          'learnerId': questions[0].dataValues.id_learner,
-          'helperId': questions[0].dataValues.id_helper,
+          'createdAt': question.dataValues.createdAt,
+          'learnerId': question.dataValues.id_learner,
+          'helperId': question.dataValues.id_helper, //this may an array in later iterations
           //make helpers an array of helpers objects
           'helpers': [{
             helperName: question.dataValues.name,
