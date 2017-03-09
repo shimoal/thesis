@@ -156,7 +156,7 @@ export default class Collaborate extends React.Component {
   updateResult(results) {
     var resultsArr = [];
     for (var i = 0; i < results.length; i++) {
-      resultsArr.push(<div class="codeResultFormat" key={i}>{results[i]}</div>);
+      resultsArr.push(<div key={i}>{results[i]}</div>);
     } 
     this.setState({applyingChanges: true});
     this.setState({results: resultsArr});
