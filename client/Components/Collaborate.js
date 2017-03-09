@@ -88,10 +88,10 @@ export default class Collaborate extends React.Component {
     socket.on('stopCall', this.stopCall);
   }
 
-	/************ live coding *************/
-	handleFormChange(e) {
-		this.setState({room_name: e.target.value});
-	}
+  /************ live coding *************/
+  handleFormChange(e) {
+    this.setState({room_name: e.target.value});
+  }
 
   handleJoinRoom(e) {
     var context = this;
