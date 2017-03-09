@@ -39,7 +39,7 @@ const controller = {
   },
   retrieve: function(req, res, next) {
     
-    console.log('XXX calling claimController retrieve with userId:', req.query.userId);
+    // console.log('XXX calling claimController retrieve with userId:', req.query.userId);
     var currentUserId = req.query.userId;
 
 

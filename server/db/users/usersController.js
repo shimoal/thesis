@@ -12,7 +12,7 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      console.log('user saved in database');
+      // console.log('user saved in database');
       return 'saved';
     })
     .catch(function(err) {
@@ -28,7 +28,7 @@ const controller = {
       }
     })
     .then(function(user) {
-      console.log('========== Successful retrieving Current User');
+      // console.log('========== Successful retrieving Current User');
       res.json(user);
     })
     .catch(function(err) {
@@ -44,7 +44,7 @@ const controller = {
       }
     })
     .then(function(user) {
-      console.log('========== Successful retrieving User Public Profile', user);
+      // console.log('========== Successful retrieving User Public Profile', user);
       res.json(user);
     })
     .catch(function(err) {
@@ -56,7 +56,7 @@ const controller = {
   retrieveAll: function(req, res, next) {
     User.findAll()
     .then(function(users) {
-      console.log('========== Successful retrieving All User');
+      // console.log('========== Successful retrieving All User');
       // console.log('users:', users);
       res.json(users);
     })
@@ -73,7 +73,7 @@ const controller = {
         $or: [{id: userId1}, {id: userId2}]
       }
     }).then(function(users) {
-      console.log('users from users sendMail:', users );
+      // console.log('users from users sendMail:', users );
       var emails = users.map(function(user) {
         return user.email;
       });
