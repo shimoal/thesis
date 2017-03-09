@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
   entry: ['./client/index.js'],
   output: {
@@ -20,5 +22,7 @@ module.exports = {
         loaders: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
-  }
+  },
+  plugins: [
+  ]
 };

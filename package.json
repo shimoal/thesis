@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "buildDev": "webpack -d --watch",
+    "build": "webpack -d --watch",
     "buildDeploy" : "webpack --optimize-minimize",
     "test": "mocha spec/**/*Spec.js",
     "dev": "nodemon server/server.js"
