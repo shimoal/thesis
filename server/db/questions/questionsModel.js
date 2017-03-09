@@ -23,7 +23,7 @@ const Question = db.define('questions', {
   },
   id_helper: { // to prevent helper to claim the same Q twice
     type: Sequelize.STRING
-  },
+  }
 });
 
 User.hasMany(Question);
