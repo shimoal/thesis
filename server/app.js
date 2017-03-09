@@ -102,6 +102,11 @@ app.get('/graph2/', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
 });
 
+app.get('*.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
 
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));

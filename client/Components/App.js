@@ -5,8 +5,8 @@ import NavLink from './NavLink';
 import style from '../sass/App.scss';
 
 //redux experiment
-import ContainerOne from '../containers/ContainerOne';
-import ContainerTwo from '../containers/ContainerTwo';
+// import ContainerOne from '../containers/ContainerOne';
+// import ContainerTwo from '../containers/ContainerTwo';
 
 export default class App extends React.Component {
 

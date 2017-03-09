@@ -5,8 +5,8 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "buildDev": "webpack -d --watch",
-    "buildDeploy" : "webpack --optimize-minimize",
+    "build": "webpack -d --watch",
+    "buildDeploy": "webpack",
     "test": "mocha spec/**/*Spec.js",
     "dev": "nodemon server/server.js"
   },
@@ -34,6 +34,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "chai-spies": "^0.7.1",
+    "compression-webpack-plugin": "^0.3.2",
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.1",
     "express": "^4.14.1",
