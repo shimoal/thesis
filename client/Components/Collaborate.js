@@ -95,7 +95,8 @@ export default class Collaborate extends React.Component {
 
   handleJoinRoom(e) {
     var context = this;
-    axios.get('/collaborate', {
+    console.log('room_name: ', context.state.room_name);
+    axios.get('/collaborates', {
         params: {
           room_number: context.state.room_name
         }
@@ -167,7 +168,9 @@ export default class Collaborate extends React.Component {
     this.setState({info: msg});
   }
   exitRoom() {
+    console.log('exit_room room_name', this.state.room_name);
     socket.emit('exit_room', this.state.username, this.state.room_name);
+    this.stopCall(true);
   }
   handleExitRoom() {
     this.setState({info: 'You left the room: '+this.state.room_name});
