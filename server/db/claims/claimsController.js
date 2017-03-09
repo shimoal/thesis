@@ -41,35 +41,12 @@ const controller = {
     
     console.log('XXX calling claimController retrieve with userId:', req.query.userId);
     var currentUserId = req.query.userId;
+    Question.hasMany(Claim, {foreignKey: 'id_question'});
+    Claim.belongsTo(User, {foreignKey: 'id_helper'});
 
-    // // Question.belongsTo(User, {foreignKey: 'userId'});
-    // Question.hasMany(Claim, {foreignKey: 'id_question'});
-    
-    // // Claim.belongsTo(Question, {foreignKey: 'id_question'});
-    // Claim.belongsTo(User, {foreignKey: 'id_helper'});
-    // // User.hasMany(Claim, {foreignKey: 'id_helper'});
-
-    // Question.findAll({ where: {userId: currentUserId}, status: 'claimed', 
-    //   // include: [{model: User, where: {id: 'id_helper'}, 
-    //   //   include: [{model: Question}]
-    //   // }]
-    //   include: [
-    //     {
-    //       model: Claim, 
-    //       include: [
-    //         User
-    //       ]  
-    //     }
-    //   ]
-
-    //   // include: [{model: Question}],
-    //   // include: [{model: User}],
     Question.findAll({ where: {
       $and: [{userId: currentUserId}, {status: 'claimed'}]
       }, 
-      // include: [{model: User, where: {id: 'id_helper'}, 
-      //   include: [{model: Question}]
-      // }]
       include: [
         {
           model: Claim, 
@@ -78,10 +55,8 @@ const controller = {
           ]  
         }
       ]
-
-      // include: [{model: Question}],
-      // include: [{model: User}],
     }) .then(function(questions) {
+      console.log('success getting questions:', questions);
       var promises = questions.map(function(question) {
         // console.log('XXX each question.dataValues.claims', question);
         return {
@@ -106,7 +81,7 @@ const controller = {
 
     })
     .catch(function(err) {
-      console.log('@_@ Error retrieving claimed questions');
+      console.log('@_@ Error retrieving claimed questions', err);
       return res.sendStatus(500);
     });
   },
