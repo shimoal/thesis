@@ -1,28 +1,30 @@
 import React from 'react';
 import axios from 'axios';
+import { browserHistory} from 'react-router';
 
 export default class HomepageSearchBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      questions: []
-    };
+    // this.state = {
+    //   searchResults: []
+    // };
     this.clickHandler = this.clickHandler.bind(this);
   }
 
   clickHandler() {
     var context = this;
-    console.log(document.getElementsByName('textbox1')[0].value);
-    axios.get('/search?term=' + document.getElementsByName('textbox1')[0].value) //+ document.getElementsByName("textbox1")[0].value)
-      .then(function(response) {
-        console.log('searchResp: ', response);
-        context.setState({questions: response.data.map(quest => (
-        quest.title + ': ' + quest.question)
-        )
-        });
-      // comp.setState({questions: response.data[0].title});
-      });
+    // console.log(document.getElementsByName('textbox1')[0].value);
+    this.props.getSearchResults(document.getElementsByName('textbox1')[0].value);
+    // axios.get('/search?term=' + document.getElementsByName('textbox1')[0].value) //+ document.getElementsByName("textbox1")[0].value)
+    //   .then(function(response) {
+    //     console.log('searchResp: ', response);
+    //     context.setState({searchResults: response.data.map(quest => (
+    //     quest.title + ': ' + quest.question)
+    //     )
+    //     });
+    //   // comp.setState({questions: response.data[0].title});
+    //   });
   }
 
   render() {
@@ -43,9 +45,6 @@ export default class HomepageSearchBar extends React.Component {
                   <button className="btn btn-default btn-fill" type="button" onClick={this.clickHandler}>Go!</button>
                 </span>
                 
-                {this.state.questions.map(question => (
-                    <p>{question}</p>
-                  ))}
 
               </div>
             </div>

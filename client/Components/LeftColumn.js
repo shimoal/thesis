@@ -10,9 +10,9 @@ export default class LeftColumn extends React.Component {
       profile_img: this.props.userCurrent.profile_img,
       id: this.props.userCurrent.id
     }
-    console.log(this.props);
-    console.log(this.props.userCurrent.profile_img);
-    console.log(this.state.profile_img);
+    // console.log(this.props);
+    // console.log(this.props.userCurrent.profile_img);
+    // console.log(this.state.profile_img);
   }
 
   componentDidMount() {

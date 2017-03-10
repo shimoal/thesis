@@ -13,6 +13,10 @@ let pc;
 let configuration = {
   'iceServers': [{
     'url': 'stun:stun.l.google.com:19302'
+  }, {
+    urls: 'turn:192.158.29.39:3478?transport=tcp',
+    username: '28224511:1379330808', 
+    credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA='
   }]
 };
 
@@ -166,9 +170,10 @@ export default class Collaborate extends React.Component {
     this.setState({info: msg});
   }
   exitRoom() {
+    this.stopCall(true);
     console.log('exit_room room_name', this.state.room_name);
     socket.emit('exit_room', this.state.username, this.state.room_name);
-    this.stopCall(true);
+
   }
   handleExitRoom() {
     this.setState({info: 'You left the room'});
@@ -178,6 +183,7 @@ export default class Collaborate extends React.Component {
 
   /********* video conference *********/
   start(isCaller) {
+    console.log('inside start');
     var room_name = this.state.room_name;
 
     //pc will be created for both caller and answerer
@@ -186,6 +192,7 @@ export default class Collaborate extends React.Component {
 
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
+      console.log('sending ice candidate:', evt);
       socket.emit('sendCandidate', room_name, (JSON.stringify({ 'candidate': evt.candidate })));
     };
 
@@ -195,31 +202,42 @@ export default class Collaborate extends React.Component {
     };
 
     // get the local stream, show it in the local video element and send it
-    navigator.getUserMedia({ 'audio': true, 'video': true }, function (stream) {
-      $('#my-camera video')[0].src = URL.createObjectURL(stream);
-      pc.addStream(stream);
-      if (isCaller){
-        pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
-      } else {
-        pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
-      }
+    navigator.getUserMedia(
+      { 'audio': true, 'video': true }, 
+      function (stream) {
+        $('#my-camera video')[0].src = URL.createObjectURL(stream);
+        pc.addStream(stream);
+        if (isCaller){
+          pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
+        } else {
+          pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
+        }
 
-      localStream = stream;
+        localStream = stream;
 
-      function gotDescription(desc) {
-        pc.setLocalDescription(desc);
-        socket.emit('sendDescription', room_name, JSON.stringify({ 'sdp': desc }));
-      }
+        function gotDescription(desc) {
+          pc.setLocalDescription(desc);
+          socket.emit('sendDescription', room_name, JSON.stringify({ 'sdp': desc }));
+        }
+    }, 
+    function(err) {
+      console.log('there was an error getting the getUserMedia');
+      console.log(err);
     });
   }
+
+
   startCall() {
     this.start(true);
   }
 
   stopCall(isStopper) {
+    console.log('inside stop call', isStopper);
     if (isStopper) {
+      console.log('emitting stopCall to ' + this.state.room_name);
       socket.emit('stopCall', this.state.room_name);
     }
+    console.log('removing stream', localStream);
     pc.removeStream(localStream);
     localStream.getVideoTracks()[0].stop();
   }
@@ -338,7 +356,7 @@ export default class Collaborate extends React.Component {
             <p>{this.state.info}</p>
             
             <p></p>
-            <button className="btn btn-success btn-fill" onClick={this.startCall} >Start video call</button> &nbsp;&nbsp;
+            <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Start video call</button> &nbsp;&nbsp;
             <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Stop</button>
             <p></p>
             <div id="my-camera">

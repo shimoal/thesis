@@ -60,11 +60,14 @@ const controller = {
     });
   },
 
-  search: function(req, res, term) {
+  search: function(req, res) {
+    console.log('inside search: ',req.query);
+    var term = req.query.term || '';
     db.query('SELECT * FROM questions WHERE question ~ ?', {replacements: [term], model: Question })
     .then(function(questions) {
+      console.log('inside query', questions);
       var promises = questions.map(function(question) {
-        console.log(question.title);
+        console.log('inside promises:', question);
         return {
           'id': question.id,
           'title':question.title,
@@ -74,6 +77,7 @@ const controller = {
           'userId':question.userId,
           'name': question.name,
           'createdAt': question.createdAt,
+          'helperId': question.id_helper
         }
       });
       Promise.all(promises).then(function() {
@@ -81,7 +85,7 @@ const controller = {
       })
     })
     .catch(function(err) {
-      console.log('@_@ Error getting questions');
+      console.log('@_@ Error getting questions', err);
       return res.status(500).send("Having trouble retrieving questions.");
     });
   },

@@ -44,7 +44,7 @@ export default class Home extends React.Component {
     console.log('Home component is rendered');
     return (
       <div className="row">
-      <HomepageSearchBar/>
+      <HomepageSearchBar getSearchResults={this.props.getSearchResults}/>
         <div className="col-sm-1 col-md-1"/>
         
         <div className="col-sm-10 col-md-10">

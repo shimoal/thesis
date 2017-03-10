@@ -19,9 +19,16 @@ passport.use(new GithubStrategy({
     callbackURL: githubCB
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log(profile.emails);
+    var email;
+    if (profile.emails) {
+      email = profile.emails[0];
+    } else {
+      email = 'hackerooxyz@gmail.com' //if the user doesn't have a github email...
+    }
     var user = {
       name: profile.displayName, 
-      email: profile.emails[0].value, 
+      email: email, 
       profile_img: profile._json.avatar_url, 
       github_id: profile.id
     };
