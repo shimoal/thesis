@@ -18,8 +18,16 @@
 
 video {
 	width: 200px;
-	height: 200px;
-	border: #000 1px solid;
+	height: 150px;
+	/*border: #000 1px solid;*/
+  background-image: url('/images/person-placeholder.jpg');
+
+  border:2px solid #ccc;
+  border-bottom:2px solid #bbb;
+  border-top:1px solid #ddd;
+  border-radius:10px;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
 }
 
 .jumbotron {
@@ -44,4 +52,8 @@ video {
 
 .addTopBottomPadding {
   padding: 10px 0;
+}
+
+.container {
+  height: 100%;
 }
