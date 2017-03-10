@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactStars from 'react-stars'
 import axios from 'axios'
-import QuestionItem from './QuestionItem';
 
 export default class ReviewPage extends React.Component {
 
@@ -77,11 +76,14 @@ export default class ReviewPage extends React.Component {
 	handleSubmit() {
 		var context = this;
 		var data = {
+			id_learner: context.state.learnerId,
+			id_helper: context.state.helperId,
 			id_collaborate: context.state.collaborateId,
 			content: context.state.content,
 			knowledge: context.state.knowledge,
 			helpfulness: context.state.helpfulness,
-			overall: context.state.overall
+			overall: context.state.overall,
+			experience: context.state.experience
 		};
 		console.log('data in submit: ', data);
 		axios.post('/review-save', data)
@@ -95,20 +97,20 @@ export default class ReviewPage extends React.Component {
 	}
 
 	handleCloseQuestion() {
-		this.setState({closeQuestion: true});
+		// this.setState({closeQuestion: true});
 
-		// var context = this;
-		// axios.post('/close-question', 
-		// 	{
-		// 		status: 'closed',
-		// 		id_question: context.state.questionId
-		// 	})
-		// .then(function() {
-		// 	this.setState({closeQuestion: true});
-		// })
-		// .catch(function(err) {
-		// 	console.log('error in closing question.', err.message);
-		// });
+		var context = this;
+		axios.post('/close-question', 
+			{
+				status: 'closed',
+				id_question: context.state.questionId
+			})
+		.then(function() {
+			this.setState({closeQuestion: true});
+		})
+		.catch(function(err) {
+			console.log('error in closing question.', err.message);
+		});
 	}
 
 	render() {
@@ -131,7 +133,7 @@ export default class ReviewPage extends React.Component {
 		                <td>Overall</td>
 		                <td>
 		                	<ReactStars
-		                		value={this.state.overall}
+		                	value={this.state.overall}
 		                    count={5}
 		                    half={false}
 		                    onChange={this.overallStar}/>
@@ -145,7 +147,7 @@ export default class ReviewPage extends React.Component {
 		                <td>Knowledge</td>
 		                <td>
 		                	<ReactStars
-		                		value={this.state.knowledge}
+		                	value={this.state.knowledge}
 		                    count={5}
 		                    half={false}
 		                    onChange={this.knowleageStar}/>
@@ -155,7 +157,7 @@ export default class ReviewPage extends React.Component {
 		                <td>Helpfulness</td>
 		                <td>
 		                	<ReactStars
-		                		value={this.state.helpfulness}
+		                	value={this.state.helpfulness}
 		                    count={5}
 		                    half={false}
 		                    onChange={this.helpfulnessStar}/>
@@ -165,7 +167,7 @@ export default class ReviewPage extends React.Component {
 		                <td>Overall Experience</td>
 		                <td>
 		                	<ReactStars
-		                		value={this.state.experience}
+		                	value={this.state.experience}
 		                    count={5}
 		                    half={false}
 		                    onChange={this.overallExpStar}/>

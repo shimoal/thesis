@@ -32,7 +32,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: { 
-    maxAge: 1000 * 60 * 60 * 5 
+    maxAge: 1000 * 60 * 60 * 6 
   } //cookie expires in 5 hours
 }));
 
@@ -88,12 +88,15 @@ app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
 
 app.post('/accept', collaborateCtrl.save);
-app.get('/collaborate', collaborateCtrl.retrieve);
+app.get('/collaborates', collaborateCtrl.retrieve);
 
 app.get('/collaborate-review', collaborateCtrl.retrieveById);
 app.post('/close-question', questionsCtrl.changeStatus);
 app.post('/review-save', reviewCtrl.save);
-app.get('/review', reviewCtrl.retrieveAllByUserName);
+app.get('/review-getAll', reviewCtrl.retrieveAll);
+app.get('/review-getByUserId/:id', reviewCtrl.retrieveAllByUserId);
+
+app.get('/search', questionsCtrl.search);
 
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
@@ -101,6 +104,14 @@ app.get('/review', reviewCtrl.retrieveAllByUserName);
 app.get('/graph2/', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../server/twitter/charts.html'));
 });
+
+app.get('*.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
+
+
 
 
 app.get('/*', function(req, res) {

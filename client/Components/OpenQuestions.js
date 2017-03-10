@@ -10,6 +10,7 @@ var OpenQuestions = React.createClass({
   renderQuestion: function(key) {
     // console.log('OpenQuestions', this.props.questions);
     // console.log('OpenQuestions', this.props.userCurrent.name);
+    // console.log('inside renderQuestion:', this.props.questions);
     if (!this.props.questions) {
       return (
         <div>

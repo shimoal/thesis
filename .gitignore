@@ -1,7 +1,11 @@
 node_modules/
 
 client/
-test/
+spec/
+oldPublicFiles/
+redux/
+
+.gitignore
 
 *.log
 

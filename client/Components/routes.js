@@ -4,12 +4,11 @@ import App from './App'
 import About from './About'
 import Home from './Home'
 import Dashboard from './Dashboard'
-// import DashboardPublic from './DashboardPublic'
 import Collaborate from './Collaborate'
-import CheckCollaborate from './CheckCollaborate'
 import ReviewPage from './ReviewPage'
 import Graph from './Graph'
 import PostQuestionPage from './PostQuestionPage'
+import SearchResults from './SearchResults'
 import Signup from './Auth/Signup'
 import Logout from './Auth/Logout'
 
@@ -25,6 +24,7 @@ module.exports = (
     <Route path="/collaborate" component={Collaborate}/>
     <Route path="/review/:questionId/:collaborateId" component={ReviewPage}/>
     <Route path="/graphs" component={Graph}/>
+    <Route path="/searchresults" component={SearchResults} />
     <Route path="/signup" component={Signup}/>
     <Route path="/logout" component={Logout}/>
 
