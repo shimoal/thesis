@@ -17,6 +17,7 @@ const controller = {
       res.status(200).send('Question successfully saved.');
     })
     .catch(function(err) {
+      console.log("error saving question:", err);
       res.status(500).send("Having trouble saving question.");
     });
   },
