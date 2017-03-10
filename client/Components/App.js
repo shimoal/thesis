@@ -135,7 +135,7 @@ export default class App extends React.Component {
     })
     .catch(function(err) {
       if (err) {
-        console.log('Error writing question to database');
+        console.log('Error writing question to database', err);
       }
     });  
   }

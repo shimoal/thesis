@@ -11,8 +11,8 @@ var PostQuestion = React.createClass({
      //1. take data from form
      var questionData = {
       userId: this.props.userCurrent.id,
-      title: this.refs.questionTitle.value,
-      question: this.refs.questionBody.value,
+      title: (this.refs.questionTitle.value).slice(0, 254),
+      question: (this.refs.questionBody.value).slice(0, 254),
       status: 'open',
       // deadline: ''
      }
@@ -56,12 +56,12 @@ var PostQuestion = React.createClass({
               <div className="form-group">
                 <h3>Post a question</h3>
                 <label>Title</label>
-                <input ref="questionTitle" type="text" className="form-control" placeholder="" required/>
+                <input ref="questionTitle" type="text" className="form-control" placeholder=""  required/>
               </div>
 
               <div className="form-group">
                 <label>Question</label>
-                <textarea ref="questionBody" className="form-control" rows="5" required></textarea>
+                <textarea ref="questionBody" className="form-control" rows="5"  required></textarea>
               </div>
 
               <p><button className="btn btn-primary btn-fill" type="submit" id="submit">Post</button> &nbsp;
