@@ -4,7 +4,6 @@ var path = require('path');
 var app = module.exports = express();
 
 //For sessions and authentication
-var questionsController = require('./db/questions/questionsController.js')
 var passport = require('passport');
 var session = require('express-session');
 var githubAuth = require('./auth/githubAuth');

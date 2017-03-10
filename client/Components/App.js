@@ -243,7 +243,7 @@ export default class App extends React.Component {
 
         <div className="row">
           <div className="col-sm-9 col-md-9">
-            &nbsp;
+            
           </div>
         </div>
       </div>
