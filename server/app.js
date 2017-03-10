@@ -4,6 +4,7 @@ var path = require('path');
 var app = module.exports = express();
 
 //For sessions and authentication
+var questionsController = require('./db/questions/questionsController.js')
 var passport = require('passport');
 var session = require('express-session');
 var githubAuth = require('./auth/githubAuth');
@@ -108,6 +109,12 @@ app.get('*.js', function (req, res, next) {
   res.set('Content-Encoding', 'gzip');
   next();
 });
+
+app.get('/search', function(req, res) {
+  console.log(req.param('term'));
+  var result = questionsController.search(req, res, req.param('term'));
+});
+
 
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));

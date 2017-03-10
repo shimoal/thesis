@@ -29,7 +29,7 @@ const controller = {
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
 
     //retrieve all questions
-    db.query('SELECT questions.id, title, question, status, deadline, questions."createdAt"::DATE, "userId", learners.name, claims.id_helper\
+    db.query('SELECT questions.id, title, question, status, deadline, questions."createdAt"::DATE, "userId", learners.name\
               FROM questions\
               INNER JOIN users AS learners ON learners.id = questions."userId"\
               LEFT OUTER JOIN claims ON claims.id_question = questions.id\
