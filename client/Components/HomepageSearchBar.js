@@ -1,54 +1,57 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
 
-export default class HomepageSearchBar extends React.Component{
+export default class HomepageSearchBar extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       questions: []
-    }
+    };
     this.clickHandler = this.clickHandler.bind(this);
   }
 
-  clickHandler(){
+  clickHandler() {
     var context = this;
-    console.log(document.getElementsByName("textbox1")[0].value);
-    axios.get('/search?term=' + document.getElementsByName("textbox1")[0].value) //+ document.getElementsByName("textbox1")[0].value)
-      .then(function(response){
-      console.log("searchResp: ", response);
-      context.setState({questions: response.data.map(quest => (
+    console.log(document.getElementsByName('textbox1')[0].value);
+    axios.get('/search?term=' + document.getElementsByName('textbox1')[0].value) //+ document.getElementsByName("textbox1")[0].value)
+      .then(function(response) {
+        console.log('searchResp: ', response);
+        context.setState({questions: response.data.map(quest => (
         quest.title + ': ' + quest.question)
         )
+        });
+      // comp.setState({questions: response.data[0].title});
       });
-     // comp.setState({questions: response.data[0].title});
-    })
   }
 
   render() {
     return (
-      <div className="jumbotron">
-        <div className="container">
+      <div>
+        <div className="jumbotron heroImage">
+        </div>
+        
+        <div className="container heroText">
           <div className="row">
-            <div className="col-md-1"/>
-            <div className="col-md-10 main">
-              <h1>Lend a Hacking Hand</h1>
-              <p>Help those who are in hacking needs</p>
+            <div className="col-md-12">
+              <h2><strong>Get Live Programming Help</strong></h2>
+              <h4>... and help those with programming questions</h4>
               <div className="input-group">
-                <input type="text" className="form-control" style={{marginBottom: 20 + 'px'}} name="textbox1" placeholder="Search for questions to answer..."/>
+                
+                <input type="text" className="form-control" name="textbox1" placeholder="Search for questions to answer..."/>
                 <span className="input-group-btn">
-                  <button className="btn btn-default" type="button" onClick={this.clickHandler}>Go!</button>
+                  <button className="btn btn-default btn-fill" type="button" onClick={this.clickHandler}>Go!</button>
                 </span>
-              </div>
-              <div>
-              {this.state.questions.map(question => (
-                  <p>{question}</p>
-                ))}
+                
+                {this.state.questions.map(question => (
+                    <p>{question}</p>
+                  ))}
+
               </div>
             </div>
-          </div>
-        </div> 
+          </div> 
+        </div>
       </div>
     );
   }
-};
+}
