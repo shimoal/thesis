@@ -1,37 +1,56 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+import { browserHistory} from 'react-router';
 
-export default React.createClass({
+export default class HomepageSearchBar extends React.Component {
 
-  clickHandler(){
-    console.log(document.getElementsByName("textbox1")[0].value);
-    axios.get('/search?term=' + document.getElementsByName("textbox1")[0].value) //+ document.getElementsByName("textbox1")[0].value)
-      .then(function(response){
-      console.log("searchResp: ", response);
-     // comp.setState({questions: response.data[0].title});
-    })
-  },
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   searchResults: []
+    // };
+    this.clickHandler = this.clickHandler.bind(this);
+  }
+
+  clickHandler() {
+    var context = this;
+    // console.log(document.getElementsByName('textbox1')[0].value);
+    this.props.getSearchResults(document.getElementsByName('textbox1')[0].value);
+    // axios.get('/search?term=' + document.getElementsByName('textbox1')[0].value) //+ document.getElementsByName("textbox1")[0].value)
+    //   .then(function(response) {
+    //     console.log('searchResp: ', response);
+    //     context.setState({searchResults: response.data.map(quest => (
+    //     quest.title + ': ' + quest.question)
+    //     )
+    //     });
+    //   // comp.setState({questions: response.data[0].title});
+    //   });
+  }
 
   render() {
     return (
-      <div><div className="jumbotron heroImage">
-      </div>
-      
-      <div className="container heroText">
-        <div className="row">
-          <div className="col-md-12 tim-typo">
-            <h2><strong>Get Live Programming Help</strong></h2>
-            <h4>... and help those with programming questions</h4>
-            <div className="input-group">
-              <input type="text" className="form-control" placeholder="Search for questions"/>
-              <span className="input-group-btn">
-                <button className="btn btn-default btn-fill" type="button">Go!</button>
-              </span>
-            </div>
-          </div>
-        </div> 
-      </div>
+      <div>
+        <div className="jumbotron heroImage">
+        </div>
+        
+        <div className="container heroText">
+          <div className="row">
+            <div className="col-md-12">
+              <h2><strong>Get Live Programming Help</strong></h2>
+              <h4>... and help those with programming questions</h4>
+              <div className="input-group">
+                
+                <input type="text" className="form-control" name="textbox1" placeholder="Search for questions to answer..."/>
+                <span className="input-group-btn">
+                  <button className="btn btn-default btn-fill" type="button" onClick={this.clickHandler}>Go!</button>
+                </span>
+                
 
+              </div>
+            </div>
+          </div> 
+        </div>
       </div>
     );
   }
-});
+}

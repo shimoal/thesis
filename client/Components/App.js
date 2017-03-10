@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexLink } from 'react-router';
+import { browserHistory, IndexLink } from 'react-router';
 import axios from 'axios';
 import NavLink from './NavLink';
 import style from '../sass/App.scss';
@@ -21,11 +21,11 @@ export default class App extends React.Component {
       userPublicQuestions: {},
       questionsClaimed: {},
       currentUserQuestions: {},
-      allUsers: {},
+      allUsers: [],
       userPublicProfile: {},
-      user: {}
+      user: {},
+      searchResults: {}
     };
-
     this.getUserQuestions = this.getUserQuestions.bind(this);
     this.getUserClaimedQuestions = this.getUserClaimedQuestions.bind(this);
   }
@@ -207,6 +207,21 @@ export default class App extends React.Component {
     });
   }
 
+  getSearchResults(searchTerm) {
+    var context = this;
+    console.log('inside getSearchResults: ', searchTerm);
+    axios.get('/search', {params: {term: searchTerm}}) //+ document.getElementsByName("textbox1")[0].value)
+          .then(function(response) {
+            // console.log('searchResp: ', response);
+            context.setState({searchResults: response.data});
+            browserHistory.push('/searchresults');
+          // comp.setState({questions: response.data[0].title});
+          })
+          .catch(function(err) {
+            console.log('Error getting search results:', err);
+          });
+  };
+
   removeUser() {
     this.setState({questionsClaimed: {}});
     this.setState({currentUserQuestions: {}});
@@ -225,16 +240,10 @@ export default class App extends React.Component {
         acceptHelper: this.acceptHelper.bind(this),
         getUserPublicProfile: this.getUserPublicProfile.bind(this),
         getUserPublicQuestions: this.getUserPublicQuestions.bind(this),
-        removeUser: this.removeUser.bind(this)
+        removeUser: this.removeUser.bind(this),
+        getSearchResults: this.getSearchResults.bind(this)
       })
     );
-    
-    /*
-    <h3>App.js state</h3>
-    <pre>
-      {JSON.stringify(this.state, null, 2)}
-    </pre>
-    */
     
     return (
       <div>
@@ -242,11 +251,6 @@ export default class App extends React.Component {
         <NavLink userData={this.state}/>
         {childrenWithProps}
 
-        <div className="row">
-          <div className="col-sm-9 col-md-9 main">
-            &nbsp;
-          </div>
-        </div>
       </div>
     );
   }

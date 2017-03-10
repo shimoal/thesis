@@ -88,12 +88,15 @@ app.post('/claim', claimsCtrl.save);
 app.get('/claim', claimsCtrl.retrieve);
 
 app.post('/accept', collaborateCtrl.save);
-app.get('/collaborate', collaborateCtrl.retrieve);
+app.get('/collaborates', collaborateCtrl.retrieve);
 
 app.get('/collaborate-review', collaborateCtrl.retrieveById);
 app.post('/close-question', questionsCtrl.changeStatus);
 app.post('/review-save', reviewCtrl.save);
-app.get('/review', reviewCtrl.retrieveAllByUserName);
+app.get('/review-getAll', reviewCtrl.retrieveAll);
+app.get('/review-getByUserId/:id', reviewCtrl.retrieveAllByUserId);
+
+app.get('/search', questionsCtrl.search);
 
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
@@ -107,6 +110,9 @@ app.get('*.js', function (req, res, next) {
   res.set('Content-Encoding', 'gzip');
   next();
 });
+
+
+
 
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));

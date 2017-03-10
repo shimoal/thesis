@@ -9,7 +9,7 @@ const controller = {
     //create room name from question id and current time in millisecond
     var d = new Date();
     var roomNumber = req.body.id_question + d.getTime().toString();
-    UserController.sendMail(req.body.id_learner, req.body.id_helper, roomNumber);
+    console.log('id_helper ----------> ', req.body.id_helper);
     
     Collaborate.create({
       id_learner: req.body.id_learner,
@@ -19,8 +19,8 @@ const controller = {
     })
     .then(function(task) {
       task.save();
-      console.log('========== Success saving collaborate session, room_number:', roomNumber);
-      return res.sendStatus(200);
+      // console.log('========== Success saving collaborate session, room_number:', roomNumber);
+      UserController.sendMail(req.body.id_learner, req.body.id_helper, roomNumber);
     })
     .catch(function(err) {
       console.log('Error saving collaborate session', err.message);

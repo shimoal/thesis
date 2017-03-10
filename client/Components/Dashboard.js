@@ -5,6 +5,8 @@ import RightColumn from './RightColumn';
 import RightColumnPublic from './RightColumnPublic';
 import Signup from './Auth/Signup';
 import { browserHistory } from 'react-router';
+import axios from 'axios'
+
 
 export default React.createClass({
 
@@ -15,9 +17,9 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    console.log('Dashboard will mount');
+    // console.log('Dashboard will mount');
     if (this.props.params.userId !== undefined) { // if public (check React Route params)
-      console.log('Current public profile id', this.props.params.userId);
+      // console.log('Current public profile id', this.props.params.userId);
       this.props.getUserPublicProfile(this.props.params.userId);
       this.props.getUserPublicQuestions(this.props.params.userId);
     }
@@ -26,6 +28,7 @@ export default React.createClass({
   componentDidMount() {
     if (this.props.userData.user.id !== undefined) {
       var userId = this.props.userData.user.id;
+      console.log(userId);
       console.log('userId:', this.props.userData);
 
       var data = {
