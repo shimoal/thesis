@@ -32,8 +32,6 @@ export default class App extends React.Component {
 
   componentWillMount() {
     //we can't call 'this' within axios, so need to hold it in 'context'
-    // var context = this;
-
     //this will set the user if there is a current session but no user
     if (!this.state.user.name) {
       //Check Authentication Session
@@ -60,17 +58,10 @@ export default class App extends React.Component {
       });
     } // ------- End of check authentication session
 
+    
     //Get all questions
-    axios.get('/question')
-    .then(response => {
-      // console.log('========== Success getting All Questions from DB');
-      //response.data object is in an array, so need to get element 0
-      // console.log('questions:', response);
-      this.setState({questions: response.data});
-    })
-    .catch(err => {
-      console.log('Error getting All Questions from DB');
-    }); // -------- End of get all questions
+    this.getAllQuestions();
+
 
     //Get all users
     axios.get('/users')
@@ -95,13 +86,26 @@ export default class App extends React.Component {
 
   }
 
-  getUserQuestions(data) {
-    //var context = this;
+  getAllQuestions() {
+    axios.get('/question')
+    .then(response => {
+      // console.log('========== Success getting All Questions from DB');
+      //response.data object is in an array, so need to get element 0
+      // console.log('questions:', response);
+      this.setState({questions: response.data});
+    })
+    .catch(err => {
+      console.log('Error getting All Questions from DB');
+    }); // -------- End of get all questions
+  }
 
+  getUserQuestions(data) {
     //do ajax call to get current user questions
+    console.log('data is ', data);
     axios.get('/question-for-one-user', { params: data })
     .then(response => {
       // console.log('========== Success getting Current User\'s Questions data from DB');
+      console.log('currentUserQuestions is', response.data);
       this.setState({currentUserQuestions: response.data});
     })
     .catch(err => {
@@ -111,7 +115,6 @@ export default class App extends React.Component {
   }
 
   getUserClaimedQuestions(data) {
-    // var context = this;
         //do ajax call to get claimed questions
     axios.get('/claim', { params: data })
     .then(response => {
@@ -130,17 +133,12 @@ export default class App extends React.Component {
     .then(res => {
       // console.log('========== Success writing question to database');
       // this.setState({questions: questionData});
-      
+      console.log('questionData is', questionData);
+      //Get poster's questions
+      this.getUserQuestions({userId: questionData.userId});
 
       //Get all questions
-      axios.get('/question')
-      .then(res => {
-        this.setState({questions: res.data});
-        console.log('inside addQuestion success post', this.state.questions);
-      })
-      .catch(err => {
-        console.log('Error getting All Questions from DB');
-      }); // -------- End of get all questions
+      this.getAllQuestions();
 
 
     })
@@ -152,7 +150,6 @@ export default class App extends React.Component {
   }
 
   getUserPublicQuestions(userId) {
-    // var context = this;
     //get user's questions
     var data = {
       userId: userId,
@@ -202,7 +199,6 @@ export default class App extends React.Component {
   }
 
   getUserPublicProfile(userId) {
-    // var context = this;
     var data = {
       userId: userId,
     };
@@ -219,7 +215,6 @@ export default class App extends React.Component {
   }
 
   getSearchResults(searchTerm) {
-    // var context = this;
     console.log('inside getSearchResults: ', searchTerm);
     axios.get('/search', {params: {term: searchTerm}}) //+ document.getElementsByName("textbox1")[0].value)
           .then(response => {

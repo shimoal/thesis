@@ -95,7 +95,7 @@ const controller = {
   retrieveForOneUser: function(req, res, next) {
     var currentUserId = req.query.userId;
     // console.log('Current User Id to Retrieve just that users question', currentUserId);
-    console.log('inside restrieve for one user:', req.query);
+    console.log('inside restrieve2 for one user:', currentUserId);
     QuestionOneUser.findAll({
       where: { userId: currentUserId, status: 'open', },
       order: [['id', 'DESC']],
