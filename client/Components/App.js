@@ -96,7 +96,7 @@ export default class App extends React.Component {
     })
     .catch(err => {
       console.log('Error getting All Questions from DB');
-    }); // -------- End of get all questions
+    });
   }
 
   getUserQuestions(data) {
@@ -132,8 +132,7 @@ export default class App extends React.Component {
     axios.post('/question', questionData)
     .then(res => {
       // console.log('========== Success writing question to database');
-      // this.setState({questions: questionData});
-      console.log('questionData is', questionData);
+      
       //Get poster's questions
       this.getUserQuestions({userId: questionData.userId});
 
