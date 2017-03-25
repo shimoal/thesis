@@ -17,9 +17,9 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    console.log('Dashboard will mount');
+    // console.log('Dashboard will mount');
     if (this.props.params.userId !== undefined) { // if public (check React Route params)
-      console.log('Current public profile id', this.props.params.userId);
+      // console.log('Current public profile id', this.props.params.userId);
       this.props.getUserPublicProfile(this.props.params.userId);
       this.props.getUserPublicQuestions(this.props.params.userId);
     }

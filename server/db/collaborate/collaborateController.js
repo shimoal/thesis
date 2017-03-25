@@ -21,7 +21,6 @@ const controller = {
       task.save();
       // console.log('========== Success saving collaborate session, room_number:', roomNumber);
       UserController.sendMail(req.body.id_learner, req.body.id_helper, roomNumber);
-      return res.status(200);
     })
     .catch(function(err) {
       console.log('Error saving collaborate session', err.message);

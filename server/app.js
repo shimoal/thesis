@@ -32,7 +32,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: { 
-    maxAge: 1000 * 60 * 60 * 5 
+    maxAge: 1000 * 60 * 60 * 6 
   } //cookie expires in 5 hours
 }));
 
@@ -96,6 +96,8 @@ app.post('/review-save', reviewCtrl.save);
 app.get('/review-getAll', reviewCtrl.retrieveAll);
 app.get('/review-getByUserId/:id', reviewCtrl.retrieveAllByUserId);
 
+app.get('/search', questionsCtrl.search);
+
 /****** coding trends routes ******/
 //https://nodejs.org/docs/latest/api/path.html#path_path_resolve_paths
 //The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
@@ -109,10 +111,7 @@ app.get('*.js', function (req, res, next) {
   next();
 });
 
-app.get('/search', function(req, res) {
-  console.log(req.param('term'));
-  var result = questionsController.search(req, res, req.param('term'));
-});
+
 
 
 app.get('/*', function(req, res) {
