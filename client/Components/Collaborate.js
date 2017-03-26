@@ -66,9 +66,6 @@ export default class Collaborate extends React.Component {
     this.editor.getSession().setMode('ace/mode/javascript');
     this.editor.setTheme('ace/theme/monokai');
     this.editor.setShowPrintMargin(false);
-    this.editor.setOptions({
-      fontSize: '11pt',
-    });
 
     socket.on('connect', function() {
       console.log(context.state.username, ' connected');
