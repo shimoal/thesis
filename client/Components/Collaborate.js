@@ -33,7 +33,8 @@ export default class Collaborate extends React.Component {
       exit_room: '',
       applyingChanges: false,
       username: '',
-      success: false //check if user successfully join a room
+      success: false, //check if user successfully join a room
+      video: 'off',
     };
     this.handleFormChange = this.handleFormChange.bind(this);
     this.handleJoinRoom = this.handleJoinRoom.bind(this);
@@ -62,8 +63,12 @@ export default class Collaborate extends React.Component {
     var context = this;   
     /*********** live coding *********/
     this.editor = ace.edit(this.refs.root);
-    this.editor.getSession().setMode("ace/mode/javascript");
-    this.editor.setTheme("ace/theme/monokai");
+    this.editor.getSession().setMode('ace/mode/javascript');
+    this.editor.setTheme('ace/theme/monokai');
+    this.editor.setShowPrintMargin(false);
+    this.editor.setOptions({
+      fontSize: '11pt',
+    });
 
     socket.on('connect', function() {
       console.log(context.state.username, ' connected');
@@ -85,7 +90,7 @@ export default class Collaborate extends React.Component {
     /**************************************/
 
 		/*********** video conference *********/
-		socket.on('description', this.handleEvent);
+    socket.on('description', this.handleEvent);
 		
     socket.on('candidate', this.handleEvent);
 
@@ -207,7 +212,7 @@ export default class Collaborate extends React.Component {
       function (stream) {
         $('#my-camera video')[0].src = URL.createObjectURL(stream);
         pc.addStream(stream);
-        if (isCaller){
+        if (isCaller) {
           pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
         } else {
           pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
@@ -219,7 +224,7 @@ export default class Collaborate extends React.Component {
           pc.setLocalDescription(desc);
           socket.emit('sendDescription', room_name, JSON.stringify({ 'sdp': desc }));
         }
-    }, 
+      }, 
     function(err) {
       console.log('there was an error getting the getUserMedia');
       console.log(err);
@@ -229,6 +234,7 @@ export default class Collaborate extends React.Component {
 
   startCall() {
     this.start(true);
+    this.setState({video: 'on'});
   }
 
   stopCall(isStopper) {
@@ -238,8 +244,11 @@ export default class Collaborate extends React.Component {
       socket.emit('stopCall', this.state.room_name);
     }
     console.log('removing stream', localStream);
-    pc.removeStream(localStream);
-    localStream.getVideoTracks()[0].stop();
+    if (pc !== undefined) { //To handle stop connection (leave the room) without video connection being initiated
+      pc.removeStream(localStream);  
+      localStream.getVideoTracks()[0].stop();
+      this.setState({video: 'off'});
+    }
   }
 
   handleEvent(evt) {
@@ -249,9 +258,9 @@ export default class Collaborate extends React.Component {
 
     var event = JSON.parse(evt);
     if (event.sdp) {
-       var description = (JSON.parse(evt)).sdp;
+      var description = (JSON.parse(evt)).sdp;
       if (!!description) {
-         pc.setRemoteDescription(new RTCSessionDescription(description));      
+        pc.setRemoteDescription(new RTCSessionDescription(description));      
       }
   
     } else if (event.candidate) {
@@ -262,7 +271,7 @@ export default class Collaborate extends React.Component {
 
     }
 
-	}
+  }
 
 	/************************************/	  
 
@@ -356,8 +365,10 @@ export default class Collaborate extends React.Component {
             <p>{this.state.info}</p>
             
             <p></p>
-            <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Start video call</button> &nbsp;&nbsp;
-            <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Stop</button>
+            { this.state.video === 'off' ? 
+              <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Turn On Camera</button> 
+              : <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Turn Off Camera</button> 
+            }
             <p></p>
             <div id="my-camera">
               <video autoPlay muted="muted"></video>
