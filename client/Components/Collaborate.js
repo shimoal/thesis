@@ -126,7 +126,7 @@ export default class Collaborate extends React.Component {
       console.log('context state ---> ', context.state);
     })
     .catch(function(err) {
-      context.setState({info: 'Wrong room number. There is no such room.'});
+      context.setState({info: 'Sorry, the room number does not exist!'});
     });
     e.preventDefault();
   }
@@ -301,6 +301,10 @@ export default class Collaborate extends React.Component {
                     </div>
                     <div className="col-sm-2 col-md-3 col-lg-3">
                       <input type="submit" value="Join" className="btn btn-success btn-fill" />
+                    </div>
+                    <div>
+                      <p>&nbsp;</p>
+                      <p>{this.state.info}</p>
                     </div>
                   </div>
                 </form> 
