@@ -278,121 +278,121 @@ export default class Collaborate extends React.Component {
 
     return (
 
+
       <div className="row">
+        <h1>Welcome to our demo!</h1>
+      </div>
+      //   {
+      //     this.state.success ? null :
+      //     (
+      //       <div className="container">
+      //         <div className="col-sm-4 col-md-4 col-lg-4">
+      //         </div>
+      //         <div className="col-sm-4 col-md-4 col-lg-4 text-center">
+      //           <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
+      //             <p>&nbsp;</p>
+      //             <p>&nbsp;</p>
+      //             <h3>Enter a room number</h3>
+      //             <div className="row">
+      //               <div className="col-sm-1 col-md-2 col-lg-2">
+      //               &nbsp;
+      //               </div>
+      //               <div className="col-sm-9 col-md-7 col-lg-7">
+      //                 <input id="roomName" className="form-control" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room number" />
+      //               </div>
+      //               <div className="col-sm-2 col-md-3 col-lg-3">
+      //                 <input type="submit" value="Join" className="btn btn-success btn-fill" />
+      //               </div>
+      //               <div>
+      //                 <p>&nbsp;</p>
+      //                 <p>{this.state.info}</p>
+      //               </div>
+      //             </div>
+      //           </form> 
+      //         </div>
+      //         <div className="col-sm-4 col-md-4 col-lg-4">
+      //         </div>
+      //       </div>
+      //     )
+      //   } 
 
-        {
-          this.state.success ? null :
-          (
-            <div className="container">
-              <div className="col-sm-4 col-md-4 col-lg-4">
-              </div>
-              <div className="col-sm-4 col-md-4 col-lg-4 text-center">
-                <form id="joinRoomForm" onSubmit={this.handleJoinRoom}>
-                  <p>&nbsp;</p>
-                  <p>&nbsp;</p>
-                  <h3>Enter a room number</h3>
-                  <div className="row">
-                    <div className="col-sm-1 col-md-2 col-lg-2">
-                    &nbsp;
-                    </div>
-                    <div className="col-sm-9 col-md-7 col-lg-7">
-                      <input id="roomName" className="form-control" onChange={this.handleFormChange} type="text" name="roomName" placeholder="room number" />
-                    </div>
-                    <div className="col-sm-2 col-md-3 col-lg-3">
-                      <input type="submit" value="Join" className="btn btn-success btn-fill" />
-                    </div>
-                    <div>
-                      <p>&nbsp;</p>
-                      <p>{this.state.info}</p>
-                    </div>
-                  </div>
-                </form> 
-              </div>
-              <div className="col-sm-4 col-md-4 col-lg-4">
-              </div>
-            </div>
-          )
-        } 
 
-
-        <div className={this.state.success ? 'col-sm-9 col-md-9 main' : 'invisible'}>
+      //   <div className={this.state.success ? 'col-sm-9 col-md-9 main' : 'invisible'}>
           
-          <div className="panel panel-default">
-            <div className="panel-body">
+      //     <div className="panel panel-default">
+      //       <div className="panel-body">
               
 
-              {this.state.success ? 
-                (
+      //         {this.state.success ? 
+      //           (
                   
-                  <div>
-                    <h5>{this.state.question.title}</h5>
-                    <p>{this.state.question.question}</p>
-                  </div>
+      //             <div>
+      //               <h5>{this.state.question.title}</h5>
+      //               <p>{this.state.question.question}</p>
+      //             </div>
 
-                ) : null
-              }
+      //           ) : null
+      //         }
                 
-            </div> 
-          </div>
+      //       </div> 
+      //     </div>
          
-          <div className={this.state.success ? '' : 'invisible'}>
-              <div className="panel panel-default">
-                <div className="panel-heading">
-                  <h3 className="panel-title">Live Coding</h3>
-                </div>
-                <div className="panel-body">
+      //     <div className={this.state.success ? '' : 'invisible'}>
+      //         <div className="panel panel-default">
+      //           <div className="panel-heading">
+      //             <h3 className="panel-title">Live Coding</h3>
+      //           </div>
+      //           <div className="panel-body">
                   
-                  <div id="editor" ref="root"></div>
+      //             <div id="editor" ref="root"></div>
                   
-                  <div className="btn-group addTopBottomPadding" role="group" aria-label="...">
-                    <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
-                    <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
-                  </div>
+      //             <div className="btn-group addTopBottomPadding" role="group" aria-label="...">
+      //               <button onClick={this.handleReset} type="button" id="reset" className="btn btn-default">Clear</button>
+      //               <button onClick={this.handleRunCode} type="button" id="run" className="btn btn-default">Run</button>
+      //             </div>
                   
-                  <div className="well result">{this.state.results}</div>
-                </div>
-              </div>
-            </div>
-        </div>
+      //             <div className="well result">{this.state.results}</div>
+      //           </div>
+      //         </div>
+      //       </div>
+      //   </div>
 
-        <div className={this.state.success ? 'col-sm-3 col-md-3' : 'invisible'}>
-          <div className="addTopBottomPadding">
+      //   <div className={this.state.success ? 'col-sm-3 col-md-3' : 'invisible'}>
+      //     <div className="addTopBottomPadding">
             
-            <button className={
-              this.state.success && this.state.room_name ? 'btn btn-danger' : 'invisible'} 
-              onClick={this.exitRoom}>Stop Connection</button>
-            <div className={this.state.room_name ? 'addTopBottomPadding' : 'invisible'}>
-              <p>You are in room: {this.state.room_name}</p>
-            </div>
+      //       <button className={
+      //         this.state.success && this.state.room_name ? 'btn btn-danger' : 'invisible'} 
+      //         onClick={this.exitRoom}>Stop Connection</button>
+      //       <div className={this.state.room_name ? 'addTopBottomPadding' : 'invisible'}>
+      //         <p>You are in room: {this.state.room_name}</p>
+      //       </div>
 
-            <p>{this.state.info}</p>
+      //       <p>{this.state.info}</p>
             
-            <p></p>
-            { this.state.video === 'off' ? 
-              <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Turn On Camera</button> 
-              : <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Turn Off Camera</button> 
-            }
-            <p></p>
-            <div id="my-camera">
-              <video autoPlay muted="muted"></video>
-            </div>
+      //       <p></p>
+      //       { this.state.video === 'off' ? 
+      //         <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Turn On Camera</button> 
+      //         : <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Turn Off Camera</button> 
+      //       }
+      //       <p></p>
+      //       <div id="my-camera">
+      //         <video autoPlay muted="muted"></video>
+      //       </div>
 
-            <div id="peer-camera">
-              <video width="400" height="400" autoPlay></video>
-            </div>          
-            {
-              (this.state.id && this.state.learner.name === this.state.username) ? 
-                (
-                  <button className="btn btn-success">
-                    <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
-                  </button>
+      //       <div id="peer-camera">
+      //         <video width="400" height="400" autoPlay></video>
+      //       </div>          
+      //       {
+      //         (this.state.id && this.state.learner.name === this.state.username) ? 
+      //           (
+      //             <button className="btn btn-success">
+      //               <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
+      //             </button>
 
-                ) : null
-            }
-          </div>
-        </div>
-
-      </div>
+      //           ) : null
+      //       }
+      //     </div>
+      //   </div>
 
     );
   }
