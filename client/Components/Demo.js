@@ -9,16 +9,6 @@ import { Link } from 'react-router';
 
 
 let socket = io();
-let pc;
-let configuration = {
-  'iceServers': [{
-    'url': 'stun:stun.l.google.com:19302'
-  }, {
-    urls: 'turn:192.158.29.39:3478?transport=tcp',
-    username: '28224511:1379330808', 
-    credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA='
-  }]
-};
 
 let localStream;
 
@@ -26,8 +16,9 @@ export default class Collaborate extends React.Component {
 
   constructor(props) {
     super(props);
+    var d = new Date();
     this.state = {
-      room_name: 'Demo',
+      room_name: 'Demo' + d.getTime().toString(),
       code: '',
       info: '',
       exit_room: '',
@@ -36,27 +27,26 @@ export default class Collaborate extends React.Component {
       success: true, //automatically set to true
       video: 'off',
     };
-    this.handleFormChange = this.handleFormChange.bind(this);
-    this.handleJoinRoom = this.handleJoinRoom.bind(this);
-    this.handleEditorContentChange = this.handleEditorContentChange.bind(this);
     this.updateEditorContent = this.updateEditorContent.bind(this);
     this.handleRunCode = this.handleRunCode.bind(this);
     this.updateResult = this.updateResult.bind(this);
     this.handleReset = this.handleReset.bind(this);
-    this.setupEditor = this.setupEditor.bind(this);
     this.ResetEditor = this.ResetEditor.bind(this);
-    this.handleInfo = this.handleInfo.bind(this);
     this.exitRoom = this.exitRoom.bind(this);
     this.handleExitRoom = this.handleExitRoom.bind(this);
     this.start = this.start.bind(this);
     this.startCall = this.startCall.bind(this);
     this.stopCall = this.stopCall.bind(this);
-    this.handleEvent = this.handleEvent.bind(this);
   }
 
   componentWillMount() {
-    // console.log('COLLABORATE Username', this.props.userData.user.name);
-    // this.setState({username: this.props.userData.user.name});
+    socket.emit('join-room', 'demo user', this.state.room_name);
+    console.log('joined the demo room');
+  }
+
+  componentWillUnmount() {
+    socket.emit('exit_room', 'demo user', this.state.room_name);
+    console.log('left the demo room');
   }
 
   componentDidMount() {
@@ -67,23 +57,11 @@ export default class Collaborate extends React.Component {
     this.editor.setTheme('ace/theme/monokai');
     this.editor.setShowPrintMargin(false);
 
-    socket.on('connect', function() {
-      console.log(context.state.username, ' connected');
-    });
-    socket.on('disconnect', this.exitRoom);
-    socket.on('room-exists', function(msg) {
-      alert(msg);
-    });
-    socket.on('exit_room', this.handleExitRoom);
-    // changes in editor
-    this.editor.on('change', this.handleEditorContentChange);
-    socket.on('editor-content-changes', this.updateEditorContent);
-    socket.on('setup-editor', this.setupEditor);
+
     socket.on('clear-editor', this.ResetEditor);
-    // 'run code'
+    //'run code'
     socket.on('submit-val', this.updateResult);
-    // handle info
-    socket.on('info', this.handleInfo);
+
     /**************************************/
 
     /*********** video conference *********/
@@ -95,46 +73,7 @@ export default class Collaborate extends React.Component {
   }
 
   /************ live coding *************/
-  handleFormChange(e) {
-    this.setState({room_name: e.target.value});
-  }
 
-  handleJoinRoom(e) {
-    var context = this;
-    socket.emit('join-room', context.state.username, context.state.room_name);
-    
-    // axios.get('/collaborates', {
-    //   params: {
-    //     room_number: context.state.room_name
-    //   }
-    // })
-    // .then(function(collaborate) {
-    //   console.log('collaborate.data ---> ', collaborate.data);
-    //   context.setState({
-    //     id: collaborate.data.id,
-    //     learnerId: collaborate.data.id_learner,
-    //     helperId: collaborate.data.id_helper,
-    //     questionId: collaborate.data.id_question,
-    //     learner: collaborate.data.Learner,
-    //     helper: collaborate.data.Helper,
-    //     question: collaborate.data.Question,
-    //     room_name: collaborate.data.room_number
-    //   });
-    //   // context.setState({success: true});
-    //   socket.emit('join-room', context.state.username, context.state.room_name);
-    //   console.log('context state ---> ', context.state);
-    // })
-    // .catch(function(err) {
-    //   context.setState({info: 'Sorry, the room number does not exist!'});
-    // });
-    e.preventDefault();
-  }
-  handleEditorContentChange(e) {
-    if (!this.state.applyingChanges) {
-      socket.emit('editor-content-changes', this.state.room_name, JSON.stringify(e));
-    }
-    return false;
-  }
   updateEditorContent(val) {
     this.setState({applyingChanges: true});
     val = JSON.parse(val);
@@ -143,15 +82,6 @@ export default class Collaborate extends React.Component {
   }
   handleReset() {
     socket.emit('clear-editor', this.state.room_name);
-  }
-  setupEditor(val) {
-    this.setState({applyingChanges: true});
-    var context = this;
-    val.forEach(function(element) {
-      element = JSON.parse(element);
-      context.editor.getSession().getDocument().applyDeltas([element]);
-    });
-    this.setState({applyingChanges: false});
   }
   ResetEditor() {
     this.editor.getSession().setValue('');
@@ -170,59 +100,25 @@ export default class Collaborate extends React.Component {
     this.setState({results: resultsArr});
     this.setState({applyingChanges: false});
   }
-  handleInfo(msg) {
-    this.setState({info: msg});
-  }
   exitRoom() {
     this.stopCall(true);
-    console.log('exit_room room_name', this.state.room_name);
     socket.emit('exit_room', this.state.username, this.state.room_name);
 
   }
   handleExitRoom() {
-    this.setState({info: 'You left the room'});
     this.setState({room_name: ''});
   }
   /************************************/
 
   /********* video conference *********/
   start(isCaller) {
-    console.log('inside start');
-    var room_name = this.state.room_name;
 
-    //pc will be created for both caller and answerer
-    pc = new RTCPeerConnection(configuration);
-
-
-    // send any ice candidates to the other peer
-    pc.onicecandidate = function (evt) {
-      console.log('sending ice candidate:', evt);
-      socket.emit('sendCandidate', room_name, (JSON.stringify({ 'candidate': evt.candidate })));
-    };
-
-    // once remote stream arrives, show it in the remote video element
-    pc.onaddstream = function (evt) {      
-      $('#peer-camera video')[0].src = URL.createObjectURL(evt.stream);
-    };
-
-    // get the local stream, show it in the local video element and send it
     navigator.getUserMedia(
       { 'audio': true, 'video': true }, 
       function (stream) {
         $('#my-camera video')[0].src = URL.createObjectURL(stream);
-        pc.addStream(stream);
-        if (isCaller) {
-          pc.createOffer(gotDescription, function(err) { console.log('error: ', err); });          
-        } else {
-          pc.createAnswer(gotDescription, function(err) { console.log('error: ', err); });          
-        }
-
+        $('#peer-camera video')[0].src = URL.createObjectURL(stream);
         localStream = stream;
-
-        function gotDescription(desc) {
-          pc.setLocalDescription(desc);
-          socket.emit('sendDescription', room_name, JSON.stringify({ 'sdp': desc }));
-        }
       }, 
     function(err) {
       console.log('there was an error getting the getUserMedia');
@@ -237,51 +133,20 @@ export default class Collaborate extends React.Component {
   }
 
   stopCall(isStopper) {
-    console.log('inside stop call', isStopper);
-    if (isStopper) {
-      console.log('emitting stopCall to ' + this.state.room_name);
-      socket.emit('stopCall', this.state.room_name);
-    }
-    console.log('removing stream', localStream);
-    if (pc !== undefined) { //To handle stop connection (leave the room) without video connection being initiated
-      pc.removeStream(localStream);  
-      localStream.getVideoTracks()[0].stop();
-      this.setState({video: 'off'});
-    }
-  }
-
-  handleEvent(evt) {
-    if (!pc) {
-      this.start(false);    
-    }
-
-    var event = JSON.parse(evt);
-    if (event.sdp) {
-      var description = (JSON.parse(evt)).sdp;
-      if (!!description) {
-        pc.setRemoteDescription(new RTCSessionDescription(description));      
-      }
-  
-    } else if (event.candidate) {
-      var candidate = event.candidate;
-      if (!!candidate) {
-        pc.addIceCandidate(new RTCIceCandidate(candidate));       
-      }
-
-    }
-
+ 
+    localStream.getVideoTracks()[0].stop();
+    this.setState({video: 'off'});
   }
 
   /************************************/    
 
   render() {
-
     return (
       <div>
 
-
       <div className="row">
         <h1>Welcome to our demo!</h1>
+        <h2> This is a simulation of the collaboration page. Please log in to start collaborating with other users! </h2>
       </div>
 
         <div className='col-sm-9 col-md-9 main'>
@@ -312,42 +177,34 @@ export default class Collaborate extends React.Component {
         </div>
         {
 
-        // <div className={this.state.success ? 'col-sm-3 col-md-3' : 'invisible'}>
-        //   <div className="addTopBottomPadding">
+        <div className={this.state.success ? 'col-sm-3 col-md-3' : 'invisible'}>
+          <div className="addTopBottomPadding">
             
-        //     <button className={
-        //       this.state.success && this.state.room_name ? 'btn btn-danger' : 'invisible'} 
-        //       onClick={this.exitRoom}>Stop Connection</button>
-        //     <div className={this.state.room_name ? 'addTopBottomPadding' : 'invisible'}>
-        //       <p>You are in room: {this.state.room_name}</p>
-        //     </div>
-        //   </div>
-        // </div>
+            <button className={
+              this.state.success && this.state.room_name ? 'btn btn-danger' : 'invisible'} 
+              onClick={function() {alert('connection stopped')}}>Stop Connection</button>
+            <div className={this.state.room_name ? 'addTopBottomPadding' : 'invisible'}>
+              <p>You are in room: {this.state.room_name}</p>
+            </div>
+          </div>
+        </div>
 
-      //       <p>{this.state.info}</p>
-            
-      //       <p></p>
-      //       { this.state.video === 'off' ? 
-      //         <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Turn On Camera</button> 
-      //         : <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Turn Off Camera</button> 
-      //       }
-      //       <p></p>
-      //       <div id="my-camera">
-      //         <video autoPlay muted="muted"></video>
-      //       </div>
-
-      //       <div id="peer-camera">
-      //         <video width="400" height="400" autoPlay></video>
-      //       </div>          
-      //       {
-      //         (this.state.id && this.state.learner.name === this.state.username) ? 
-      //           (
-      //             <button className="btn btn-success">
-      //               <Link to={'/review/' + this.state.questionId + '/' + this.state.id }>Write Review</Link>
-      //             </button>
-
-      //           ) : null
+              }
+            <p></p>
+            { this.state.video === 'off' ? 
+              <button className="btn btn-success btn-fill" onClick={this.startCall.bind(this, true)} >Turn On Camera</button> 
+              : <button className="btn btn-success" onClick={this.stopCall.bind(this, true)} >Turn Off Camera</button> 
             }
+            <p></p>
+            <div id="my-camera">
+              <video autoPlay muted="muted"></video>
+            </div>
+
+            <div id="peer-camera">
+              <video width="400" height="400" autoPlay></video>
+            </div>          
+
+            
       </div>
 
     );
