@@ -1,12 +1,9 @@
 node_modules/
 
+client/
 spec/
 oldPublicFiles/
 redux/
-
-/public/bundle.js
-
-/public/bundle.js.gz
 
 *.log
 
