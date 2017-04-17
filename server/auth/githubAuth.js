@@ -19,10 +19,11 @@ passport.use(new GithubStrategy({
     callbackURL: githubCB
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log('inside passport: profile=', profile);
     console.log(profile.emails);
     var email;
     if (profile.emails) {
-      email = profile.emails[0];
+      email = profile.emails[0].value;
     } else {
       email = 'hackerooxyz@gmail.com' //if the user doesn't have a github email...
     }
@@ -40,6 +41,7 @@ passport.use(new GithubStrategy({
     }).then( function(userFound) {
       if (!userFound) {
         console.log('user does not exist');
+        console.log(user);
         usersCtrl.save(user);
       } else {
         console.log('user exists');
