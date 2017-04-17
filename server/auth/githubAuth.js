@@ -20,7 +20,6 @@ passport.use(new GithubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('inside passport: profile=', profile);
-    console.log(profile.emails);
     var email;
     if (profile.emails) {
       email = profile.emails[0].value;
