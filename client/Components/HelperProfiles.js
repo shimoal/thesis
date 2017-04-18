@@ -7,8 +7,8 @@ export default React.createClass({
   renderProfile(key) {
 
     this.props.allUsers.forEach(user => {
-      var ratings = this.props.allRatings[user.id];
-      user.ratings = ratings;
+      var reviewRatings = this.props.allRatings[user.id];
+      user.reviewRatings = reviewRatings;
     });
 
     return (
