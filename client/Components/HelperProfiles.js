@@ -3,23 +3,17 @@ import { Link } from 'react-router';
 import HelperProfileItem from './HelperProfileItem';
 
 export default React.createClass({
-  
-  // getInitialState: function() {
-  //   return {
-  //     allUsers: {key: {}},
-  //   }
-  // },
 
   renderProfile(key) {
     return (
       <HelperProfileItem key={key}
         index={key} 
-        details={this.props.allUsers[key]} />
+        details={this.props.allUsers[key]}
+        rating={this.props.allRatings[key]} />
     );
   },
 
   render() {
-    //{ Object.keys(this.props.allUsers).map(this.renderProfiles) }
     return (
       <div>
         <h2>Find Hackers</h2>
