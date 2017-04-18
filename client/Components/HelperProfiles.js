@@ -5,11 +5,16 @@ import HelperProfileItem from './HelperProfileItem';
 export default React.createClass({
 
   renderProfile(key) {
+
+    this.props.allUsers.forEach(user => {
+      var ratings = this.props.allRatings[user.id];
+      user.ratings = ratings;
+    });
+
     return (
       <HelperProfileItem key={key}
         index={key} 
-        details={this.props.allUsers[key]}
-        rating={this.props.allRatings[key]} />
+        details={this.props.allUsers[key]} />
     );
   },
 
