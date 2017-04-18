@@ -18,10 +18,34 @@ export default React.createClass({
         <p>&nbsp;</p>
         {this.props.details.reviewRatings !== undefined ? (
           <div>
-            <p>averageOverall: {this.props.details.reviewRatings.averageOverall}</p>
-            <p>averageKnowledge: {this.props.details.reviewRatings.averageKnowledge}</p>
-            <p>averageHelpfulness: {this.props.details.reviewRatings.averageHelpfulness}</p>
-            <p>averageExperience: {this.props.details.reviewRatings.averageExperience}</p>
+            <p>averageOverall: 
+                <ReactStars
+                  value={this.props.details.reviewRatings.averageOverall}
+                  count={5}
+                  half={false}
+                  edit={false}/>
+            </p>
+            <p>averageKnowledge: 
+              <ReactStars
+                  value={this.props.details.reviewRatings.averageKnowledge}
+                  count={5}
+                  half={false}
+                  edit={false}/>
+            </p>
+            <p>averageHelpfulness: 
+              <ReactStars
+                  value={this.props.details.reviewRatings.averageHelpfulness}
+                  count={5}
+                  half={false}
+                  edit={false}/>
+            </p>
+            <p>averageExperience: 
+              <ReactStars
+                  value={this.props.details.reviewRatings.averageExperience}
+                  count={5}
+                  half={false}
+                  edit={false}/>
+            </p>
           </div> 
           ) : (
           <p>no reviews</p>
