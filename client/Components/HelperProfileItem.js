@@ -10,8 +10,6 @@ export default React.createClass({
 
   render() {
 
-    console.log('this.props.details', this.props.details);
-
     return (
       <div className="col-xs-6 col-sm-3 placeholder">
         <img src={this.props.details.profile_img} width="200px"/>
