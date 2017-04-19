@@ -9,7 +9,7 @@ export default React.createClass({
   },
 
   render() {
-
+    
     return (
       <div className="col-xs-6 col-sm-3 placeholder">
         <img src={this.props.details.profile_img} width="200px"/>
@@ -18,34 +18,54 @@ export default React.createClass({
         <p>&nbsp;</p>
         {this.props.details.reviewRatings !== undefined ? (
           <div>
-            <p>averageOverall: 
-                <ReactStars
-                  value={this.props.details.reviewRatings.averageOverall}
-                  count={5}
-                  half={false}
-                  edit={false}/>
-            </p>
-            <p>averageKnowledge: 
-              <ReactStars
-                  value={this.props.details.reviewRatings.averageKnowledge}
-                  count={5}
-                  half={false}
-                  edit={false}/>
-            </p>
-            <p>averageHelpfulness: 
-              <ReactStars
-                  value={this.props.details.reviewRatings.averageHelpfulness}
-                  count={5}
-                  half={false}
-                  edit={false}/>
-            </p>
-            <p>averageExperience: 
-              <ReactStars
-                  value={this.props.details.reviewRatings.averageExperience}
-                  count={5}
-                  half={false}
-                  edit={false}/>
-            </p>
+            <table className="table table-condensed">
+            <tbody>
+              <tr>
+                <td><p>Overall</p></td>
+                <td>
+                  <ReactStars 
+                    value={this.props.details.reviewRatings.averageOverall}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td><p>Knowledge</p></td>
+                <td>
+                  <ReactStars
+                    value={this.props.details.reviewRatings.averageKnowledge}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Helpfulness</p></td>
+                <td>
+                  <ReactStars 
+                    value={this.props.details.reviewRatings.averageHelpfulness}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Overall Experience</p></td>
+                <td>
+                  <ReactStars 
+                    value={this.props.details.reviewRatings.averageExperience}
+                    count={5}
+                    half={false}
+                    edit={false}/>
+                </td>
+              </tr>
+            </tbody>
+          </table> 
+          
+            
           </div> 
           ) : (
           <p>no reviews</p>
@@ -57,53 +77,7 @@ export default React.createClass({
     );
   }
 });
-// <div className="table-responsive">
-        //       <table className="table">
-        //         <tbody>
-        //           <tr>
-        //             <td>Overall</td>
-        //             <td>
-        //               <ReactStars
-        //               value={this.state.overall}
-        //                 count={5}
-        //                 half={false}
-        //                 edit={false}/>
-        //             </td>
-        //           </tr>
-        //           <tr>
-        //             <td>&nbsp;</td>
-        //             <td>&nbsp;</td>
-        //           </tr>
-        //           <tr>
-        //             <td>Knowledge</td>
-        //             <td>
-        //               <ReactStars
-        //               value={this.state.knowledge}
-        //                 count={5}
-        //                 half={false}
-        //                 edit={false}/>
-        //             </td>
-        //           </tr>
-        //           <tr>
-        //             <td>Helpfulness</td>
-        //             <td>
-        //               <ReactStars
-        //               value={this.state.helpfulness}
-        //                 count={5}
-        //                 half={false}
-        //                 edit={false}/>
-        //             </td>
-        //           </tr>
-        //           <tr>
-        //             <td>Overall Experience</td>
-        //             <td>
-        //               <ReactStars
-        //               value={this.state.experience}
-        //                 count={5}
-        //                 half={false}
-        //                 edit={false}/>
-        //             </td>
-        //           </tr>
-        //         </tbody>
-        //       </table>
-        //     </div>
+
+
+  
+  
