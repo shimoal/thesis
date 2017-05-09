@@ -2,6 +2,8 @@ node_modules/
 
 client/
 spec/
+oldPublicFiles/
+redux/
 
 *.log
 

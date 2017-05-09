@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+var CompressionPlugin = require('compression-webpack-plugin');
+
 module.exports = {
   entry: ['./client/index.js'],
   output: {
@@ -18,14 +21,22 @@ module.exports = {
         test: /\.scss$/,
         include: /client/,
         loaders: ["style-loader", "css-loader", "sass-loader"]
-        // loader: ExtractTextPlugin.extract('css-loader!sass-loader')
       }
     ]
-  }
-  // ,
-  // plugins: [
-  //   new ExtractTextPlugin('dist/styles/main.css', {
-  //     allChunks: true
-  //   })
-  // ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new CompressionPlugin({ 
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
+  ]
 };

@@ -1,73 +1,61 @@
-import React from 'react'
-import { Link } from 'react-router'
-import OpenQuestions from './OpenQuestions'
+import React from 'react';
+import { Link } from 'react-router';
+import OpenQuestions from './OpenQuestions';
+import HomepageSearchBar from './HomepageSearchBar';
+import HelperProfiles from './HelperProfiles';
 
-export default React.createClass({
 
+export default class Home extends React.Component {
+
+  componentWillMount() {
+
+  }
+  
+//   constructor() {
+//     super(); 
+
+
+
+//   }
+
+//   // //Before component is rendered
+//   // componentWillMount() {
+//   //   console.log('Home component is mounting');
+//   //   //check to make sure user is authenticated and set state to 1 or 0
+//   //   this.props.checkUserAuth();
+//   // }
+
+//   //Happens after component has rendered
+//   componentDidMount() {
+//     console.log('Home component has rendered');
+
+// // every component needs to do GET /session to check if the user has been authenticated!!!!
+// // need to pass down the following function as props to all components
+
+//   }
+  
+//   //Happens when component has rendered and about to unmount
+//   componentWillUnmount() {
+//     // this.props.showSearch('no');
+//   }
+
+  //Happen whenever home component's state changes
   render() {
+    console.log('Home component is rendered');
     return (
       <div className="row">
+      <HomepageSearchBar getSearchResults={this.props.getSearchResults}/>
         <div className="col-sm-1 col-md-1"/>
         
-        <div className="col-sm-10 col-md-10 main">
-        
+        <div className="col-sm-10 col-md-10">
           { /* OpenQuestions.js */}
-          <OpenQuestions questions={this.props.userData.questions} />
+          <OpenQuestions 
+            userCurrent={this.props.userData.user}
+            questions={this.props.userData.questions}
+            claimQuestion={this.props.claimQuestion} />
 
           { /* FindHelpers Compoent */}
-          <div>
-            <h3>Find Helpers</h3>
-            <div className="panel panel-default">
-              <div className="panel-body">
-
-            
-                <div className="row placeholders">
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/sky" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><Link to="/dashboard">Ai Shi</Link></h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-                    
-                  </div>
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/vine" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><Link to="/dashboard">Allison Reed</Link></h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-
-                  </div>
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/sky" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><Link to="/dashboard">Max Quinn</Link></h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-
-                  </div>
-                  <div className="col-xs-6 col-sm-3 placeholder">
-                    <img data-src="holder.js/200x200/auto/vine" className="img-responsive" alt="Generic placeholder thumbnail"/>
-                    <h3><Link to="/dashboard">Hanyen Widjaja</Link></h3>
-                    
-                    <p>&nbsp;</p>
-                    <p>Javascript (5)</p>
-                    <p>HTML (5)</p>
-                    <p>CSS (5)</p>
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-                  
-          </div>
+          <HelperProfiles allUsers={this.props.userData.allUsers} allRatings={this.props.userData.ratings}/>
 
         </div>
 
@@ -76,6 +64,6 @@ export default React.createClass({
 
 
       
-    )
+    );
   }
-})
+}

@@ -1,28 +1,38 @@
-import React from 'react'
-import { Link } from 'react-router'
-import QuestionItem from './QuestionItem'
+import React from 'react';
+import { Link } from 'react-router';
+import QuestionItem from './QuestionItem';
 
 var ClaimedQuestions = React.createClass({
 
   renderQuestion: function(key) {
-    console.log(this.props.questionsClaimed);
-    return ( <QuestionItem key={key} index={key} details={this.props.questionsClaimed[key]}/> )
+    // console.log('Inside ClaimedQuestions renderQuestion', this.props.questionsClaimed);
+    if (!this.props.questionsClaimed) {
+      return (
+        <div>
+          <p>No one has claimed your questions yet</p>
+        </div>
+      );
+    }
+    return ( <QuestionItem 
+                key={key} 
+                index={key} 
+                acceptHelper={this.props.acceptHelper} 
+                details={this.props.questionsClaimed[key]}/> );
   },
-  componentDidMount: function() {
-    console.log('Inside ClaimedQuestions', this.props.questions);
+  componentWillMount: function() {
+    // console.log('Inside ClaimedQuestions this.props', this.props);
+
   },
   render: function() {
     return (
       <div>
-        <h3>Claimed Questions</h3>
-        <div className="panel panel-default">
-          <div className="panel-body">
+        <h2>Claimed Questions</h2>
+          <div>
             { Object.keys(this.props.questionsClaimed).map(this.renderQuestion) }
           </div>
-        </div>
       </div>
-    )
+    );
   }
-})
+});
 
-export default ClaimedQuestions
+export default ClaimedQuestions;
